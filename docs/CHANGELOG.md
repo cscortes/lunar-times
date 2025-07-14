@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.3] - 2024-12-19
+
+### Fixed
+- **mypy Type Checking**: Fixed all type checking errors in GitHub Actions CI
+  - Added missing type stub packages: `types-requests`, `types-pytz`
+  - Added comprehensive type annotations to all functions in `src/moon_phases/cli.py`
+  - Fixed Python 3.8 compatibility using `Tuple[T, U]` instead of `tuple[T, U]`
+  - Added mypy configuration to ignore missing geopy type stubs
+  - Fixed function signature line length violation with proper line breaking
+  - Updated test expectations for API parameter types (tz converted to string)
+  - All mypy checks now pass successfully across Python 3.8-3.12
+
 ## [0.6.2] - 2024-12-19
 
 ### Fixed

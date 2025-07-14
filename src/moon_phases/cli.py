@@ -2,6 +2,7 @@ import requests
 import datetime
 import pytz
 import sys
+from typing import Dict, Any, Tuple
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 
@@ -10,7 +11,7 @@ url = "https://aa.usno.navy.mil/api/rstt/oneday"
 
 
 # Search for coordinates using GeoPy
-def find_latlong(city, state):
+def find_latlong(city: str, state: str) -> Tuple[float, float]:
     """
     Find the latitude and longitude coordinates for a given city and state.
 
@@ -38,7 +39,7 @@ def find_latlong(city, state):
 
 
 # Get city and state from the user
-def get_citystate():
+def get_citystate() -> Tuple[str, str]:
     """
     Get city and state from user input.
 
@@ -61,7 +62,7 @@ def get_citystate():
     return city, state
 
 
-def get_timezone(latitude, longitude):
+def get_timezone(latitude: float, longitude: float) -> Tuple[str, float]:
     """
     Find the timezone and offset for a given latitude and longitude.
 
@@ -86,7 +87,7 @@ def get_timezone(latitude, longitude):
     return tz_label, offset
 
 
-def find_moon_data(data):
+def find_moon_data(data: Dict[str, Any]) -> Tuple[str, str]:
     """
     Find the moonrise and moonset times from the given moon data.
 
@@ -112,7 +113,9 @@ def find_moon_data(data):
     return moonrise, moonset
 
 
-def print_moon_data(today, tz_label, offset, moonrise, moonset):
+def print_moon_data(
+    today: str, tz_label: str, offset: float, moonrise: str, moonset: str
+) -> None:
     """
     Print the moonrise and moonset times for a specific date and location.
 
@@ -139,7 +142,7 @@ def print_moon_data(today, tz_label, offset, moonrise, moonset):
     print(f"-  SET: {moonset}")
 
 
-def main():
+def main() -> None:
     """
     Main entry point for the program.
 
@@ -163,7 +166,7 @@ def main():
     params = {
         "date": today,
         "coords": f"{latitude:.2f},{longitude:.2f}",
-        "tz": offset,
+        "tz": str(offset),
         "dst": "false",
     }
 
