@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.6] - 2024-12-26
+
+### Fixed
+- **GitHub Actions Infrastructure**: Updated deprecated GitHub Actions to current versions
+  - Updated `actions/upload-artifact` from deprecated v3 to v4 for improved performance and reliability
+  - Replaced deprecated `actions/create-release@v1` and `actions/upload-release-asset@v1` with `softprops/action-gh-release@v1`
+  - Resolves GitHub Actions deprecation warnings and ensures workflows continue to function after January 30, 2025
+  - CI builds now use up to 10x faster artifact upload/download with v4 actions
+  - Release workflow now uses modern, maintained action for creating GitHub releases
+
 ## [0.6.5] - 2024-12-26
 
 ### Fixed

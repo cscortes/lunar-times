@@ -548,6 +548,67 @@ When encountering new issues:
 4. **Test**: Verify the issue is reproducible
 5. **Update**: Add the resolved issue to this document
 
+## Issue: GitHub Actions Deprecation Warnings
+
+**Date**: 2024-12-26
+**Reporter**: Developer
+**Severity**: High
+**Environment**: GitHub Actions CI/CD pipelines
+
+### Problem Description
+GitHub Actions workflows were failing with deprecation warnings for `actions/upload-artifact@v3` and deprecated release actions. The error message indicated:
+```
+This request has been automatically failed because it uses a deprecated version of actions/upload-artifact: v3. 
+Learn more: https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/
+```
+
+### Expected Behavior
+- CI workflows should run without deprecation warnings
+- Package building should complete successfully
+- GitHub releases should be created without deprecated actions
+
+### Actual Behavior
+- Build package job failed on GitHub Actions
+- Deprecation warnings for `actions/upload-artifact@v3`
+- Release workflow using deprecated `actions/create-release@v1` and `actions/upload-release-asset@v1`
+
+### Reproduction Steps
+1. Push code to GitHub repository
+2. GitHub Actions CI workflow runs
+3. Build package job fails with deprecation error
+4. Release workflow would fail with deprecated actions
+
+### Investigation History
+#### Attempt 1: Research Current Action Versions
+- **Method**: Checked GitHub changelog and action repositories for current versions
+- **Reasoning**: Need to understand what versions are current and what breaking changes exist
+- **Result**: Found v4 of upload-artifact available with up to 10x performance improvements
+- **Why it succeeded**: Identified correct migration path and breaking changes
+
+#### Attempt 2: Update Actions to Current Versions
+- **Method**: 
+  - Updated `actions/upload-artifact@v3` to `actions/upload-artifact@v4` 
+  - Replaced `actions/create-release@v1` and `actions/upload-release-asset@v1` with `softprops/action-gh-release@v1`
+- **Reasoning**: Modern versions are actively maintained and avoid deprecation
+- **Result**: Workflows validated successfully with proper YAML syntax
+- **Why it succeeded**: Used recommended migration path from GitHub documentation
+
+### Resolution
+- **Solution**: Updated GitHub Actions to current, supported versions
+- **Implementation**: 
+  - CI workflow: `actions/upload-artifact@v4` (improved performance)
+  - Release workflow: `softprops/action-gh-release@v1` (modern, maintained action)
+- **Verification**: YAML syntax validation passed, workflows ready for deployment
+- **Fixed in**: v0.6.6
+
+### Prevention
+- Monitor GitHub changelog for action deprecation notices
+- Use Dependabot or similar tools to track action version updates
+- Test workflows locally when possible using `act` tool
+- Keep documentation updated with supported action versions
+
+---
+
 ## Maintenance
 
 This document should be:
@@ -558,5 +619,5 @@ This document should be:
 
 ---
 
-*Last Updated: 2024-12-19*
-*Document Version: 1.1* 
+*Last Updated: 2024-12-26*
+*Document Version: 1.2* 

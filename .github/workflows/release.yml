@@ -66,14 +66,15 @@ jobs:
         echo "y" | make upload-pypi
 
     - name: Create GitHub Release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Lunar Times ${{ github.ref }}
+        name: Lunar Times ${{ github.ref }}
         draft: false
         prerelease: false
+        files: dist/*
         body: |
           ## What's Changed
           
@@ -91,14 +92,4 @@ jobs:
           lunar-times
           # or debug mode
           lunar-times -d
-          ```
-
-    - name: Upload Release Assets
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/
-        asset_name: lunar-times-${{ github.ref }}.tar.gz
-        asset_content_type: application/gzip 
+          ``` 
