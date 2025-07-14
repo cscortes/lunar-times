@@ -10,10 +10,10 @@ from moon_phases import cli as moon_data
 
 class TestMoonData(unittest.TestCase):
     """
-    Test suite for the Moon Phases Calculator functions.
+    Test suite for the Lunar Times functions.
 
-    This test suite covers all public functions with both positive and negative
-    test cases, mocking external dependencies to ensure reproducible tests.
+    This module contains comprehensive unit tests for all functionality in the
+    lunar times calculator application.
     """
 
     def setUp(self):

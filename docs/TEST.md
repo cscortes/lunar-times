@@ -1,8 +1,8 @@
-# Testing Documentation
+# Testing Guide: Lunar Times
 
 ## Overview
 
-The Moon Phases Calculator project maintains a comprehensive test suite designed to ensure reliability, maintainability, and correctness of all functionality. Our testing approach emphasizes mock-based testing to avoid external API dependencies and ensure reproducible results.
+The Lunar Times project maintains a comprehensive test suite designed to ensure reliability, maintainability, and correctness of all functionality. Our testing approach emphasizes mock-based testing to avoid external dependencies and ensure consistent, fast test execution.
 
 ## Test Suite Statistics
 

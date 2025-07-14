@@ -1,5 +1,5 @@
 """
-Moon Phases Calculator
+Lunar Times
 
 A Python package for calculating moonrise and moonset times for any given
 city and state. Integrates with external APIs to provide accurate

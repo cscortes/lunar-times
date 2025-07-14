@@ -27,7 +27,7 @@ The project is now configured for PyPI publishing with the following improvement
 4. **Build System**
    - Uses modern `hatchling` build backend
    - Proper package structure with `src/` layout
-   - Command-line script entry point: `moon-phases`
+   - Command-line script entry point: `lunar-times`
 
 5. **Development Dependencies**
    - Added `twine==5.1.1` for PyPI uploads

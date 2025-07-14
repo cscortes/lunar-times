@@ -1,1 +1,1 @@
-"""Tests for the moon_phases package."""
+"""Tests for the lunar_times package."""

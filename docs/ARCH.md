@@ -1,8 +1,8 @@
-# Architecture Document: Moon Phases Calculator
+# Architecture Document: Lunar Times
 
-## System Overview
+## Overview
 
-The Moon Phases Calculator is a command-line Python application that retrieves and displays moonrise and moonset times for any given city and state. The system integrates with external APIs and services to provide accurate astronomical data with proper timezone handling.
+The Lunar Times is a command-line Python application that retrieves and displays moonrise and moonset times for any given city and state. The system integrates with external APIs and services to provide accurate astronomical data with proper timezone handling.
 
 ### Key Features
 - Location-based moon data retrieval
@@ -329,4 +329,4 @@ make check
 
 ## Conclusion
 
-The Moon Phases Calculator demonstrates a clean, modular architecture suitable for a command-line utility. The design prioritizes simplicity, maintainability, and clear separation of concerns while providing reliable astronomical data through well-established external APIs. 
+The Lunar Times demonstrates a clean, modular architecture suitable for a command-line utility. The design prioritizes simplicity, maintainability, and clear separation of concerns while providing reliable astronomical data through well-established external APIs. 

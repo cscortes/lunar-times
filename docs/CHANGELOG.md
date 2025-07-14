@@ -182,7 +182,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.0] - 2024-01-15
 
 ### Added
-- Initial release of Moon Phases Calculator
+- Initial release of Lunar Times (originally named Moon Phases Calculator)
 - Command-line interface for moon rise/set time calculations
 - City and state input with automatic geocoding via Nominatim API
 - Timezone-aware calculations using timezonefinder and pytz

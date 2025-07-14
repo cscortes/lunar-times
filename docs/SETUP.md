@@ -1,4 +1,6 @@
-# Setup Guide: Moon Phases Calculator
+# Setup Guide: Lunar Times
+
+This guide provides comprehensive instructions for setting up the Lunar Times project for development and usage. The project uses modern Python packaging with `uv` for dependency management and `make` for task automation.
 
 ## Prerequisites
 
