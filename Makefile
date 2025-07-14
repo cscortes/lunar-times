@@ -12,7 +12,7 @@ TEST_FILES := $(shell find tests -name "*.py" 2>/dev/null || echo "")
 	@touch .venv/pyvenv.cfg
 
 # Project Configuration
-PROJECT_NAME := moon-phases-calculator
+PROJECT_NAME := lunar-times
 PYTHON_VERSION := 3.8
 
 # Colors for output
@@ -55,7 +55,7 @@ info:
 	@echo "  make setup     # First-time project setup"
 	@echo "  make test      # Run tests"
 	@echo "  make check     # Run all quality checks"
-	@echo "  make run       # Run the moon phases calculator"
+	@echo "  make run       # Run the lunar times calculator"
 	@echo "  make ci        # Run CI pipeline (format + check + build)"
 
 # Initial project setup
@@ -128,12 +128,12 @@ check: lint typecheck test check-invisible
 # Run the application
 run: install
 	@echo "$(BLUE)Running $(PROJECT_NAME)...$(RESET)"
-	@uv run python -m moon_phases.cli
+	@uv run lunar-times
 
 # Run in debug mode
 run-debug: install
 	@echo "$(BLUE)Running $(PROJECT_NAME) in debug mode (El Paso, TX)...$(RESET)"
-	@uv run python -m moon_phases.cli -d
+	@uv run lunar-times -d
 
 # Build marker for tracking
 .build-marker: $(SRC_FILES) pyproject.toml
