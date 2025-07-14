@@ -421,20 +421,20 @@ class TestMoonData(unittest.TestCase):
             mock_requests.return_value = mock_response
             mock_find_moon.return_value = ("10:58 PM", "01:08 PM")
 
-                    # Test
-        moon_data.main()
+            # Test
+            moon_data.main()
 
-        # Check API call parameters
-        expected_params = {
-            "date": "2024-01-15",
-            "coords": " 30.27, -97.74",
-            "tz": "-6.0",
-            "dst": "false",
-        }
+            # Check API call parameters
+            expected_params = {
+                "date": "2024-01-15",
+                "coords": " 30.27, -97.74",
+                "tz": "-6.0",
+                "dst": "false",
+            }
 
-        mock_requests.assert_called_once_with(
-            moon_data.url, params=expected_params
-        )
+            mock_requests.assert_called_once_with(
+                moon_data.url, params=expected_params
+            )
 
 
 class TestIntegration(unittest.TestCase):
