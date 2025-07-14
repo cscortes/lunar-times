@@ -19,7 +19,7 @@ This guide provides detailed instructions and examples for using the Moon Phases
 Run the application without any flags to enter interactive mode:
 
 ```bash
-uv run python moon_data.py
+make run
 ```
 
 You'll be prompted to enter a city and state:
@@ -31,25 +31,36 @@ Enter the state: TX
 
 ### Debug Mode
 
-Use the `-d` flag to automatically use El Paso, TX as the location:
+Use debug mode to automatically use El Paso, TX as the location:
 
 ```bash
-uv run python moon_data.py -d
+make run-debug
 ```
 
-### Using the Script Entry Point
+### Alternative: Direct Commands
 
-You can also use the installed script command:
+You can also run the application directly:
 
 ```bash
 # Interactive mode
-uv run moon-phases
+uv run python moon_data.py
 
 # Debug mode
+uv run python moon_data.py -d
+
+# Using script entry point
+uv run moon-phases
 uv run moon-phases -d
 ```
 
 ## Command-Line Options
+
+| Make Target | Description | Example |
+|-------------|-------------|---------|
+| `make run` | Interactive mode - prompts for city and state | `make run` |
+| `make run-debug` | Debug mode - uses El Paso, TX as default location | `make run-debug` |
+
+### Alternative uv Commands
 
 | Option | Description | Example |
 |--------|-------------|---------|
@@ -137,7 +148,7 @@ Running in debug mode. Defaulting to city (El Paso, TX)
 
 ### 1. Photography Planning
 ```bash
-$ uv run moon-phases
+$ make run
 Enter the city: Yosemite Valley
 Enter the state: CA
 # Moon rise/set times in (Timezone: America/Los_Angeles -8.0) on 2024-01-15:
@@ -147,7 +158,7 @@ Enter the state: CA
 
 ### 2. Astronomical Observation
 ```bash
-$ uv run moon-phases
+$ make run
 Enter the city: Flagstaff
 Enter the state: AZ
 # Moon rise/set times in (Timezone: America/Phoenix -7.0) on 2024-01-15:
@@ -157,7 +168,7 @@ Enter the state: AZ
 
 ### 3. Outdoor Activities
 ```bash
-$ uv run moon-phases
+$ make run
 Enter the city: Moab
 Enter the state: UT
 # Moon rise/set times in (Timezone: America/Denver -6.0) on 2024-01-15:
@@ -167,7 +178,7 @@ Enter the state: UT
 
 ### 4. Quick Testing/Development
 ```bash
-$ uv run moon-phases -d
+$ make run-debug
 Running in debug mode. Defaulting to city (El Paso, TX)
 # Moon rise/set times in (Timezone: America/Denver -6.0) on 2024-01-15:
 -  RISE: 10:28 PM
@@ -178,7 +189,7 @@ Running in debug mode. Defaulting to city (El Paso, TX)
 
 ### Location Not Found
 ```
-$ uv run moon-phases
+$ make run
 Enter the city: InvalidCity
 Enter the state: XX
 ValueError: Could not find coordinates for Invalidcity, XX
@@ -248,7 +259,7 @@ ModuleNotFoundError: No module named 'requests'
 ```
 **Solution**: Install dependencies
 ```bash
-uv sync
+make install
 ```
 
 #### 2. Application Hangs
@@ -276,13 +287,13 @@ uv sync
 
 #### Basic Functionality Test
 ```bash
-uv run moon-phases -d
+make run-debug
 ```
 Expected output should show El Paso, TX moon data.
 
 #### Interactive Mode Test
 ```bash
-uv run moon-phases
+make run
 # Enter: New York
 # Enter: NY
 ```
@@ -290,7 +301,7 @@ Should show New York moon data with Eastern timezone.
 
 #### Error Handling Test
 ```bash
-uv run moon-phases
+make run
 # Enter: InvalidCity
 # Enter: XX
 ```
@@ -302,9 +313,9 @@ Should display a clear error message.
 For development or automated testing:
 ```bash
 # Test basic functionality
-uv run moon-phases -d
+make run-debug
 
-# Test with known good location
+# Test with known good location (using direct uv for piping)
 echo -e "Austin\nTX" | uv run moon-phases
 ```
 
@@ -318,6 +329,7 @@ The application outputs to stdout, making it suitable for:
 ```bash
 #!/bin/bash
 # Get moon data for multiple cities
+# Note: Using uv directly for piping input; make targets work best interactively
 cities=("Austin:TX" "Denver:CO" "Seattle:WA")
 
 for city_state in "${cities[@]}"; do

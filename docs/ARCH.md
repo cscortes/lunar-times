@@ -11,6 +11,38 @@ The Moon Phases Calculator is a command-line Python application that retrieves a
 - Debug mode for development
 - Clean command-line interface
 
+## Core Principles
+
+### Reproducibility
+Reproducibility is a fundamental priority for this project, ensuring consistent behavior across different environments and time periods:
+
+**Dependency Management**:
+- All dependencies are pinned to specific versions in `pyproject.toml`
+- Lock file (`uv.lock`) ensures identical dependency resolution
+- No floating version requirements that could introduce variability
+
+**Deterministic Behavior**:
+- Same inputs produce identical outputs across systems
+- External API calls are the only source of variability (real-time data)
+- Consistent formatting and data processing logic
+
+**Environment Consistency**:
+- Minimal system dependencies (Python 3.8+ only)
+- Self-contained virtual environment via uv
+- Cross-platform compatibility (Linux, macOS, Windows)
+
+**Version Control**:
+- All configuration files under version control
+- Dependency versions tracked and updated deliberately
+- Build and runtime environment reproducible from repository
+
+**Testing Reproducibility**:
+- Debug mode provides consistent test location (El Paso, TX)
+- Same API endpoints and parameters for all requests
+- Predictable error handling and output formatting
+
+This focus on reproducibility ensures the application behaves consistently for astronomical calculations, which is critical for planning and scientific accuracy.
+
 ## High-Level Architecture
 
 The system follows a modular, functional architecture with clear separation of concerns:
@@ -277,16 +309,22 @@ graph TB
 ### Build and Deployment
 ```bash
 # Install dependencies
-uv sync
+make install
 
 # Run application
-uv run python moon_data.py
+make run
 
 # Debug mode
-uv run python moon_data.py -d
+make run-debug
 
-# Using installed script
-uv run moon-phases
+# Build project
+make build
+
+# Run tests
+make test
+
+# Check code quality
+make check
 ```
 
 ## Conclusion

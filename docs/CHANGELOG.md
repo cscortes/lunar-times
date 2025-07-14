@@ -32,6 +32,87 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Pipfile and Pipfile.lock (replaced by pyproject.toml and uv.lock)
 
+## [1.3.1] - 2025-01-14
+
+### Changed
+- Enhanced build target with intelligent source file dependency tracking
+- Build only rebuilds when source files or pyproject.toml are newer than last build
+- Improved build efficiency with `.build-marker` file for timestamp tracking
+
+### Removed
+- `watch` target from Makefile (no longer needed with smart build dependencies)
+- File watching functionality using entr (simplified development workflow)
+
+## [1.3.0] - 2025-01-14
+
+### Added
+- Intelligent dependency tracking in Makefile using virtual environment timestamps
+- New advanced make targets: `ci`, `quick-check`, `watch`, `reset`
+- Automatic dependency resolution for all development targets
+- `dev-setup` target as alias for convenience
+
+### Changed
+- Enhanced Makefile with proper target dependencies to ensure tools are available before use
+- `build` target now depends on `check` to ensure quality before building
+- All development targets (test, lint, format, typecheck) now automatically install dependencies
+- `ci` target runs complete pipeline: format → check → build
+- Improved Makefile organization with phony targets and color-coded help
+
+### Fixed  
+- Removed unused imports from test_moon_data.py
+- Fixed f-string without placeholders in moon_data.py
+
+## [1.2.1] - 2025-01-14
+
+### Changed
+- Updated all documentation to reference make targets instead of raw uv commands
+- Improved consistency across README.md, docs/SETUP.md, docs/USAGE.md, and docs/ARCH.md
+- Prioritized make targets while keeping uv commands as alternatives where appropriate
+- Enhanced examples and usage instructions to use standardized workflow commands
+
+## [1.2.0] - 2025-01-14
+
+### Added
+- Comprehensive Makefile for development workflow management
+- Standardized development commands: setup, test, lint, format, check, run, build, clean, status
+- Developer-focused status reporting with dependency and configuration details
+- Color-coded output for improved readability
+- Centralized reference for all development tasks
+
+### Changed
+- Enhanced development experience with consistent command interface
+
+## [1.1.0] - 2025-01-14
+
+### Added
+- Comprehensive test suite with 22 unit tests covering all functions
+- Mock-based testing to avoid external API dependencies during testing
+- Integration test with real API validation
+- Complete test coverage for error conditions and edge cases
+
+### Changed
+- Enhanced development workflow with automated testing capabilities
+
+## [1.0.2] - 2025-01-14
+
+### Fixed
+- Python version compatibility: Updated requirement from 3.13+ to 3.8+ for broader compatibility
+- Pinned all runtime dependencies for reproducibility: requests==2.32.4, geopy==2.4.1, timezonefinder==6.5.4, pytz==2024.2
+- Pinned all dev dependencies for reproducibility: pytest==8.3.5, black==24.8.0, flake8==5.0.4, mypy==1.14.1
+- Updated development tools configuration (mypy, black) to target Python 3.8
+
+### Changed
+- Added reproducibility as a core architectural principle in documentation
+- Updated all documentation to reflect new Python 3.8+ requirement
+
+## [1.0.1] - 2025-07-14
+
+### Changed
+- Updated Python version requirement from 3.13+ to 3.8+ for broader compatibility
+- Updated author information in project configuration
+- Updated all documentation to reflect new Python 3.8+ requirement
+- Updated development tools configuration (mypy, black) to target Python 3.8
+
 ## [1.0.0] - 2024-01-15
 
 ### Added

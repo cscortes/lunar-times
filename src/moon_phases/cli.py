@@ -1,36 +1,38 @@
 import requests
 import datetime
 import pytz
-import sys 
+import sys
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 
 # API endpoint URL
 url = "https://aa.usno.navy.mil/api/rstt/oneday"
 
+
 # Search for coordinates using GeoPy
 def find_latlong(city, state):
-  """
-  Find the latitude and longitude coordinates for a given city and state.
+    """
+    Find the latitude and longitude coordinates for a given city and state.
 
-  Args:
-      city (str): City name.
-      state (str): State name or abbreviation.
+    Args:
+        city (str): City name.
+        state (str): State name or abbreviation.
 
-  Returns:
-      tuple: (latitude, longitude) coordinates.
+    Returns:
+        tuple: (latitude, longitude) coordinates.
 
-  Raises:
-      ValueError: If the city and state cannot be found.
-  """
-  geolocator = Nominatim(user_agent="moon_data_app")
-  location = geolocator.geocode(f"{city}, {state}")
-  if location is None:
-      raise ValueError(f"Could not find coordinates for {city}, {state}")
+    Raises:
+        ValueError: If the city and state cannot be found.
+    """
+    geolocator = Nominatim(user_agent="moon_data_app")
+    location = geolocator.geocode(f"{city}, {state}")
+    if location is None:
+        raise ValueError(f"Could not find coordinates for {city}, {state}")
 
-  latitude = location.latitude
-  longitude = location.longitude
-  return latitude,longitude
+    latitude = location.latitude
+    longitude = location.longitude
+    return latitude, longitude
+
 
 # Get city and state from the user
 def get_citystate():
@@ -44,7 +46,7 @@ def get_citystate():
     Returns:
         tuple: (city, state)
     """
-    if '-d' in sys.argv:
+    if "-d" in sys.argv:
         city = "El Paso"
         state = "tx"
     else:
@@ -53,7 +55,8 @@ def get_citystate():
 
     city = city.title().strip()
     state = state.upper().strip()
-    return city,state
+    return city, state
+
 
 def get_timezone(latitude, longitude):
     """
@@ -75,7 +78,8 @@ def get_timezone(latitude, longitude):
     tz_label = tz_finder.timezone_at(lng=longitude, lat=latitude)
     tz = pytz.timezone(tz_label)
     offset = tz.utcoffset(datetime.datetime.now()).total_seconds() / 3600
-    return tz_label,offset
+    return tz_label, offset
+
 
 def find_moon_data(data):
     """
@@ -91,12 +95,17 @@ def find_moon_data(data):
     """
     moonrise = "N/A"
     moonset = "N/A"
-    for item in data['properties']["data"]["moondata"]:
+    for item in data["properties"]["data"]["moondata"]:
         if item["phen"] == "Rise":
-            moonrise = datetime.datetime.strptime(item["time"], "%H:%M").strftime("%I:%M %p")
+            moonrise = datetime.datetime.strptime(item["time"], "%H:%M").strftime(
+                "%I:%M %p"
+            )
         elif item["phen"] == "Set":
-             moonset = datetime.datetime.strptime(item["time"], "%H:%M").strftime("%I:%M %p")
-    return moonrise,moonset
+            moonset = datetime.datetime.strptime(item["time"], "%H:%M").strftime(
+                "%I:%M %p"
+            )
+    return moonrise, moonset
+
 
 def print_moon_data(today, tz_label, offset, moonrise, moonset):
     """
@@ -114,54 +123,58 @@ def print_moon_data(today, tz_label, offset, moonrise, moonset):
     it indicates that the program is running in debug mode and defaults to
     the city El Paso, TX.
     """
-    if '-d' in sys.argv:
-        print(f"Running in debug mode. Defaulting to city (El Paso, TX)") 
+    if "-d" in sys.argv:
+        print("Running in debug mode. Defaulting to city (El Paso, TX)")
     offset_sign = "+" if offset >= 0 else "-"
-    print(f"# Moon rise/set times in (Timezone: {tz_label} {offset_sign}{abs(offset)}) on {today}:")
+    print(
+        f"# Moon rise/set times in (Timezone: {tz_label} {offset_sign}{abs(offset)}) on {today}:"
+    )
     print(f"-  RISE: {moonrise}")
     print(f"-  SET: {moonset}")
 
+
 def main():
-  """
-  Main entry point for the program.
+    """
+    Main entry point for the program.
 
-  This function retrieves the city and state from the user, finds the
-  latitude and longitude coordinates, and gets the timezone and offset.
-  It then sends a request to the USNO API to retrieve the moon data and
-  prints the moonrise and moonset times for the given date and location.
+    This function retrieves the city and state from the user, finds the
+    latitude and longitude coordinates, and gets the timezone and offset.
+    It then sends a request to the USNO API to retrieve the moon data and
+    prints the moonrise and moonset times for the given date and location.
 
-  If the '-d' flag is present on the command line, the program defaults to
-  the city El Paso, TX.
+    If the '-d' flag is present on the command line, the program defaults to
+    the city El Paso, TX.
 
-  Raises:
-      ConnectionError: If the request to the API fails.
-  """
-  city, state = get_citystate()
-  latitude, longitude = find_latlong(city, state)
-  today = datetime.date.today().strftime("%Y-%m-%d")
-  tz_label, offset = get_timezone(latitude, longitude)
+    Raises:
+        ConnectionError: If the request to the API fails.
+    """
+    city, state = get_citystate()
+    latitude, longitude = find_latlong(city, state)
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    tz_label, offset = get_timezone(latitude, longitude)
 
-  # Define parameters
-  params = {
-      "date": today,
-      "coords": f"{latitude:.2f},{longitude:.2f}",
-      "tz": offset,
-      "dst": "false"
-  }
+    # Define parameters
+    params = {
+        "date": today,
+        "coords": f"{latitude:.2f},{longitude:.2f}",
+        "tz": offset,
+        "dst": "false",
+    }
 
-  # Send the request and get the response
-  response = requests.get(url, params=params)
-  # Check for errors
-  if response.status_code != 200:
-      raise ConnectionError(f"Failed to retrieve moon data. Status code: {response.status_code}")
+    # Send the request and get the response
+    response = requests.get(url, params=params)
+    # Check for errors
+    if response.status_code != 200:
+        raise ConnectionError(
+            f"Failed to retrieve moon data. Status code: {response.status_code}"
+        )
 
-  # Parse the JSON data
-  data = response.json()
-  moonrise, moonset = find_moon_data(data)
+    # Parse the JSON data
+    data = response.json()
+    moonrise, moonset = find_moon_data(data)
 
-  print_moon_data(today, tz_label, offset, moonrise, moonset)
+    print_moon_data(today, tz_label, offset, moonrise, moonset)
 
 
 if __name__ == "__main__":
-  main()
-
+    main()

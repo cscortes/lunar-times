@@ -42,17 +42,23 @@ cd moon_phases
 
 #### 3. Install Dependencies
 ```bash
-uv sync
+make install
 ```
 
 This will:
-- Create a virtual environment automatically
+- Create a virtual environment automatically  
 - Install all required packages from `pyproject.toml`
+- Install development dependencies
 - Lock dependencies in `uv.lock`
 
 #### 4. Run Commands
 ```bash
-# Run commands in the environment
+# Use make targets for common tasks
+make run                   # Run the application
+make run-debug            # Run in debug mode
+make test                 # Run tests
+
+# Or run commands directly in the environment
 uv run python moon_data.py
 
 # Or activate the environment
@@ -104,7 +110,22 @@ The application requires the following Python packages:
 
 ### Basic Usage
 
-#### Using uv:
+#### Using Make (Recommended):
+```bash
+# Run with user input
+make run
+
+# Run in debug mode (uses El Paso, TX as default)
+make run-debug
+
+# Run tests
+make test
+
+# Check code quality
+make check
+```
+
+#### Using uv directly:
 ```bash
 # Run with user input
 uv run python moon_data.py
@@ -225,22 +246,35 @@ Ensure your firewall allows outbound HTTPS connections to these domains.
 
 #### 1. Install Development Dependencies
 ```bash
+make install
+```
+
+#### 2. Run Development Commands
+```bash
+# Run all quality checks
+make check
+
+# Run tests
+make test
+
+# Format code
+make format
+
+# Lint code
+make lint
+
+# Type checking
+make typecheck
+```
+
+#### 3. Alternative: Direct uv Commands
+```bash
+# Install dev dependencies
 uv sync --dev
-```
 
-#### 2. Enable Development Mode
-```bash
-uv run python -m pytest  # If you have tests
-```
+# Run tests
+uv run python -m pytest
 
-#### 3. Run Tests (if available)
-```bash
-python -m pytest
-```
-
-### Code Style
-The project follows Python PEP 8 style guidelines. Development tools are included:
-```bash
 # Format code
 uv run black .
 

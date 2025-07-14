@@ -14,16 +14,19 @@ A simple command-line Python application that calculates moonrise and moonset ti
 
 ```bash
 # Install dependencies
-uv sync
+make install
 
 # Run the application
-uv run python moon_data.py
+make run
 
 # Or use debug mode (defaults to El Paso, TX)
-uv run python moon_data.py -d
+make run-debug
 
-# Alternative: run via installed script
-uv run moon-phases
+# Run tests
+make test
+
+# Check code quality
+make check
 ```
 
 ## Example Usage
