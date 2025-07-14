@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2024-12-19
+
+### Fixed
+- **GitHub Actions CI Linting**: Fixed E501 line length violations in test file
+  - Corrected 7 lines in `tests/test_cli.py` exceeding 79-character limit
+  - Properly broke long `patch()` statements, assertions, and dictionary structures
+  - Improved code readability while maintaining PEP 8 compliance
+  - GitHub Actions CI pipeline now passes linting checks successfully
+  - All 22 tests continue to pass after formatting fixes
+
 ## [0.6.0] - 2024-12-19
 
 ### Added

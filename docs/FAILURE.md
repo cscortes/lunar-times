@@ -397,6 +397,68 @@ Raw ANSI escape codes visible as literal text, making output harder to read.
 - **Fix**: Use `printf` for ANSI escape sequences
 - **Backup**: `NO_COLOR` environment variable for color-disabled terminals
 
+### Issue: GitHub Actions CI Linting Failures
+
+**Date**: 2024-12-19
+**Reporter**: Development Team  
+**Severity**: Medium
+**Environment**: GitHub Actions CI, Python 3.8+, flake8 linting
+
+#### Problem Description
+GitHub Actions CI pipeline failed during the linting stage with multiple E501 line length violations in `tests/test_cli.py`. The flake8 linter reported 7 lines exceeding the 79-character limit, causing the entire CI pipeline to fail.
+
+#### Expected Behavior
+All source code should pass flake8 linting checks with no line length violations, allowing CI pipeline to proceed to testing and deployment stages.
+
+#### Actual Behavior
+CI pipeline failed at the linting stage with errors:
+```
+tests/test_cli.py:137:80: E501 line too long (84 > 79 characters)
+tests/test_cli.py:164:80: E501 line too long (84 > 79 characters)
+tests/test_cli.py:242:80: E501 line too long (80 > 79 characters)
+tests/test_cli.py:367:80: E501 line too long (84 > 79 characters)
+tests/test_cli.py:385:80: E501 line too long (84 > 79 characters)
+tests/test_cli.py:392:80: E501 line too long (87 > 79 characters)
+tests/test_cli.py:425:80: E501 line too long (88 > 79 characters)
+```
+
+#### Reproduction Steps
+1. Push code to GitHub repository
+2. GitHub Actions CI workflow triggers
+3. Linting stage runs `make lint` command
+4. flake8 reports line length violations
+5. CI pipeline fails with exit code 2
+
+#### Investigation History
+
+##### Attempt 1: Local Testing
+- **Method**: Ran `make lint` locally to reproduce the issue
+- **Reasoning**: Needed to confirm the exact linting violations before fixing
+- **Result**: Successfully reproduced all 7 line length violations locally
+- **Why it succeeded**: Confirmed the issue was consistent across environments
+
+#### Final Solution
+**Method**: Fixed line length violations by breaking long lines appropriately
+**Implementation**: 
+- Broke long `patch()` statements across multiple lines
+- Split assertion messages with proper indentation
+- Restructured dictionary definitions for readability
+- Split multi-parameter function calls
+**Files Modified**: `tests/test_cli.py`
+**Result**: All linting checks pass, CI pipeline successful
+
+#### Key Insights
+- GitHub Actions CI environment has stricter linting enforcement than local development
+- Line length violations in test files are just as important as in source code  
+- Proper line breaking maintains code readability while satisfying linting rules
+- The `make lint` command should be run locally before every commit
+
+#### Prevention Strategies
+- Run `make lint` before every commit
+- Configure IDE to show 79-character guideline
+- Use `make quick-check` for comprehensive local validation
+- Consider adding pre-commit hooks for automatic linting
+
 ## Reporting New Issues
 
 When encountering new issues:
