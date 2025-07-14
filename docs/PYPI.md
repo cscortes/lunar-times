@@ -194,4 +194,48 @@ For subsequent releases:
 4. Upload to TestPyPI first: `make upload-test`
 5. If everything works, upload to PyPI: `make upload-pypi`
 
+## Automated CI/CD Publishing
+
+The project includes GitHub Actions workflows for automated PyPI publishing:
+
+### Automated Release Process
+1. **Version Tag**: Create and push a version tag (e.g., `git tag v0.6.0`)
+2. **CI Pipeline**: GitHub Actions automatically runs full test suite
+3. **Test PyPI**: Package is first published to Test PyPI for validation
+4. **Production PyPI**: After validation, package is published to production PyPI
+5. **GitHub Release**: Automatic GitHub release creation with changelog
+
+### Release Workflow Features
+- **Version Validation**: Ensures tag matches package version in `pyproject.toml`
+- **Full Testing**: Runs complete CI pipeline before publishing
+- **Two-Stage Deployment**: Test PyPI → Production PyPI
+- **Installation Testing**: Validates package installation from Test PyPI
+- **Release Notes**: Automatic GitHub release with changelog integration
+
+### Setting Up Automated Publishing
+1. **Add secrets** to your GitHub repository:
+   ```
+   PYPI_API_TOKEN=your_production_pypi_token
+   TEST_PYPI_API_TOKEN=your_test_pypi_token
+   ```
+
+2. **Create version tag**:
+   ```bash
+   git tag v0.6.0
+   git push origin v0.6.0
+   ```
+
+3. **Monitor release**: Check GitHub Actions tab for progress
+
+### Manual Override
+You can still use manual publishing:
+```bash
+make upload-test    # Manual Test PyPI upload
+make upload-pypi    # Manual production PyPI upload
+```
+
+The automated pipeline provides safer, more reliable releases with comprehensive validation.
+
+## Summary
+
 The package is now properly configured and ready for PyPI publishing once you complete the contact information updates! 

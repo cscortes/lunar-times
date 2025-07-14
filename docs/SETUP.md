@@ -228,6 +228,17 @@ pytz.UnknownTimeZoneError
 - Try a different nearby location
 - Check if timezonefinder is properly installed
 
+#### 6. Terminal Color Display Issues
+```
+\033[32m✓ Dependencies updated\033[0m
+```
+If you see ANSI escape sequences instead of colors in Make output:
+
+**Solutions**: 
+- **Most terminals**: Issue should be resolved automatically (fixed in v0.5.1)
+- **Disable colors**: Set `NO_COLOR=1 make run` to disable colors entirely
+- **Persistent issues**: Use `NO_COLOR=1` permanently: `export NO_COLOR=1`
+
 ### Network Requirements
 
 The application requires access to these external services:
@@ -341,6 +352,43 @@ pip uninstall requests geopy timezonefinder pytz
 - Chicago, IL
 - Houston, TX
 - Miami, FL
+
+## Continuous Integration
+
+This project includes comprehensive **live and operational** GitHub Actions workflows for automated testing and deployment.
+
+### CI/CD Features ✅
+- **Automated Testing**: Every push and pull request triggers comprehensive testing ✅
+- **Multi-Python Support**: Tests across Python 3.8, 3.9, 3.10, 3.11, and 3.12 ✅
+- **Cross-Platform**: Validation on Ubuntu, Windows, and macOS ✅
+- **Quality Gates**: Linting, type checking, coverage, and security scanning ✅
+- **Automated Publishing**: PyPI deployment on version tags ✅
+
+### Operational Workflow Files
+- **`.github/workflows/ci.yml`**: Main CI pipeline with comprehensive testing (212 lines, 4.9KB) ✅
+- **`.github/workflows/release.yml`**: Automated PyPI publishing on tags (104 lines, 2.6KB) ✅  
+- **`.github/workflows/health-check.yml`**: Weekly API health monitoring (57 lines, 1.6KB) ✅
+
+### Status Checks
+The CI pipeline runs the same commands available locally:
+```bash
+make quick-check    # Fast validation (used in CI quick-check job)
+make check          # Comprehensive checks (used in CI test job)
+make build-package  # Package building (used in CI build job)
+```
+
+### Branch Protection
+When configured, the CI pipeline enforces:
+- All tests must pass before merging
+- Code coverage requirements
+- Security vulnerability checks
+- Multi-Python version compatibility
+
+### Setting Up CI
+1. **Push workflows**: Commit the `.github/workflows/` files to your repository
+2. **Configure secrets**: Add `PYPI_API_TOKEN` and `TEST_PYPI_API_TOKEN` to repository secrets
+3. **Enable branch protection**: Require CI success for main branch merges
+4. **Monitor results**: View detailed logs and reports in GitHub Actions tab
 
 ## Performance Notes
 

@@ -352,6 +352,51 @@ if latitude is None or longitude is None:
 - Document known issues and workarounds
 - Maintain clear setup and usage instructions
 
+## Issue: Terminal Color Display Problems
+
+**Date**: 2024-12-19
+**Reporter**: User
+**Severity**: Medium
+**Environment**: Linux terminal, various shells
+
+### Problem Description
+ANSI escape sequences displaying as literal text instead of colors in Makefile output:
+```
+\033[32m✓ Dependencies updated\033[0m
+```
+
+### Expected Behavior
+Colors should display properly:
+- Green checkmarks and success messages
+- Blue info messages  
+- Yellow warnings
+- Red errors
+
+### Actual Behavior
+Raw ANSI escape codes visible as literal text, making output harder to read.
+
+### Investigation History
+
+#### Attempt 1: Shell Compatibility Check
+- **Method**: Investigated different shell behaviors with `echo` command
+- **Reasoning**: Different shells handle escape sequences differently
+- **Result**: Confirmed `echo` behavior varies across terminals
+- **Solution**: Switched from `echo` to `printf` for consistent behavior
+
+#### Final Solution: Printf and NO_COLOR Support
+- **Method**: 
+  - Replaced `echo` with `printf` in Makefile color functions
+  - Added `NO_COLOR` environment variable support
+  - Created reusable `colorecho` function
+- **Result**: Colors display correctly across terminals
+- **Additional Benefit**: Users can disable colors with `NO_COLOR=1`
+
+### Resolution
+- **Status**: Resolved in v0.5.1
+- **Root Cause**: `echo` command doesn't handle ANSI sequences consistently
+- **Fix**: Use `printf` for ANSI escape sequences
+- **Backup**: `NO_COLOR` environment variable for color-disabled terminals
+
 ## Reporting New Issues
 
 When encountering new issues:
@@ -372,5 +417,5 @@ This document should be:
 
 ---
 
-*Last Updated: 2024-01-15*
-*Document Version: 1.0* 
+*Last Updated: 2024-12-19*
+*Document Version: 1.1* 

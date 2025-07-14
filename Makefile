@@ -7,7 +7,7 @@ TEST_FILES := $(shell find tests -name "*.py" 2>/dev/null || echo "")
 
 # Dependency tracking
 .venv/pyvenv.cfg: pyproject.toml
-	@echo "$(YELLOW)Creating/updating virtual environment...$(RESET)"
+	$(call colorecho,$(YELLOW),Creating/updating virtual environment...)
 	@uv sync --extra dev
 	@touch .venv/pyvenv.cfg
 
@@ -15,43 +15,57 @@ TEST_FILES := $(shell find tests -name "*.py" 2>/dev/null || echo "")
 PROJECT_NAME := lunar-times
 PYTHON_VERSION := 3.8
 
-# Colors for output
+# Colors for output (using printf for better compatibility)
+# Set NO_COLOR=1 to disable colors
+ifdef NO_COLOR
+BLUE := 
+GREEN := 
+YELLOW := 
+RED := 
+RESET := 
+else
 BLUE := \033[36m
 GREEN := \033[32m
 YELLOW := \033[33m
 RED := \033[31m
 RESET := \033[0m
+endif
+
+# Color-aware echo function
+define colorecho
+	@printf "$(1)%s$(RESET)\n" "$(2)"
+endef
 
 # Default target - show available commands
 info:
-	@echo "$(BLUE)$(PROJECT_NAME) Development Makefile$(RESET)"
+	$(call colorecho,$(BLUE),$(PROJECT_NAME) Development Makefile)
 	@echo ""
-	@echo "$(GREEN)Available targets:$(RESET)"
-	@echo "  $(YELLOW)info$(RESET)        Show this help message (default)"
-	@echo "  $(YELLOW)setup$(RESET)       Initial project setup and dependency installation"
-	@echo "  $(YELLOW)install$(RESET)     Install/update dependencies"
-	@echo "  $(YELLOW)test$(RESET)        Run the test suite"
-	@echo "  $(YELLOW)test-coverage$(RESET) Run tests with coverage reporting"
-	@echo "  $(YELLOW)coverage-report$(RESET) Generate detailed coverage report"
-	@echo "  $(YELLOW)coverage-html$(RESET) Open coverage report in browser"
-	@echo "  $(YELLOW)lint$(RESET)        Run code linting (flake8)"
-	@echo "  $(YELLOW)format$(RESET)      Format code with black"
-	@echo "  $(YELLOW)check$(RESET)       Run all checks (lint + test + type check)"
-	@echo "  $(YELLOW)run$(RESET)         Run the application interactively"
-	@echo "  $(YELLOW)run-debug$(RESET)   Run the application in debug mode (El Paso, TX)"
-	@echo "  $(YELLOW)build$(RESET)       Build the project (runs checks first)"
-	@echo "  $(YELLOW)clean$(RESET)       Clean build artifacts and cache"
-	@echo "  $(YELLOW)status$(RESET)      Show project status and configuration"
+	$(call colorecho,$(GREEN),Available targets:)
+	@printf "  $(YELLOW)%s$(RESET)        %s\n" "info" "Show this help message (default)"
+	@printf "  $(YELLOW)%s$(RESET)       %s\n" "setup" "Initial project setup and dependency installation"
+	@printf "  $(YELLOW)%s$(RESET)     %s\n" "install" "Install/update dependencies"
+	@printf "  $(YELLOW)%s$(RESET)        %s\n" "test" "Run the test suite"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-coverage" "Run tests with coverage reporting"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "coverage-report" "Generate detailed coverage report"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "coverage-html" "Open coverage report in browser"
+	@printf "  $(YELLOW)%s$(RESET)        %s\n" "lint" "Run code linting (flake8)"
+	@printf "  $(YELLOW)%s$(RESET)      %s\n" "format" "Format code with black"
+	@printf "  $(YELLOW)%s$(RESET)       %s\n" "check" "Run all checks (lint + test + type check)"
+	@printf "  $(YELLOW)%s$(RESET)         %s\n" "run" "Run the application interactively"
+	@printf "  $(YELLOW)%s$(RESET)   %s\n" "run-debug" "Run the application in debug mode (El Paso, TX)"
+	@printf "  $(YELLOW)%s$(RESET)       %s\n" "build" "Build the project (runs checks first)"
+	@printf "  $(YELLOW)%s$(RESET)       %s\n" "clean" "Clean build artifacts and cache"
+	@printf "  $(YELLOW)%s$(RESET)      %s\n" "status" "Show project status and configuration"
 	@echo ""
-	@echo "$(GREEN)Advanced targets:$(RESET)"
-	@echo "  $(YELLOW)ci$(RESET)          Run continuous integration checks (format + check + build)"
-	@echo "  $(YELLOW)quick-check$(RESET) Run quick development checks (lint + test)"
-	@echo "  $(YELLOW)check-invisible$(RESET) Check for invisible characters in source files"
-	@echo "  $(YELLOW)clean-invisible$(RESET) Remove invisible characters from source files"
-	@echo "  $(YELLOW)pre-publish-clean$(RESET) Proactive cleanup for PyPI publishing"
-	@echo "  $(YELLOW)reset$(RESET)       Reset environment (clean + fresh install)"
+	$(call colorecho,$(GREEN),Advanced targets:)
+	@printf "  $(YELLOW)%s$(RESET)          %s\n" "ci" "Run continuous integration checks (format + check + build)"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "quick-check" "Run quick development checks (lint + test)"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "check-invisible" "Check for invisible characters in source files"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "clean-invisible" "Remove invisible characters from source files"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-publish-clean" "Proactive cleanup for PyPI publishing"
+	@printf "  $(YELLOW)%s$(RESET)       %s\n" "reset" "Reset environment (clean + fresh install)"
 	@echo ""
-	@echo "$(GREEN)Usage examples:$(RESET)"
+	$(call colorecho,$(GREEN),Usage examples:)
 	@echo "  make setup     # First-time project setup"
 	@echo "  make test      # Run tests"
 	@echo "  make check     # Run all quality checks"
@@ -60,97 +74,97 @@ info:
 
 # Initial project setup
 setup:
-	@echo "$(BLUE)Setting up $(PROJECT_NAME)...$(RESET)"
-	@echo "$(YELLOW)Installing Python $(PYTHON_VERSION)...$(RESET)"
+	$(call colorecho,$(BLUE),Setting up $(PROJECT_NAME)...)
+	$(call colorecho,$(YELLOW),Installing Python $(PYTHON_VERSION)...)
 	@uv python install $(PYTHON_VERSION)
-	@echo "$(YELLOW)Installing dependencies...$(RESET)"
+	$(call colorecho,$(YELLOW),Installing dependencies...)
 	@uv sync --extra dev
-	@echo "$(GREEN)✓ Setup complete!$(RESET)"
+	$(call colorecho,$(GREEN),✓ Setup complete!)
 	@echo ""
-	@echo "$(BLUE)Next steps:$(RESET)"
+	$(call colorecho,$(BLUE),Next steps:)
 	@echo "  make test      # Run tests to verify setup"
 	@echo "  make run       # Run the application"
 
 # Install/update dependencies
 install: .venv/pyvenv.cfg
-	@echo "$(GREEN)✓ Dependencies updated$(RESET)"
+	$(call colorecho,$(GREEN),✓ Dependencies updated)
 
 # Development setup (alias for convenience)
 dev-setup: install
 
 # Run tests
 test: install
-	@echo "$(BLUE)Running test suite...$(RESET)"
+	$(call colorecho,$(BLUE),Running test suite...)
 	@uv run --extra dev python -m pytest tests/ -v
-	@echo "$(GREEN)✓ Tests completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Tests completed)
 
 # Run tests with coverage
 test-coverage: install
-	@echo "$(BLUE)Running tests with coverage...$(RESET)"
+	$(call colorecho,$(BLUE),Running tests with coverage...)
 	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing
-	@echo "$(GREEN)✓ Tests with coverage completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Tests with coverage completed)
 
 # Generate coverage report
 coverage-report: install
-	@echo "$(BLUE)Generating coverage report...$(RESET)"
+	$(call colorecho,$(BLUE),Generating coverage report...)
 	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing --cov-report=html
-	@echo "$(GREEN)✓ Coverage report generated in htmlcov/$(RESET)"
+	$(call colorecho,$(GREEN),✓ Coverage report generated in htmlcov/)
 
 # Open coverage report in browser
 coverage-html: coverage-report
-	@echo "$(BLUE)Opening coverage report...$(RESET)"
+	$(call colorecho,$(BLUE),Opening coverage report...)
 	@python -m webbrowser htmlcov/index.html || open htmlcov/index.html || xdg-open htmlcov/index.html
 
 # Run linting
 lint: install
-	@echo "$(BLUE)Running code linting...$(RESET)"
+	$(call colorecho,$(BLUE),Running code linting...)
 	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev flake8 $(SRC_FILES); fi
 	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev flake8 $(TEST_FILES); fi
-	@echo "$(GREEN)✓ Linting completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Linting completed)
 
 # Format code
 format: install
-	@echo "$(BLUE)Formatting code...$(RESET)"
+	$(call colorecho,$(BLUE),Formatting code...)
 	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev black $(SRC_FILES); fi
 	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev black $(TEST_FILES); fi
-	@echo "$(GREEN)✓ Code formatted$(RESET)"
+	$(call colorecho,$(GREEN),✓ Code formatted)
 
 # Type checking
 typecheck: install
-	@echo "$(BLUE)Running type checking...$(RESET)"
+	$(call colorecho,$(BLUE),Running type checking...)
 	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev mypy $(SRC_FILES); fi
-	@echo "$(GREEN)✓ Type checking completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Type checking completed)
 
 # Run all checks
 check: lint typecheck test check-invisible
-	@echo "$(GREEN)✓ All checks passed!$(RESET)"
+	$(call colorecho,$(GREEN),✓ All checks passed!)
 
 # Run the application
 run: install
-	@echo "$(BLUE)Running $(PROJECT_NAME)...$(RESET)"
+	$(call colorecho,$(BLUE),Running $(PROJECT_NAME)...)
 	@uv run lunar-times
 
 # Run in debug mode
 run-debug: install
-	@echo "$(BLUE)Running $(PROJECT_NAME) in debug mode (El Paso, TX)...$(RESET)"
+	$(call colorecho,$(BLUE),Running $(PROJECT_NAME) in debug mode (El Paso TX)...)
 	@uv run lunar-times -d
 
 # Build marker for tracking
 .build-marker: $(SRC_FILES) pyproject.toml
-	@echo "$(BLUE)Source files changed, running checks...$(RESET)"
+	$(call colorecho,$(BLUE),Source files changed - running checks...)
 	@$(MAKE) check
-	@echo "$(BLUE)Building $(PROJECT_NAME)...$(RESET)"
+	$(call colorecho,$(BLUE),Building $(PROJECT_NAME)...)
 	@uv build
 	@touch .build-marker
-	@echo "$(GREEN)✓ Build completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Build completed)
 
 # Build the project (smart rebuild based on source changes)
 build: .build-marker
-	@echo "$(GREEN)✓ Build is up to date$(RESET)"
+	$(call colorecho,$(GREEN),✓ Build is up to date)
 
 # Clean build artifacts and cache
 clean:
-	@echo "$(BLUE)Cleaning build artifacts...$(RESET)"
+	$(call colorecho,$(BLUE),Cleaning build artifacts...)
 	@rm -rf dist/
 	@rm -rf build/
 	@rm -rf *.egg-info/
@@ -164,25 +178,25 @@ clean:
 	@find . -type d -name "__pycache__" -delete
 	@find src tests -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 	@find src tests -name "*.pyc" -type f -delete 2>/dev/null || true
-	@echo "$(GREEN)✓ Cleanup completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Cleanup completed)
 
 # Show project status
 status:
-	@echo "$(BLUE)$(PROJECT_NAME) Status$(RESET)"
+	$(call colorecho,$(BLUE),$(PROJECT_NAME) Status)
 	@echo ""
-	@echo "$(YELLOW)Python Environment:$(RESET)"
+	$(call colorecho,$(YELLOW),Python Environment:)
 	@uv run python --version
 	@echo ""
-	@echo "$(YELLOW)Project Version:$(RESET)"
+	$(call colorecho,$(YELLOW),Project Version:)
 	@grep "version.*=" pyproject.toml
 	@echo ""
-	@echo "$(YELLOW)Dependencies Status:$(RESET)"
+	$(call colorecho,$(YELLOW),Dependencies Status:)
 	@echo "Runtime dependencies:"
 	@uv run pip list | grep -E "(requests|geopy|timezonefinder|pytz)" || echo "  Dependencies not installed"
 	@echo "Dev dependencies:"
 	@uv run --extra dev python -c "import pytest, black, flake8, mypy; print(f'  pytest=={pytest.__version__}, black=={black.__version__}, flake8=={flake8.__version__}, mypy installed')" 2>/dev/null || echo "  Dev dependencies not fully installed"
 	@echo ""
-	@echo "$(YELLOW)Test Status:$(RESET)"
+	$(call colorecho,$(YELLOW),Test Status:)
 	@if [ -d "tests" ] && [ -n "$(TEST_FILES)" ]; then \
 		echo "  ✓ Test suite available"; \
 		uv run --extra dev python -c "import sys; sys.path.insert(0, 'tests'); import test_cli; tests = [m for cls in [test_cli.TestMoonData, test_cli.TestIntegration] for m in dir(cls) if m.startswith('test_')]; print(f'  {len(tests)} unit tests found')" 2>/dev/null || echo "  Test count unavailable"; \
@@ -190,79 +204,79 @@ status:
 		echo "  ✗ No test suite found"; \
 	fi
 	@echo ""
-	@echo "$(YELLOW)Configuration:$(RESET)"
+	$(call colorecho,$(YELLOW),Configuration:)
 	@echo "  Python requirement: $(shell grep 'requires-python' pyproject.toml | cut -d'=' -f2 | tr -d ' \"')"
 	@echo "  Target Python: $(PYTHON_VERSION)"
 
 # Continuous Integration pipeline
 ci: format check build
-	@echo "$(GREEN)✓ CI pipeline completed successfully!$(RESET)"
+	$(call colorecho,$(GREEN),✓ CI pipeline completed successfully!)
 
 
 
 # Quick development check (faster than full check)
 quick-check: lint test check-invisible
-	@echo "$(GREEN)✓ Quick check completed!$(RESET)"
+	$(call colorecho,$(GREEN),✓ Quick check completed!)
 
 # Reset environment (clean + fresh install)
 reset: clean
-	@echo "$(BLUE)Resetting environment...$(RESET)"
+	$(call colorecho,$(BLUE),Resetting environment...)
 	@rm -rf .venv/
 	@make install
-	@echo "$(GREEN)✓ Environment reset completed!$(RESET)"
+	$(call colorecho,$(GREEN),✓ Environment reset completed!)
 
 # Invisible Character Management
 # See docs: scripts/invisible_chars_commands.md for manual detection methods
 check-invisible:
-	@echo "$(BLUE)Checking for invisible characters...$(RESET)"
-	@echo "$(YELLOW)Reference: scripts/invisible_chars_commands.md for manual methods$(RESET)"
+	$(call colorecho,$(BLUE),Checking for invisible characters...)
+	$(call colorecho,$(YELLOW),Reference: scripts/invisible_chars_commands.md for manual methods)
 	@python scripts/clean_invisible_chars.py src
 	@python scripts/clean_invisible_chars.py docs
 	@python scripts/clean_invisible_chars.py tests
 	@python scripts/clean_invisible_chars.py pyproject.toml
-	@echo "$(GREEN)✓ Invisible character check completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Invisible character check completed)
 
 # Clean invisible characters proactively (with backup)
 clean-invisible:
-	@echo "$(BLUE)Cleaning invisible characters...$(RESET)"
-	@echo "$(YELLOW)Creating backups before cleaning (see scripts/invisible_chars_commands.md)$(RESET)"
+	$(call colorecho,$(BLUE),Cleaning invisible characters...)
+	$(call colorecho,$(YELLOW),Creating backups before cleaning (see scripts/invisible_chars_commands.md))
 	@python scripts/clean_invisible_chars.py src --clean
 	@python scripts/clean_invisible_chars.py docs --clean
 	@python scripts/clean_invisible_chars.py tests --clean
 	@python scripts/clean_invisible_chars.py pyproject.toml --clean
-	@echo "$(GREEN)✓ Invisible character cleanup completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Invisible character cleanup completed)
 
 # Proactive invisible character cleanup for publishing
 pre-publish-clean: clean-invisible
-	@echo "$(BLUE)Running proactive cleanup for publishing...$(RESET)"
-	@echo "$(YELLOW)Ensuring all source files are clean of invisible characters$(RESET)"
+	$(call colorecho,$(BLUE),Running proactive cleanup for publishing...)
+	$(call colorecho,$(YELLOW),Ensuring all source files are clean of invisible characters)
 	@python scripts/clean_invisible_chars.py . --clean
-	@echo "$(GREEN)✓ Pre-publish cleanup completed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Pre-publish cleanup completed)
 
 # PyPI Package Building and Publishing
 build-package: .venv/pyvenv.cfg clean pre-publish-clean
-	@echo "$(BLUE)Building package for PyPI...$(RESET)"
-	@echo "$(YELLOW)Package cleaned of invisible characters$(RESET)"
+	$(call colorecho,$(BLUE),Building package for PyPI...)
+	$(call colorecho,$(YELLOW),Package cleaned of invisible characters)
 	@uv build
-	@echo "$(GREEN)✓ Package built in dist/$(RESET)"
+	$(call colorecho,$(GREEN),✓ Package built in dist/)
 
 check-package: build-package
-	@echo "$(BLUE)Checking package integrity...$(RESET)"
+	$(call colorecho,$(BLUE),Checking package integrity...)
 	@uv run twine check dist/*
-	@echo "$(GREEN)✓ Package checks passed$(RESET)"
+	$(call colorecho,$(GREEN),✓ Package checks passed)
 
 upload-test: check-package
-	@echo "$(BLUE)Uploading to Test PyPI...$(RESET)"
-	@echo "$(YELLOW)Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for TestPyPI$(RESET)"
+	$(call colorecho,$(BLUE),Uploading to Test PyPI...)
+	$(call colorecho,$(YELLOW),Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for TestPyPI)
 	@uv run twine upload --repository testpypi dist/*
-	@echo "$(GREEN)✓ Uploaded to Test PyPI$(RESET)"
+	$(call colorecho,$(GREEN),✓ Uploaded to Test PyPI)
 
 upload-pypi: check-package
-	@echo "$(RED)WARNING: This will upload to the REAL PyPI!$(RESET)"
-	@echo "$(YELLOW)Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for PyPI$(RESET)"
+	$(call colorecho,$(RED),WARNING: This will upload to the REAL PyPI!)
+	$(call colorecho,$(YELLOW),Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for PyPI)
 	@read -p "Are you sure you want to upload to PyPI? (y/N): " confirm && [ "$$confirm" = "y" ]
 	@uv run twine upload dist/*
-	@echo "$(GREEN)✓ Uploaded to PyPI$(RESET)"
+	$(call colorecho,$(GREEN),✓ Uploaded to PyPI)
 
 # Help alias
 help: info

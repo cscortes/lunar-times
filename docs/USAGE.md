@@ -309,6 +309,25 @@ Should display a clear error message.
 
 ## Advanced Usage
 
+### Terminal Color Configuration
+
+By default, the Makefile displays colored output for better readability. If you prefer no colors or encounter display issues:
+
+```bash
+# Disable colors for a single command
+NO_COLOR=1 make run
+
+# Disable colors permanently for your session
+export NO_COLOR=1
+make run
+```
+
+**When to use NO_COLOR:**
+- Terminal doesn't support ANSI colors
+- Screen readers or accessibility tools
+- Plain text output for logging
+- Personal preference
+
 ### Automated Testing
 For development or automated testing:
 ```bash

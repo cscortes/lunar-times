@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2024-12-19
+
+### Added
+- **GitHub Actions CI/CD Pipeline**: Comprehensive automated testing and deployment infrastructure now live and operational
+  - **Multi-Python Testing**: Automated testing on Python 3.8, 3.9, 3.10, 3.11, and 3.12 ✅
+  - **Cross-Platform Support**: CI runs on Ubuntu, Windows, and macOS for maximum compatibility ✅
+  - **Quality Automation**: Integrated linting, type checking, test coverage, and invisible character detection ✅
+  - **Security Scanning**: Automated dependency vulnerability checking with safety and OSV ✅
+  - **Automated PyPI Publishing**: Full deployment pipeline with Test PyPI validation before production ✅
+  - **Health Monitoring**: Weekly API health checks for Nominatim and USNO services with automatic issue creation ✅
+  - **GitHub Releases**: Automated release creation with changelog integration on version tags ✅
+  - **Branch Protection Integration**: Required status checks for safe code merging ✅
+  - **Codecov Integration**: Coverage reporting and tracking with visual reports ✅
+  - **Fast Feedback**: Quick validation jobs provide rapid PR feedback, comprehensive matrix testing for thorough validation ✅
+
+### Technical Implementation
+- **CI Workflow** (`.github/workflows/ci.yml`): 212 lines, 4.9KB - Multi-stage pipeline with quick checks, test matrix, build validation, cross-platform testing, and security scanning
+- **Release Workflow** (`.github/workflows/release.yml`): 104 lines, 2.6KB - Automated PyPI publishing with version validation, full test suite, and GitHub release creation
+- **Health Check Workflow** (`.github/workflows/health-check.yml`): 57 lines, 1.6KB - Weekly API monitoring with automatic issue creation on failure
+- Leverages existing Makefile targets (`make quick-check`, `make check`, `make build-package`) for consistency
+- Comprehensive artifact management and package validation
+- Environment-based release approval process for production deployments
+- All workflows tested and operational
+
+## [0.5.2] - 2024-12-19
+
+### Fixed
+- **Complete Makefile Color Support**: Systematically updated ALL echo commands to use consistent color functions
+  - Converted all remaining `echo` statements with color variables to use `colorecho` function or `printf`
+  - Fixed help text formatting in `info` target to display colors properly while maintaining alignment
+  - Ensured consistent terminal color behavior across all Makefile targets
+  - Eliminated all remaining ANSI escape sequence display issues
+  - All 25+ targets now use unified color approach for cross-terminal compatibility
+
+## [0.5.1] - 2024-12-19
+
+### Fixed
+- **Makefile Color Display**: Fixed ANSI escape sequences showing as literal text instead of colors
+  - Replaced `echo` with `printf` for better terminal compatibility
+  - Added support for `NO_COLOR` environment variable to disable colors
+  - Improved cross-terminal and cross-shell compatibility
+  - Enhanced user experience with proper color rendering
+
 ## [0.5.0] - 2024-12-19
 
 ### Changed
