@@ -1,6 +1,6 @@
 [project]
 name = "moon-phases-calculator"
-version = "1.3.1"
+version = "1.3.2"
 description = "A command-line Python application that calculates moonrise and moonset times for any given city and state"
 authors = [
     {name = "Luis Cortes"}

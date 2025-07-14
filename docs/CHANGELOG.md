@@ -32,6 +32,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Pipfile and Pipfile.lock (replaced by pyproject.toml and uv.lock)
 
+## [1.3.2] - 2025-01-14
+
+### Removed
+- `test.json` file (no longer used - test data is embedded in test suite)
+- References to test.json in documentation and comments
+
+### Changed
+- Updated test file comment to reflect embedded test data instead of external file
+- Updated development guidelines to reference embedded test data
+
 ## [1.3.1] - 2025-01-14
 
 ### Changed

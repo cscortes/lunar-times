@@ -434,7 +434,7 @@ class TestIntegration(unittest.TestCase):
 
     def test_full_workflow_with_real_data(self):
         """Test complete workflow using real API response structure."""
-        # Real API response from test.json
+        # Real API response structure for testing
         real_api_response = {
             "apiversion": "4.0.1",
             "geometry": {"coordinates": [-106.44, 32.04], "type": "Point"},

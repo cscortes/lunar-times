@@ -47,7 +47,7 @@ This is a Python command-line application that calculates moonrise and moonset t
 - `docs/USAGE.md`: Detailed usage instructions and examples
 - `docs/CHANGELOG.md`: Version history and release notes
 - `docs/FAILURE.md`: Troubleshooting and known issues
-- `test.json`: Sample API response for reference
+
 - `LICENSE`: Project license
 
 ## Function Guidelines
@@ -105,7 +105,7 @@ This is a Python command-line application that calculates moonrise and moonset t
 - **Debug Mode**: Use `-d` flag for consistent testing
 - **Print Statements**: Use for debugging, remove before committing
 - **Test Locations**: Use well-known cities for testing
-- **API Response**: Reference test.json for expected data structure
+- **API Response**: Use embedded test data for expected data structure
 
 ## Code Review Checklist
 - [ ] Functions have clear, single responsibilities
