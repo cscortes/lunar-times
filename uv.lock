@@ -576,7 +576,7 @@ wheels = [
 
 [[package]]
 name = "lunar-times"
-version = "0.6.3"
+version = "0.6.5"
 source = { editable = "." }
 dependencies = [
     { name = "geopy" },

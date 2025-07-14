@@ -165,7 +165,7 @@ def main() -> None:
     # Define parameters
     params = {
         "date": today,
-        "coords": f"{latitude:.2f},{longitude:.2f}",
+        "coords": f"{latitude:.2f}, {longitude:.2f}",
         "tz": str(offset),
         "dst": "false",
     }

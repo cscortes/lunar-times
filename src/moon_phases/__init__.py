@@ -15,7 +15,7 @@ from .cli import (
     get_citystate,
 )
 
-__version__ = "0.6.4"
+__version__ = "0.6.5"
 __author__ = "Luis Cortés"
 __email__ = "your-email@example.com"
 

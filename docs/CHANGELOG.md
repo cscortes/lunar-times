@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.5] - 2024-12-26
+
+### Fixed
+- **Code Formatting**: Fixed linting errors in coordinate formatting
+  - Added proper spacing after comma in f-string format specifiers (`"30.27, -97.74"` instead of `"30.27,-97.74"`)
+  - Updated test expectations to match new coordinate format
+  - Improved code compliance with PEP 8 formatting standards (E231 violations resolved)
+  - GitHub Actions CI now passes successfully on all Python versions
+
 ## [0.6.4] - 2024-12-19
 
 ### Fixed

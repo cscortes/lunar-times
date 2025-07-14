@@ -1,6 +1,6 @@
 [project]
 name = "lunar-times"
-version = "0.6.4"
+version = "0.6.5"
 description = "Calculate lunar rise and set times for any location"
 authors = [
     {name = "Luis Cortés", email = "your-email@example.com"}

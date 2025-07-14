@@ -427,7 +427,7 @@ class TestMoonData(unittest.TestCase):
             # Check API call parameters
             expected_params = {
                 "date": "2024-01-15",
-                "coords": "30.27,-97.74",
+                "coords": "30.27, -97.74",
                 "tz": "-6.0",
                 "dst": "false",
             }

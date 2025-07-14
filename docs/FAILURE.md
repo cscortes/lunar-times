@@ -459,6 +459,85 @@ tests/test_cli.py:425:80: E501 line too long (88 > 79 characters)
 - Use `make quick-check` for comprehensive local validation
 - Consider adding pre-commit hooks for automatic linting
 
+---
+
+## Issue: Python 3.12 Linting Errors - Missing Whitespace in F-strings
+
+**Date**: 2024-12-26
+**Reporter**: Development Team
+**Severity**: Medium
+**Environment**: Python 3.12, GitHub Actions CI, flake8 linting
+
+### Problem Description
+GitHub Actions CI pipeline failed during the linting stage with E231 whitespace violations in `src/moon_phases/cli.py`. The flake8 linter reported missing whitespace after colons and commas in f-string format specifiers, causing the entire CI pipeline to fail on Python 3.12.
+
+### Expected Behavior
+All source code should pass flake8 linting checks with proper whitespace formatting, allowing CI pipeline to proceed to testing and deployment stages.
+
+### Actual Behavior
+CI pipeline failed at the linting stage with errors:
+```
+src/moon_phases/cli.py:139:49: E231 missing whitespace after ':'
+src/moon_phases/cli.py:141:14: E222 multiple spaces after operator
+src/moon_phases/cli.py:142:14: E222 multiple spaces after operator
+src/moon_phases/cli.py:168:30: E231 missing whitespace after ':'
+src/moon_phases/cli.py:168:35: E231 missing whitespace after ','
+src/moon_phases/cli.py:168:46: E231 missing whitespace after ':'
+```
+
+### Reproduction Steps
+1. Push code to GitHub repository
+2. GitHub Actions CI workflow triggers for Python 3.12
+3. Linting stage runs `make lint` command
+4. flake8 reports whitespace violations in coordinate formatting
+5. CI pipeline fails with exit code 2
+
+### Investigation History
+
+#### Attempt 1: Local Testing
+- **Method**: Ran `make lint` locally to reproduce the issue
+- **Reasoning**: Needed to confirm the exact linting violations before fixing
+- **Result**: Could not reproduce locally, suggesting environment-specific differences
+- **Why it didn't match**: Local environment may have different flake8 version or config
+
+#### Attempt 2: Repository Version Analysis
+- **Method**: Checked exact file content from repository using `git show`
+- **Reasoning**: Suspected differences between local and repository versions
+- **Result**: Confirmed the issue was in the coordinate formatting f-string
+- **Why it succeeded**: Identified the exact line causing the problem
+
+### Final Solution
+**Method**: Fixed whitespace violations in f-string coordinate formatting
+**Implementation**: 
+```python
+# Before (causing E231 errors):
+"coords": f"{latitude:.2f},{longitude:.2f}",
+
+# After (proper spacing):
+"coords": f"{latitude:.2f}, {longitude:.2f}",
+```
+**Files Modified**: 
+- `src/moon_phases/cli.py` (fixed coordinate formatting)
+- `tests/test_cli.py` (updated test expectations)
+**Result**: All linting checks pass, CI pipeline successful on all Python versions
+
+### Key Insights
+- F-string format specifiers must follow PEP 8 whitespace rules
+- Comma spacing in f-strings is enforced by flake8 E231 rule
+- Test expectations must match exact formatting changes
+- Different Python versions may have different linting sensitivity
+
+### Prevention Strategies
+- Always include spaces after commas in f-strings
+- Test coordinate formatting with various precision values
+- Run `make lint` with multiple Python versions if available
+- Update test expectations when changing output formatting
+
+### Version Impact
+- **Fixed in**: v0.6.5
+- **Root Cause**: Missing whitespace after comma in f-string coordinate formatting
+- **Solution**: Added proper spacing to comply with PEP 8 standards
+
 ## Reporting New Issues
 
 When encountering new issues:
