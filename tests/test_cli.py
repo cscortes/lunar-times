@@ -83,7 +83,7 @@ class TestMoonData(unittest.TestCase):
 
             self.assertIn(
                 "Could not find coordinates for InvalidCity, XX",
-                str(context.exception)
+                str(context.exception),
             )
 
     def test_find_latlong_input_formatting(self):
@@ -371,7 +371,7 @@ class TestMoonData(unittest.TestCase):
 
         self.assertIn(
             "Failed to retrieve moon data. Status code: 500",
-            str(context.exception)
+            str(context.exception),
         )
 
     @patch("moon_phases.cli.get_citystate")
@@ -390,7 +390,7 @@ class TestMoonData(unittest.TestCase):
 
         self.assertIn(
             "Could not find coordinates for InvalidCity, XX",
-            str(context.exception)
+            str(context.exception),
         )
 
     def test_api_request_parameters(self):

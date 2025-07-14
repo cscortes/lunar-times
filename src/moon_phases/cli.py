@@ -31,8 +31,8 @@ def find_latlong(city: str, state: str) -> Tuple[float, float]:
         raise ValueError(f"Could not find coordinates for {city}, {state}")
 
     # Safe attribute access for type checker compatibility
-    latitude = getattr(location, 'latitude', None)
-    longitude = getattr(location, 'longitude', None)
+    latitude = getattr(location, "latitude", None)
+    longitude = getattr(location, "longitude", None)
     if latitude is None or longitude is None:
         raise ValueError(f"Invalid location data for {city}, {state}")
     return latitude, longitude
@@ -103,13 +103,15 @@ def find_moon_data(data: Dict[str, Any]) -> Tuple[str, str]:
     moonset = "N/A"
     for item in data["properties"]["data"]["moondata"]:
         if item["phen"] == "Rise":
-            moonrise = datetime.datetime.strptime(
-                item["time"], "%H:%M"
-            ).strftime("%I:%M %p")
+            time_str = item["time"]
+            moonrise = datetime.datetime.strptime(time_str, "%H:%M").strftime(
+                "%I:%M %p"
+            )
         elif item["phen"] == "Set":
-            moonset = datetime.datetime.strptime(
-                item["time"], "%H:%M"
-            ).strftime("%I:%M %p")
+            time_str = item["time"]
+            moonset = datetime.datetime.strptime(time_str, "%H:%M").strftime(
+                "%I:%M %p"
+            )
     return moonrise, moonset
 
 

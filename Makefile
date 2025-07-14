@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset check-invisible clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -60,6 +60,9 @@ info:
 	$(call colorecho,$(GREEN),Advanced targets:)
 	@printf "  $(YELLOW)%s$(RESET)          %s\n" "ci" "Run continuous integration checks (format + check + build)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "quick-check" "Run quick development checks (lint + test)"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-all-python" "Test with multiple Python versions (like CI)"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-github-actions" "Test GitHub Actions workflows locally (requires act)"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-commit" "Run comprehensive pre-commit checks"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "check-invisible" "Check for invisible characters in source files"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "clean-invisible" "Remove invisible characters from source files"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-publish-clean" "Proactive cleanup for PyPI publishing"
@@ -125,8 +128,8 @@ lint: install
 # Format code
 format: install
 	$(call colorecho,$(BLUE),Formatting code...)
-	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev black $(SRC_FILES); fi
-	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev black $(TEST_FILES); fi
+	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev black --line-length 79 $(SRC_FILES); fi
+	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev black --line-length 79 $(TEST_FILES); fi
 	$(call colorecho,$(GREEN),✓ Code formatted)
 
 # Type checking
@@ -217,6 +220,31 @@ ci: format check build
 # Quick development check (faster than full check)
 quick-check: lint test check-invisible
 	$(call colorecho,$(GREEN),✓ Quick check completed!)
+
+# Test with multiple Python versions (like GitHub Actions CI)
+test-all-python:
+	$(call colorecho,$(BLUE),Testing with multiple Python versions...)
+	@if [ ! -f scripts/test_all_python.sh ]; then \
+		echo "Error: scripts/test_all_python.sh not found"; \
+		exit 1; \
+	fi
+	@chmod +x scripts/test_all_python.sh
+	@./scripts/test_all_python.sh
+
+# Test GitHub Actions workflows locally (requires act tool)
+test-github-actions:
+	$(call colorecho,$(BLUE),Testing GitHub Actions workflows locally...)
+	@if [ ! -f scripts/test_github_actions_local.sh ]; then \
+		echo "Error: scripts/test_github_actions_local.sh not found"; \
+		exit 1; \
+	fi
+	@chmod +x scripts/test_github_actions_local.sh
+	@./scripts/test_github_actions_local.sh
+
+# Comprehensive pre-commit checks (recommended before every commit)
+pre-commit: format check
+	$(call colorecho,$(GREEN),✓ Pre-commit checks completed!)
+	$(call colorecho,$(BLUE),Recommendation: Run 'make test-all-python' before major commits)
 
 # Reset environment (clean + fresh install)
 reset: clean
