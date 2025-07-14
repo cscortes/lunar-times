@@ -138,8 +138,8 @@ def print_moon_data(
         f"# Moon rise/set times in (Timezone: {tz_label} "
         f"{offset_sign}{abs(offset)}) on {today}:"
     )
-    print(f"-  RISE: {moonrise}")
-    print(f"-  SET: {moonset}")
+    print(f"- RISE: {moonrise}")
+    print(f"- SET: {moonset}")
 
 
 def main() -> None:
