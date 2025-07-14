@@ -1,6 +1,6 @@
 [project]
 name = "lunar-times"
-version = "0.6.3"
+version = "0.6.4"
 description = "Calculate lunar rise and set times for any location"
 authors = [
     {name = "Luis Cortés", email = "your-email@example.com"}
@@ -36,6 +36,8 @@ dependencies = [
     "geopy==2.4.1", 
     "timezonefinder==6.5.4",
     "pytz==2024.2",
+    "numpy>=1.19.0; python_version<'3.12'",
+    "numpy>=1.26.0; python_version>='3.12'",
 ]
 
 [project.optional-dependencies]

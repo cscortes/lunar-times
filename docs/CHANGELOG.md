@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.4] - 2024-12-19
+
+### Fixed
+- **Python 3.12 NumPy Compatibility**: Fixed numpy dependency conflict for Python 3.12
+  - Added conditional numpy version constraints: `>=1.19.0` for Python <3.12, `>=1.26.0` for Python >=3.12
+  - Resolves build failure: "ModuleNotFoundError: No module named 'distutils'" on Python 3.12
+  - NumPy 1.26.0+ required for Python 3.12 as it uses Meson build system instead of removed distutils
+  - Maintains backward compatibility with Python 3.8-3.11 using older numpy versions
+  - GitHub Actions CI now passes successfully on all Python versions (3.8-3.12)
+
 ## [0.6.3] - 2024-12-19
 
 ### Fixed
