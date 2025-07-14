@@ -43,6 +43,7 @@ Enter the state: TX
 ## Documentation
 
 - **[Usage Guide](docs/USAGE.md)** - Detailed usage instructions and examples
+- **[Testing Documentation](docs/TEST.md)** - Comprehensive testing documentation and coverage analysis
 - **[Setup Guide](docs/SETUP.md)** - Installation and configuration instructions
 - **[Architecture](docs/ARCH.md)** - Technical architecture and design documentation
 - **[Changelog](docs/CHANGELOG.md)** - Version history and release notes

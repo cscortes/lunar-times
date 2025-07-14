@@ -97,13 +97,13 @@ def find_moon_data(data):
     moonset = "N/A"
     for item in data["properties"]["data"]["moondata"]:
         if item["phen"] == "Rise":
-            moonrise = datetime.datetime.strptime(item["time"], "%H:%M").strftime(
-                "%I:%M %p"
-            )
+            moonrise = datetime.datetime.strptime(
+                item["time"], "%H:%M"
+            ).strftime("%I:%M %p")
         elif item["phen"] == "Set":
-            moonset = datetime.datetime.strptime(item["time"], "%H:%M").strftime(
-                "%I:%M %p"
-            )
+            moonset = datetime.datetime.strptime(
+                item["time"], "%H:%M"
+            ).strftime("%I:%M %p")
     return moonrise, moonset
 
 
@@ -127,7 +127,8 @@ def print_moon_data(today, tz_label, offset, moonrise, moonset):
         print("Running in debug mode. Defaulting to city (El Paso, TX)")
     offset_sign = "+" if offset >= 0 else "-"
     print(
-        f"# Moon rise/set times in (Timezone: {tz_label} {offset_sign}{abs(offset)}) on {today}:"
+        f"# Moon rise/set times in (Timezone: {tz_label} "
+        f"{offset_sign}{abs(offset)}) on {today}:"
     )
     print(f"-  RISE: {moonrise}")
     print(f"-  SET: {moonset}")
@@ -166,7 +167,8 @@ def main():
     # Check for errors
     if response.status_code != 200:
         raise ConnectionError(
-            f"Failed to retrieve moon data. Status code: {response.status_code}"
+            f"Failed to retrieve moon data. "
+            f"Status code: {response.status_code}"
         )
 
     # Parse the JSON data

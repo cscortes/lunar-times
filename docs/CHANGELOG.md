@@ -32,6 +32,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Pipfile and Pipfile.lock (replaced by pyproject.toml and uv.lock)
 
+## [1.4.0] - 2025-01-14
+
+### Added
+- Comprehensive testing documentation (docs/TEST.md)
+- Code coverage reporting with pytest-cov
+- New make targets for coverage: `test-coverage`, `coverage-report`, `coverage-html`
+- Coverage configuration in pyproject.toml with 90% minimum threshold
+- HTML coverage reports in htmlcov/ directory
+- Enhanced testing workflow with coverage analysis
+
+### Changed
+- Updated development dependencies to include pytest-cov==4.0.0
+- Enhanced Makefile with coverage targets and improved clean command
+- Updated documentation references to include testing guide
+- Improved quality gates to include coverage requirements
+
+### Fixed
+- Added missing coverage files to clean target for complete cleanup
+
 ## [1.3.2] - 2025-01-14
 
 ### Removed

@@ -1,4 +1,4 @@
-.PHONY: info setup install test lint format clean check run run-debug build status help ci dev-setup quick-check reset
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -31,6 +31,9 @@ info:
 	@echo "  $(YELLOW)setup$(RESET)       Initial project setup and dependency installation"
 	@echo "  $(YELLOW)install$(RESET)     Install/update dependencies"
 	@echo "  $(YELLOW)test$(RESET)        Run the test suite"
+	@echo "  $(YELLOW)test-coverage$(RESET) Run tests with coverage reporting"
+	@echo "  $(YELLOW)coverage-report$(RESET) Generate detailed coverage report"
+	@echo "  $(YELLOW)coverage-html$(RESET) Open coverage report in browser"
 	@echo "  $(YELLOW)lint$(RESET)        Run code linting (flake8)"
 	@echo "  $(YELLOW)format$(RESET)      Format code with black"
 	@echo "  $(YELLOW)check$(RESET)       Run all checks (lint + test + type check)"
@@ -77,6 +80,23 @@ test: install
 	@echo "$(BLUE)Running test suite...$(RESET)"
 	@uv run --extra dev python -m pytest tests/ -v
 	@echo "$(GREEN)✓ Tests completed$(RESET)"
+
+# Run tests with coverage
+test-coverage: install
+	@echo "$(BLUE)Running tests with coverage...$(RESET)"
+	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing
+	@echo "$(GREEN)✓ Tests with coverage completed$(RESET)"
+
+# Generate coverage report
+coverage-report: install
+	@echo "$(BLUE)Generating coverage report...$(RESET)"
+	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing --cov-report=html
+	@echo "$(GREEN)✓ Coverage report generated in htmlcov/$(RESET)"
+
+# Open coverage report in browser
+coverage-html: coverage-report
+	@echo "$(BLUE)Opening coverage report...$(RESET)"
+	@python -m webbrowser htmlcov/index.html || open htmlcov/index.html || xdg-open htmlcov/index.html
 
 # Run linting
 lint: install
@@ -134,6 +154,8 @@ clean:
 	@rm -rf .pytest_cache/
 	@rm -rf __pycache__/
 	@rm -rf .mypy_cache/
+	@rm -rf htmlcov/
+	@rm -f .coverage
 	@rm -f .build-marker
 	@find . -type f -name "*.pyc" -delete
 	@find . -type d -name "__pycache__" -delete
