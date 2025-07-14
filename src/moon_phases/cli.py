@@ -29,8 +29,11 @@ def find_latlong(city, state):
     if location is None:
         raise ValueError(f"Could not find coordinates for {city}, {state}")
 
-    latitude = location.latitude
-    longitude = location.longitude
+    # Safe attribute access for type checker compatibility
+    latitude = getattr(location, 'latitude', None)
+    longitude = getattr(location, 'longitude', None)
+    if latitude is None or longitude is None:
+        raise ValueError(f"Invalid location data for {city}, {state}")
     return latitude, longitude
 
 
@@ -76,6 +79,8 @@ def get_timezone(latitude, longitude):
     """
     tz_finder = TimezoneFinder()
     tz_label = tz_finder.timezone_at(lng=longitude, lat=latitude)
+    if tz_label is None:
+        raise ValueError(f"No timezone found for {latitude}, {longitude}")
     tz = pytz.timezone(tz_label)
     offset = tz.utcoffset(datetime.datetime.now()).total_seconds() / 3600
     return tz_label, offset

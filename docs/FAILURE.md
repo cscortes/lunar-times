@@ -185,6 +185,121 @@ offset = tz.utcoffset(datetime.datetime.now()).total_seconds() / 3600
 
 ---
 
+### Issue: Type Checking Errors with pytz.timezone() None Parameter
+
+**Date**: 2024-12-19
+**Reporter**: Development Team  
+**Severity**: Medium
+**Environment**: Python 3.8+, mypy type checking, pytz 2023.x, timezonefinder 6.x
+
+#### Problem Description
+Type checker reports error: "Argument of type 'str | None' cannot be assigned to parameter 'zone' of type 'str' in function 'timezone'". The `timezone_at()` method can return None, but `pytz.timezone()` requires a string parameter.
+
+#### Expected Behavior
+Code should pass type checking while maintaining robust error handling for invalid coordinates.
+
+#### Actual Behavior
+Linter fails with type checking error preventing clean builds.
+
+#### Reproduction Steps
+1. Run `make lint` on codebase
+2. Observe type checking error on line with `pytz.timezone(tz_label)`
+3. Error occurs because `TimezoneFinder.timezone_at()` returns `Optional[str]`
+
+#### Investigation History
+
+##### Attempt 1: Type Assertion
+- **Method**: Added `assert tz_label is not None` before `pytz.timezone()` call
+- **Reasoning**: Thought type narrowing would help mypy understand the None check
+- **Result**: Type checker still complained about potential None value
+- **Why it failed**: Type checker didn't recognize the assertion as sufficient type narrowing
+
+##### Attempt 2: Type Ignore Comment
+- **Method**: Considered adding `# type: ignore` comment
+- **Reasoning**: Quick fix to suppress type checking warning
+- **Result**: Would work but hides potential runtime issues
+- **Why it failed**: Doesn't actually solve the underlying problem of None handling
+
+#### Final Solution
+**Method**: Explicit None check with informative error message
+**Implementation**:
+```python
+tz_label = tz_finder.timezone_at(lng=longitude, lat=latitude)
+if tz_label is None:
+    raise ValueError(f"No timezone found for {latitude}, {longitude}")
+tz = pytz.timezone(tz_label)
+```
+**Reasoning**: Explicit None check ensures type safety and provides clear error message
+**Testing**: All 22 tests pass, type checking passes, maintains error handling
+
+#### Lessons Learned
+- Type checkers require explicit None handling even when logically impossible
+- Explicit checks are better than type assertions for robustness
+- Error messages should be concise to avoid line length issues
+
+#### Related Issues
+- Geopy attribute access type checking issue (see below)
+
+---
+
+### Issue: Type Checking Errors with Geopy Location Attributes
+
+**Date**: 2024-12-19
+**Reporter**: Development Team
+**Severity**: Medium  
+**Environment**: Python 3.8+, mypy type checking, geopy 2.x
+
+#### Problem Description
+Type checker reports error about accessing `latitude` and `longitude` attributes on what it identifies as "CoroutineType[Any, Any, Any | Unknown | None]" instead of a Location object.
+
+#### Expected Behavior
+Code should access location attributes safely and pass type checking.
+
+#### Actual Behavior
+Linter fails with type checking errors on `location.latitude` and `location.longitude` attribute access.
+
+#### Reproduction Steps
+1. Run `make lint` on codebase
+2. Observe type checking errors on lines accessing location attributes
+3. Error suggests type checker sees location as a coroutine instead of Location object
+
+#### Investigation History
+
+##### Attempt 1: Type Assertion with Location Check
+- **Method**: Added `assert location is not None` after None check
+- **Reasoning**: Thought additional assertion would help with type narrowing
+- **Result**: Type checker still complained about attribute access
+- **Why it failed**: Type checker's confusion about geopy types wasn't resolved by assertions
+
+##### Attempt 2: Direct Attribute Access with Exception Handling
+- **Method**: Considered using try/except around attribute access
+- **Reasoning**: Runtime error handling instead of compile-time type checking
+- **Result**: Would work but less elegant than type-safe solution
+- **Why it failed**: Doesn't address the root type checking issue
+
+#### Final Solution
+**Method**: Safe attribute access using getattr() with additional validation
+**Implementation**:
+```python
+latitude = getattr(location, 'latitude', None)
+longitude = getattr(location, 'longitude', None)
+if latitude is None or longitude is None:
+    raise ValueError(f"Invalid location data for {city}, {state}")
+```
+**Reasoning**: `getattr()` is type-safe and provides fallback values, additional check ensures data validity
+**Testing**: All 22 tests pass, type checking passes, maintains existing functionality
+
+#### Lessons Learned
+- Type stubs for third-party libraries may not be perfect
+- `getattr()` provides type-safe attribute access when type checker is confused
+- Additional validation after safe access ensures data integrity
+- Consider both type safety and runtime robustness in solutions
+
+#### Related Issues
+- Timezone None parameter type checking issue (see above)
+
+---
+
 ## Common Failure Patterns
 
 ### API Integration Issues

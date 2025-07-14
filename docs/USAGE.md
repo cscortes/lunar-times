@@ -1,6 +1,6 @@
-# Usage Guide: Moon Phases Calculator
+# Usage Guide: Lunar Times
 
-This guide provides detailed instructions and examples for using the Moon Phases Calculator application.
+This guide provides detailed instructions and examples for using the Lunar Times application.
 
 ## Table of Contents
 - [Basic Usage](#basic-usage)
@@ -48,9 +48,9 @@ uv run python moon_data.py
 # Debug mode
 uv run python moon_data.py -d
 
-# Using script entry point
-uv run moon-phases
-uv run moon-phases -d
+# Run the command-line tool
+uv run lunar-times
+uv run lunar-times -d
 ```
 
 ## Command-Line Options
@@ -64,8 +64,8 @@ uv run moon-phases -d
 
 | Option | Description | Example |
 |--------|-------------|---------|
-| (none) | Interactive mode - prompts for city and state | `uv run moon-phases` |
-| `-d` | Debug mode - uses El Paso, TX as default location | `uv run moon-phases -d` |
+| (none) | Interactive mode - prompts for city and state | `uv run lunar-times` |
+| `-d` | Debug mode - uses El Paso, TX as default location | `uv run lunar-times -d` |
 
 ## Input Formats
 
@@ -316,7 +316,7 @@ For development or automated testing:
 make run-debug
 
 # Test with known good location (using direct uv for piping)
-echo -e "Austin\nTX" | uv run moon-phases
+echo -e "Austin\nTX" | uv run lunar-times
 ```
 
 ### Integration with Other Tools
@@ -335,7 +335,7 @@ cities=("Austin:TX" "Denver:CO" "Seattle:WA")
 for city_state in "${cities[@]}"; do
     IFS=':' read -r city state <<< "$city_state"
     echo "=== $city, $state ==="
-    echo -e "$city\n$state" | uv run moon-phases
+    echo -e "$city\n$state" | uv run lunar-times
     echo
 done
 ```

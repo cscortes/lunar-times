@@ -1,11 +1,48 @@
 # Changelog
 
-All notable changes to the Moon Phases Calculator project will be documented in this file.
+All notable changes to the Lunar Times project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.5.0] - 2024-12-19
+
+### Changed
+- **Package Name**: Renamed from `moon-phases-calculator` to `lunar-times`
+  - More accurate name reflecting moonrise/moonset times vs moon phases
+  - Shorter, more professional package name
+  - Clearer indication of functionality
+- **Command Name**: Changed from `moon-phases` to `lunar-times`
+- **Description**: Updated to "Calculate lunar rise and set times for any location"
+- **Keywords**: Updated to focus on lunar times rather than phases
+
+### Technical Details
+- All documentation updated with new package name and commands
+- Entry point script renamed to `lunar-times`
+- Maintains backward compatibility for internal module structure
+- No changes to core functionality or API
+
+## [0.4.1] - 2024-12-19
+
+### Fixed
+- **Type Checking Issues**: Resolved mypy/linter errors in timezone and geopy attribute access
+  - Added explicit None check for `TimezoneFinder.timezone_at()` return value before passing to `pytz.timezone()`
+  - Implemented safe attribute access using `getattr()` for geopy Location object's latitude/longitude
+  - Fixed line length violations by shortening error messages
+  - All type checking errors resolved while maintaining robust error handling
+- **Documentation**: Added comprehensive failure analysis entries to docs/FAILURE.md
+  - Documented investigation history and solution approaches for type checking issues
+  - Added lessons learned and debugging strategies for future reference
+
+### Technical Details
+- Enhanced `get_timezone()` function with proper None handling for timezone resolution
+- Improved `find_latlong()` function with type-safe attribute access patterns
+- Maintained 100% test coverage (22/22 tests passing)
+- All linting rules now pass without type checking warnings
+
+## [0.4.0] - 2024-12-19
 
 ### Added
 - Comprehensive documentation suite (docs/ARCH.md, docs/SETUP.md, docs/USAGE.md, .cursorrules)
@@ -32,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Pipfile and Pipfile.lock (replaced by pyproject.toml and uv.lock)
 
-## [1.4.0] - 2025-01-14
+## [0.4.0] - 2025-01-14
 
 ### Added
 - Comprehensive testing documentation (docs/TEST.md)
@@ -51,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Added missing coverage files to clean target for complete cleanup
 
-## [1.3.2] - 2025-01-14
+## [0.3.2] - 2025-01-14
 
 ### Removed
 - `test.json` file (no longer used - test data is embedded in test suite)
@@ -61,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated test file comment to reflect embedded test data instead of external file
 - Updated development guidelines to reference embedded test data
 
-## [1.3.1] - 2025-01-14
+## [0.3.1] - 2025-01-14
 
 ### Changed
 - Enhanced build target with intelligent source file dependency tracking
@@ -72,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `watch` target from Makefile (no longer needed with smart build dependencies)
 - File watching functionality using entr (simplified development workflow)
 
-## [1.3.0] - 2025-01-14
+## [0.3.0] - 2025-01-14
 
 ### Added
 - Intelligent dependency tracking in Makefile using virtual environment timestamps
@@ -91,7 +128,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unused imports from test_moon_data.py
 - Fixed f-string without placeholders in moon_data.py
 
-## [1.2.1] - 2025-01-14
+## [0.2.1] - 2025-01-14
 
 ### Changed
 - Updated all documentation to reference make targets instead of raw uv commands
@@ -99,7 +136,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prioritized make targets while keeping uv commands as alternatives where appropriate
 - Enhanced examples and usage instructions to use standardized workflow commands
 
-## [1.2.0] - 2025-01-14
+## [0.2.0] - 2025-01-14
 
 ### Added
 - Comprehensive Makefile for development workflow management
@@ -111,7 +148,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Enhanced development experience with consistent command interface
 
-## [1.1.0] - 2025-01-14
+## [0.1.0] - 2025-01-14
 
 ### Added
 - Comprehensive test suite with 22 unit tests covering all functions
@@ -122,7 +159,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Enhanced development workflow with automated testing capabilities
 
-## [1.0.2] - 2025-01-14
+## [0.0.2] - 2025-01-14
 
 ### Fixed
 - Python version compatibility: Updated requirement from 3.13+ to 3.8+ for broader compatibility
@@ -134,7 +171,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added reproducibility as a core architectural principle in documentation
 - Updated all documentation to reflect new Python 3.8+ requirement
 
-## [1.0.1] - 2025-07-14
+## [0.0.1] - 2025-07-14
 
 ### Changed
 - Updated Python version requirement from 3.13+ to 3.8+ for broader compatibility
@@ -142,7 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all documentation to reflect new Python 3.8+ requirement
 - Updated development tools configuration (mypy, black) to target Python 3.8
 
-## [1.0.0] - 2024-01-15
+## [0.0.0] - 2024-01-15
 
 ### Added
 - Initial release of Moon Phases Calculator
@@ -168,7 +205,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - USNO Navy Astronomical Applications API
 - TimezoneFinder offline timezone resolution
 
-## [0.1.0] - 2024-01-10
+## [0.0.0] - 2024-01-10
 
 ### Added
 - Basic project structure

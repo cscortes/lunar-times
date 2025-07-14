@@ -1,6 +1,6 @@
-# Moon Phases Calculator
+# Lunar Times
 
-A simple command-line Python application that calculates moonrise and moonset times for any given city and state. The application integrates with external APIs to provide accurate astronomical data with proper timezone handling.
+A command-line Python application that calculates moonrise and moonset times for any location. The application integrates with external APIs to provide accurate astronomical data with proper timezone handling.
 
 ## Features
 

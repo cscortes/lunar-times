@@ -134,8 +134,8 @@ uv run python moon_data.py
 uv run python moon_data.py -d
 
 # Using the installed script
-uv run moon-phases
-uv run moon-phases -d
+uv run lunar-times
+uv run lunar-times -d
 ```
 
 #### Using Standard Python:

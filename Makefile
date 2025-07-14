@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset check-invisible clean-invisible
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset check-invisible clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -48,6 +48,7 @@ info:
 	@echo "  $(YELLOW)quick-check$(RESET) Run quick development checks (lint + test)"
 	@echo "  $(YELLOW)check-invisible$(RESET) Check for invisible characters in source files"
 	@echo "  $(YELLOW)clean-invisible$(RESET) Remove invisible characters from source files"
+	@echo "  $(YELLOW)pre-publish-clean$(RESET) Proactive cleanup for PyPI publishing"
 	@echo "  $(YELLOW)reset$(RESET)       Reset environment (clean + fresh install)"
 	@echo ""
 	@echo "$(GREEN)Usage examples:$(RESET)"
@@ -121,7 +122,7 @@ typecheck: install
 	@echo "$(GREEN)✓ Type checking completed$(RESET)"
 
 # Run all checks
-check: lint typecheck test
+check: lint typecheck test check-invisible
 	@echo "$(GREEN)✓ All checks passed!$(RESET)"
 
 # Run the application
@@ -200,7 +201,7 @@ ci: format check build
 
 
 # Quick development check (faster than full check)
-quick-check: lint test
+quick-check: lint test check-invisible
 	@echo "$(GREEN)✓ Quick check completed!$(RESET)"
 
 # Reset environment (clean + fresh install)
@@ -210,21 +211,58 @@ reset: clean
 	@make install
 	@echo "$(GREEN)✓ Environment reset completed!$(RESET)"
 
-# Check for invisible characters
+# Invisible Character Management
+# See docs: scripts/invisible_chars_commands.md for manual detection methods
 check-invisible:
 	@echo "$(BLUE)Checking for invisible characters...$(RESET)"
+	@echo "$(YELLOW)Reference: scripts/invisible_chars_commands.md for manual methods$(RESET)"
 	@python scripts/clean_invisible_chars.py src
 	@python scripts/clean_invisible_chars.py docs
 	@python scripts/clean_invisible_chars.py tests
+	@python scripts/clean_invisible_chars.py pyproject.toml
 	@echo "$(GREEN)✓ Invisible character check completed$(RESET)"
 
-# Clean invisible characters (with backup)
+# Clean invisible characters proactively (with backup)
 clean-invisible:
 	@echo "$(BLUE)Cleaning invisible characters...$(RESET)"
+	@echo "$(YELLOW)Creating backups before cleaning (see scripts/invisible_chars_commands.md)$(RESET)"
 	@python scripts/clean_invisible_chars.py src --clean
 	@python scripts/clean_invisible_chars.py docs --clean
 	@python scripts/clean_invisible_chars.py tests --clean
+	@python scripts/clean_invisible_chars.py pyproject.toml --clean
 	@echo "$(GREEN)✓ Invisible character cleanup completed$(RESET)"
+
+# Proactive invisible character cleanup for publishing
+pre-publish-clean: clean-invisible
+	@echo "$(BLUE)Running proactive cleanup for publishing...$(RESET)"
+	@echo "$(YELLOW)Ensuring all source files are clean of invisible characters$(RESET)"
+	@python scripts/clean_invisible_chars.py . --clean
+	@echo "$(GREEN)✓ Pre-publish cleanup completed$(RESET)"
+
+# PyPI Package Building and Publishing
+build-package: .venv/pyvenv.cfg clean pre-publish-clean
+	@echo "$(BLUE)Building package for PyPI...$(RESET)"
+	@echo "$(YELLOW)Package cleaned of invisible characters$(RESET)"
+	@uv build
+	@echo "$(GREEN)✓ Package built in dist/$(RESET)"
+
+check-package: build-package
+	@echo "$(BLUE)Checking package integrity...$(RESET)"
+	@uv run twine check dist/*
+	@echo "$(GREEN)✓ Package checks passed$(RESET)"
+
+upload-test: check-package
+	@echo "$(BLUE)Uploading to Test PyPI...$(RESET)"
+	@echo "$(YELLOW)Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for TestPyPI$(RESET)"
+	@uv run twine upload --repository testpypi dist/*
+	@echo "$(GREEN)✓ Uploaded to Test PyPI$(RESET)"
+
+upload-pypi: check-package
+	@echo "$(RED)WARNING: This will upload to the REAL PyPI!$(RESET)"
+	@echo "$(YELLOW)Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for PyPI$(RESET)"
+	@read -p "Are you sure you want to upload to PyPI? (y/N): " confirm && [ "$$confirm" = "y" ]
+	@uv run twine upload dist/*
+	@echo "$(GREEN)✓ Uploaded to PyPI$(RESET)"
 
 # Help alias
 help: info
