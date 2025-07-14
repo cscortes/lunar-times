@@ -1,0 +1,82 @@
+[project]
+name = "moon-phases-calculator"
+version = "1.0.0"
+description = "A command-line Python application that calculates moonrise and moonset times for any given city and state"
+authors = [
+    {name = "Moon Phases Calculator Team"}
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.13"
+keywords = ["astronomy", "moon", "phases", "cli", "timezone"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    "requests",
+    "geopy",
+    "timezonefinder",
+    "pytz",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/moon-phases-calculator"
+Repository = "https://github.com/your-username/moon-phases-calculator"
+Documentation = "https://github.com/your-username/moon-phases-calculator/tree/main/docs"
+Issues = "https://github.com/your-username/moon-phases-calculator/issues"
+
+[project.scripts]
+moon-phases = "moon_data:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["moon_data.py"]
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true 
