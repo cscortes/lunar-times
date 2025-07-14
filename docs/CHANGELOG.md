@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.2] - 2024-12-19
+
+### Fixed
+- **Python 3.8 Compatibility**: Fixed type annotation compatibility issue in invisible character script
+  - Changed `List[str] | None` to `Optional[List[str]]` for Python 3.8/3.9 support
+  - Added `Optional` import to `scripts/clean_invisible_chars.py`
+  - GitHub Actions CI now passes on all Python versions (3.8-3.12)
+  - Union type syntax `|` introduced in Python 3.10, incompatible with older versions
+
 ## [0.6.1] - 2024-12-19
 
 ### Fixed

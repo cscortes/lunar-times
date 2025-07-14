@@ -10,7 +10,7 @@ import os
 import sys
 import re
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
 # Common problematic invisible characters
 INVISIBLE_CHARS = {
@@ -148,7 +148,7 @@ def clean_file(file_path: Path, dry_run: bool = True) -> bool:
         print(f"❌ Error processing {file_path}: {e}")
         return False
 
-def scan_directory(directory: Path, extensions: List[str] | None = None) -> None:
+def scan_directory(directory: Path, extensions: Optional[List[str]] = None) -> None:
     """
     Scan directory for invisible characters.
     """
