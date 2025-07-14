@@ -134,7 +134,9 @@ class TestMoonData(unittest.TestCase):
 
     def test_get_timezone_success(self):
         """Test get_timezone with valid coordinates."""
-        with patch("moon_phases.cli.TimezoneFinder") as mock_tz_finder_class, patch(
+        with patch(
+            "moon_phases.cli.TimezoneFinder"
+        ) as mock_tz_finder_class, patch(
             "moon_phases.cli.pytz.timezone"
         ) as mock_pytz_timezone:
 
@@ -161,7 +163,9 @@ class TestMoonData(unittest.TestCase):
 
     def test_get_timezone_edge_cases(self):
         """Test get_timezone with edge case coordinates."""
-        with patch("moon_phases.cli.TimezoneFinder") as mock_tz_finder_class, patch(
+        with patch(
+            "moon_phases.cli.TimezoneFinder"
+        ) as mock_tz_finder_class, patch(
             "moon_phases.cli.pytz.timezone"
         ) as mock_pytz_timezone:
 
@@ -239,7 +243,9 @@ class TestMoonData(unittest.TestCase):
         for input_time, expected_output in test_cases:
             test_data = {
                 "properties": {
-                    "data": {"moondata": [{"phen": "Rise", "time": input_time}]}
+                    "data": {
+                        "moondata": [{"phen": "Rise", "time": input_time}]
+                    }
                 }
             }
 
@@ -364,7 +370,8 @@ class TestMoonData(unittest.TestCase):
             moon_data.main()
 
         self.assertIn(
-            "Failed to retrieve moon data. Status code: 500", str(context.exception)
+            "Failed to retrieve moon data. Status code: 500",
+            str(context.exception)
         )
 
     @patch("moon_phases.cli.get_citystate")
@@ -382,14 +389,17 @@ class TestMoonData(unittest.TestCase):
             moon_data.main()
 
         self.assertIn(
-            "Could not find coordinates for InvalidCity, XX", str(context.exception)
+            "Could not find coordinates for InvalidCity, XX",
+            str(context.exception)
         )
 
     def test_api_request_parameters(self):
         """Test that API request includes correct parameters."""
         with patch("moon_phases.cli.get_citystate") as mock_get_cs, patch(
             "moon_phases.cli.find_latlong"
-        ) as mock_find_ll, patch("moon_phases.cli.get_timezone") as mock_get_tz, patch(
+        ) as mock_find_ll, patch(
+            "moon_phases.cli.get_timezone"
+        ) as mock_get_tz, patch(
             "moon_phases.cli.requests.get"
         ) as mock_requests, patch(
             "moon_phases.cli.find_moon_data"
@@ -422,7 +432,9 @@ class TestMoonData(unittest.TestCase):
                 "dst": "false",
             }
 
-            mock_requests.assert_called_once_with(moon_data.url, params=expected_params)
+            mock_requests.assert_called_once_with(
+                moon_data.url, params=expected_params
+            )
 
 
 class TestIntegration(unittest.TestCase):
