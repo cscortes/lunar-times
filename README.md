@@ -45,6 +45,7 @@ Enter the state: TX
 - **[Usage Guide](docs/USAGE.md)** - Detailed usage instructions and examples
 - **[Testing Documentation](docs/TEST.md)** - Comprehensive testing documentation and coverage analysis
 - **[Setup Guide](docs/SETUP.md)** - Installation and configuration instructions
+- **[Invisible Character Detection](scripts/invisible_chars_commands.md)** - Tools for detecting and removing invisible characters in AI-generated code
 - **[Architecture](docs/ARCH.md)** - Technical architecture and design documentation
 - **[Changelog](docs/CHANGELOG.md)** - Version history and release notes
 - **[Failure Analysis](docs/FAILURE.md)** - Troubleshooting and known issues

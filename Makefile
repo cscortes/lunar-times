@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check reset check-invisible clean-invisible
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -46,6 +46,8 @@ info:
 	@echo "$(GREEN)Advanced targets:$(RESET)"
 	@echo "  $(YELLOW)ci$(RESET)          Run continuous integration checks (format + check + build)"
 	@echo "  $(YELLOW)quick-check$(RESET) Run quick development checks (lint + test)"
+	@echo "  $(YELLOW)check-invisible$(RESET) Check for invisible characters in source files"
+	@echo "  $(YELLOW)clean-invisible$(RESET) Remove invisible characters from source files"
 	@echo "  $(YELLOW)reset$(RESET)       Reset environment (clean + fresh install)"
 	@echo ""
 	@echo "$(GREEN)Usage examples:$(RESET)"
@@ -207,6 +209,22 @@ reset: clean
 	@rm -rf .venv/
 	@make install
 	@echo "$(GREEN)✓ Environment reset completed!$(RESET)"
+
+# Check for invisible characters
+check-invisible:
+	@echo "$(BLUE)Checking for invisible characters...$(RESET)"
+	@python scripts/clean_invisible_chars.py src
+	@python scripts/clean_invisible_chars.py docs
+	@python scripts/clean_invisible_chars.py tests
+	@echo "$(GREEN)✓ Invisible character check completed$(RESET)"
+
+# Clean invisible characters (with backup)
+clean-invisible:
+	@echo "$(BLUE)Cleaning invisible characters...$(RESET)"
+	@python scripts/clean_invisible_chars.py src --clean
+	@python scripts/clean_invisible_chars.py docs --clean
+	@python scripts/clean_invisible_chars.py tests --clean
+	@echo "$(GREEN)✓ Invisible character cleanup completed$(RESET)"
 
 # Help alias
 help: info
