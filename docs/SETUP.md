@@ -4,7 +4,7 @@
 
 ### System Requirements
 - **Operating System**: Linux, macOS, or Windows
-- **Python Version**: Python 3.13 or higher
+- **Python Version**: Python 3.8 or higher
 - **Internet Connection**: Required for API calls to external services
 
 ### Check Python Version
@@ -14,7 +14,7 @@ python --version
 python3 --version
 ```
 
-If you don't have Python 3.13+, download it from [python.org](https://www.python.org/downloads/).
+If you don't have Python 3.8+, download it from [python.org](https://www.python.org/downloads/).
 
 ## Installation Methods
 
@@ -168,9 +168,9 @@ Running in debug mode. Defaulting to city (El Paso, TX)
 
 #### 1. Python Version Error
 ```
-Error: Python 3.13 or higher required
+Error: Python 3.8 or higher required
 ```
-**Solution**: Upgrade Python to version 3.13 or higher.
+**Solution**: Upgrade Python to version 3.8 or higher.
 
 #### 2. Missing Dependencies
 ```

@@ -47,7 +47,7 @@ Enter the state: TX
 
 ## Requirements
 
-- Python 3.13+
+- Python 3.8+
 - [uv](https://docs.astral.sh/uv/) package manager
 - Internet connection for API calls
 - Dependencies: requests, geopy, timezonefinder, pytz

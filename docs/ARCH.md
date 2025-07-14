@@ -266,7 +266,7 @@ graph TB
 ## Development Environment
 
 ### Technology Stack
-- **Language**: Python 3.13
+- **Language**: Python 3.8+
 - **Package Manager**: uv (modern Python package manager)
 - **HTTP Client**: requests
 - **Geocoding**: geopy (Nominatim)

@@ -73,7 +73,7 @@ For each issue, use this format:
 **Date**: 2024-01-15
 **Reporter**: Development Team
 **Severity**: High
-**Environment**: Python 3.13, All OS, geopy 2.x
+**Environment**: Python 3.8+, All OS, geopy 2.x
 
 #### Problem Description
 Nominatim geocoding API occasionally returns None for valid city/state combinations, causing ValueError exceptions and application crashes.
@@ -135,7 +135,7 @@ time.sleep(1)  # Rate limiting
 **Date**: 2024-01-12
 **Reporter**: Development Team
 **Severity**: Medium
-**Environment**: Python 3.13, timezonefinder 6.x, pytz 2023.x
+**Environment**: Python 3.8+, timezonefinder 6.x, pytz 2023.x
 
 #### Problem Description
 Timezone calculations showing incorrect UTC offsets, especially during daylight saving time transitions.

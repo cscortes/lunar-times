@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - geopy: Geocoding services (Nominatim)
 - timezonefinder: Timezone resolution from coordinates
 - pytz: Timezone handling and conversion
-- Python 3.13+ standard library (datetime, sys)
+- Python 3.8+ standard library (datetime, sys)
 
 ### External Services
 - Nominatim Geocoding API (OpenStreetMap)
