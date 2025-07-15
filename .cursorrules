@@ -38,7 +38,6 @@ This is a Python command-line application that calculates moonrise and moonset t
 - **TimezoneFinder**: Offline timezone resolution
 
 ## File Structure
-- `moon_data.py`: Main application module
 - `pyproject.toml`: Project configuration and dependency management
 - `uv.lock`: Dependency lock file (auto-generated)
 - `README.md`: Project overview and basic usage
