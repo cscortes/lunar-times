@@ -59,14 +59,14 @@ Issues = "https://github.com/cscortes/lunar-times/issues"
 Changelog = "https://github.com/cscortes/lunar-times/blob/main/docs/CHANGELOG.md"
 
 [project.scripts]
-lunar-times = "moon_phases.cli:main"
+lunar-times = "lunar_times.cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/moon_phases"]
+packages = ["src/lunar_times"]
 
 [tool.black]
 line-length = 88

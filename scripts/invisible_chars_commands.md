@@ -17,7 +17,7 @@ find src -name "*.py" -exec cat -A {} \; | grep -E '[^\x00-\x7F]'
 ### 2. Using `file` Command (Check Encoding)
 ```bash
 # Check file encoding
-file -bi src/moon_phases/cli.py
+file -bi src/lunar_times/cli.py
 
 # Check multiple files
 find . -name "*.py" -exec file -bi {} \; | grep -v "us-ascii\|utf-8"

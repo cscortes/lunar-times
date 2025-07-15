@@ -105,13 +105,13 @@ test: install
 # Run tests with coverage
 test-coverage: install
 	$(call colorecho,$(BLUE),Running tests with coverage...)
-	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing
+	@uv run --extra dev python -m pytest tests/ --cov=src/lunar_times --cov-report=term-missing
 	$(call colorecho,$(GREEN),✓ Tests with coverage completed)
 
 # Generate coverage report
 coverage-report: install
 	$(call colorecho,$(BLUE),Generating coverage report...)
-	@uv run --extra dev python -m pytest tests/ --cov=src/moon_phases --cov-report=term-missing --cov-report=html
+	@uv run --extra dev python -m pytest tests/ --cov=src/lunar_times --cov-report=term-missing --cov-report=html
 	$(call colorecho,$(GREEN),✓ Coverage report generated in htmlcov/)
 
 # Open coverage report in browser

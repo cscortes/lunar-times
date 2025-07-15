@@ -39,7 +39,7 @@ pip install uv
 #### 2. Clone/Download the Project
 ```bash
 git clone <repository-url>
-cd moon_phases
+cd lunar_times
 ```
 
 #### 3. Install Dependencies

@@ -189,7 +189,7 @@ def captured_output(self):
 ## Coverage Configuration
 
 ### Source Coverage
-- **Source Directory**: `src/moon_phases/`
+- **Source Directory**: `src/lunar_times/`
 - **Excluded**: `tests/`, `*/__init__.py`
 - **Minimum Coverage**: 90%
 - **Report Formats**: Terminal, HTML
@@ -197,13 +197,13 @@ def captured_output(self):
 ### Coverage Commands
 ```bash
 # Basic coverage
-pytest --cov=src/moon_phases
+pytest --cov=src/lunar_times
 
 # With missing lines
-pytest --cov=src/moon_phases --cov-report=term-missing
+pytest --cov=src/lunar_times --cov-report=term-missing
 
 # Generate HTML report
-pytest --cov=src/moon_phases --cov-report=html
+pytest --cov=src/lunar_times --cov-report=html
 
 # Combined terminal and HTML
 make coverage-report
@@ -286,7 +286,7 @@ uv run --extra dev python -m pytest tests/test_cli.py::TestClass::test_method --
 uv run --extra dev python -m pytest tests/test_cli.py --tb=long
 
 # Coverage for specific test
-uv run --extra dev python -m pytest tests/test_cli.py::TestClass::test_method --cov=src/moon_phases --cov-report=term-missing
+uv run --extra dev python -m pytest tests/test_cli.py::TestClass::test_method --cov=src/lunar_times --cov-report=term-missing
 ```
 
 ## Testing Best Practices

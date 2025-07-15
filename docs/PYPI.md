@@ -57,7 +57,7 @@ The project is now configured for PyPI publishing with the following improvement
 
 3. **Update Version** (if needed)
    - Current version: `0.5.0`
-   - Update in both `pyproject.toml` and `src/moon_phases/__init__.py`
+   - Update in both `pyproject.toml` and `src/lunar_times/__init__.py`
 
 4. **Final Quality Checks**
    ```bash

@@ -123,7 +123,7 @@ jobs:
         cd /tmp
         pip install ${{ github.workspace }}/dist/*.whl
         lunar-times --help || echo "Help command not available"
-        python -c "import moon_phases.cli; print('Package imports successfully')"
+        python -c "import lunar_times.cli; print('Package imports successfully')"
 
   # Multi-OS testing for critical functionality
   cross-platform:

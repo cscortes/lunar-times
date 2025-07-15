@@ -5,7 +5,7 @@ import io
 from contextlib import contextmanager
 
 # Import the module to test
-from moon_phases import cli as moon_data
+from lunar_times import cli as moon_data
 
 
 class TestMoonData(unittest.TestCase):
@@ -50,7 +50,7 @@ class TestMoonData(unittest.TestCase):
 
     def test_find_latlong_success(self):
         """Test find_latlong with valid city and state."""
-        with patch("moon_phases.cli.Nominatim") as mock_nominatim:
+        with patch("lunar_times.cli.Nominatim") as mock_nominatim:
             # Setup mock
             mock_geolocator = MagicMock()
             mock_nominatim.return_value = mock_geolocator
@@ -71,7 +71,7 @@ class TestMoonData(unittest.TestCase):
 
     def test_find_latlong_not_found(self):
         """Test find_latlong with invalid city and state."""
-        with patch("moon_phases.cli.Nominatim") as mock_nominatim:
+        with patch("lunar_times.cli.Nominatim") as mock_nominatim:
             # Setup mock to return None (location not found)
             mock_geolocator = MagicMock()
             mock_nominatim.return_value = mock_geolocator
@@ -88,7 +88,7 @@ class TestMoonData(unittest.TestCase):
 
     def test_find_latlong_input_formatting(self):
         """Test find_latlong handles various input formats correctly."""
-        with patch("moon_phases.cli.Nominatim") as mock_nominatim:
+        with patch("lunar_times.cli.Nominatim") as mock_nominatim:
             mock_geolocator = MagicMock()
             mock_nominatim.return_value = mock_geolocator
 
@@ -109,14 +109,14 @@ class TestMoonData(unittest.TestCase):
                 self.assertEqual(lat, 40.7128)
                 self.assertEqual(lng, -74.0060)
 
-    @patch("sys.argv", ["moon_phases.cli.py", "-d"])
+    @patch("sys.argv", ["lunar_times.cli.py", "-d"])
     def test_get_citystate_debug_mode(self):
         """Test get_citystate in debug mode."""
         city, state = moon_data.get_citystate()
         self.assertEqual(city, "El Paso")
         self.assertEqual(state, "TX")
 
-    @patch("sys.argv", ["moon_phases.cli.py"])
+    @patch("sys.argv", ["lunar_times.cli.py"])
     @patch("builtins.input", side_effect=["austin", "tx"])
     def test_get_citystate_interactive_mode(self, mock_input):
         """Test get_citystate in interactive mode."""
@@ -124,7 +124,7 @@ class TestMoonData(unittest.TestCase):
         self.assertEqual(city, "Austin")
         self.assertEqual(state, "TX")
 
-    @patch("sys.argv", ["moon_phases.cli.py"])
+    @patch("sys.argv", ["lunar_times.cli.py"])
     @patch("builtins.input", side_effect=[" new york ", " ny "])
     def test_get_citystate_input_cleaning(self, mock_input):
         """Test get_citystate properly cleans and formats input."""
@@ -135,9 +135,9 @@ class TestMoonData(unittest.TestCase):
     def test_get_timezone_success(self):
         """Test get_timezone with valid coordinates."""
         with patch(
-            "moon_phases.cli.TimezoneFinder"
+            "lunar_times.cli.TimezoneFinder"
         ) as mock_tz_finder_class, patch(
-            "moon_phases.cli.pytz.timezone"
+            "lunar_times.cli.pytz.timezone"
         ) as mock_pytz_timezone:
 
             # Setup mocks
@@ -164,9 +164,9 @@ class TestMoonData(unittest.TestCase):
     def test_get_timezone_edge_cases(self):
         """Test get_timezone with edge case coordinates."""
         with patch(
-            "moon_phases.cli.TimezoneFinder"
+            "lunar_times.cli.TimezoneFinder"
         ) as mock_tz_finder_class, patch(
-            "moon_phases.cli.pytz.timezone"
+            "lunar_times.cli.pytz.timezone"
         ) as mock_pytz_timezone:
 
             mock_tz_finder = MagicMock()
@@ -253,7 +253,7 @@ class TestMoonData(unittest.TestCase):
             self.assertEqual(moonrise, expected_output)
             self.assertEqual(moonset, "N/A")
 
-    @patch("sys.argv", ["moon_phases.cli.py"])
+    @patch("sys.argv", ["lunar_times.cli.py"])
     def test_print_moon_data_normal_mode(self):
         """Test print_moon_data in normal mode."""
         with self.captured_output() as output:
@@ -268,7 +268,7 @@ class TestMoonData(unittest.TestCase):
         self.assertIn("RISE: 10:58 PM", output_lines[1])
         self.assertIn("SET: 01:08 PM", output_lines[2])
 
-    @patch("sys.argv", ["moon_phases.cli.py", "-d"])
+    @patch("sys.argv", ["lunar_times.cli.py", "-d"])
     def test_print_moon_data_debug_mode(self):
         """Test print_moon_data in debug mode."""
         with self.captured_output() as output:
@@ -302,13 +302,13 @@ class TestMoonData(unittest.TestCase):
         self.assertIn("RISE: N/A", output_text)
         self.assertIn("SET: N/A", output_text)
 
-    @patch("moon_phases.cli.get_citystate")
-    @patch("moon_phases.cli.find_latlong")
-    @patch("moon_phases.cli.get_timezone")
-    @patch("moon_phases.cli.requests.get")
-    @patch("moon_phases.cli.find_moon_data")
-    @patch("moon_phases.cli.print_moon_data")
-    @patch("moon_phases.cli.datetime.date")
+    @patch("lunar_times.cli.get_citystate")
+    @patch("lunar_times.cli.find_latlong")
+    @patch("lunar_times.cli.get_timezone")
+    @patch("lunar_times.cli.requests.get")
+    @patch("lunar_times.cli.find_moon_data")
+    @patch("lunar_times.cli.print_moon_data")
+    @patch("lunar_times.cli.datetime.date")
     def test_main_success(
         self,
         mock_date,
@@ -346,11 +346,11 @@ class TestMoonData(unittest.TestCase):
             "2024-01-15", "America/Chicago", -6.0, "10:58 PM", "01:08 PM"
         )
 
-    @patch("moon_phases.cli.get_citystate")
-    @patch("moon_phases.cli.find_latlong")
-    @patch("moon_phases.cli.get_timezone")
-    @patch("moon_phases.cli.requests.get")
-    @patch("moon_phases.cli.datetime.date")
+    @patch("lunar_times.cli.get_citystate")
+    @patch("lunar_times.cli.find_latlong")
+    @patch("lunar_times.cli.get_timezone")
+    @patch("lunar_times.cli.requests.get")
+    @patch("lunar_times.cli.datetime.date")
     def test_main_api_error(
         self, mock_date, mock_requests, mock_get_tz, mock_find_ll, mock_get_cs
     ):
@@ -374,8 +374,8 @@ class TestMoonData(unittest.TestCase):
             str(context.exception),
         )
 
-    @patch("moon_phases.cli.get_citystate")
-    @patch("moon_phases.cli.find_latlong")
+    @patch("lunar_times.cli.get_citystate")
+    @patch("lunar_times.cli.find_latlong")
     def test_main_geocoding_error(self, mock_find_ll, mock_get_cs):
         """Test main function with geocoding error."""
         # Setup mocks
@@ -395,18 +395,18 @@ class TestMoonData(unittest.TestCase):
 
     def test_api_request_parameters(self):
         """Test that API request includes correct parameters."""
-        with patch("moon_phases.cli.get_citystate") as mock_get_cs, patch(
-            "moon_phases.cli.find_latlong"
+        with patch("lunar_times.cli.get_citystate") as mock_get_cs, patch(
+            "lunar_times.cli.find_latlong"
         ) as mock_find_ll, patch(
-            "moon_phases.cli.get_timezone"
+            "lunar_times.cli.get_timezone"
         ) as mock_get_tz, patch(
-            "moon_phases.cli.requests.get"
+            "lunar_times.cli.requests.get"
         ) as mock_requests, patch(
-            "moon_phases.cli.find_moon_data"
+            "lunar_times.cli.find_moon_data"
         ) as mock_find_moon, patch(
-            "moon_phases.cli.print_moon_data"
+            "lunar_times.cli.print_moon_data"
         ), patch(
-            "moon_phases.cli.datetime.date"
+            "lunar_times.cli.datetime.date"
         ) as mock_date:
 
             # Setup mocks

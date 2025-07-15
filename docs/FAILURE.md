@@ -469,7 +469,7 @@ tests/test_cli.py:425:80: E501 line too long (88 > 79 characters)
 **Environment**: Python 3.12, GitHub Actions CI, flake8 linting
 
 ### Problem Description
-GitHub Actions CI pipeline failed during the linting stage with E231 whitespace violations in `src/moon_phases/cli.py`. The flake8 linter reported missing whitespace after colons and commas in f-string format specifiers, causing the entire CI pipeline to fail on Python 3.12.
+GitHub Actions CI pipeline failed during the linting stage with E231 whitespace violations in `src/lunar_times/cli.py`. The flake8 linter reported missing whitespace after colons and commas in f-string format specifiers, causing the entire CI pipeline to fail on Python 3.12.
 
 ### Expected Behavior
 All source code should pass flake8 linting checks with proper whitespace formatting, allowing CI pipeline to proceed to testing and deployment stages.
@@ -477,12 +477,12 @@ All source code should pass flake8 linting checks with proper whitespace formatt
 ### Actual Behavior
 CI pipeline failed at the linting stage with errors:
 ```
-src/moon_phases/cli.py:139:49: E231 missing whitespace after ':'
-src/moon_phases/cli.py:141:14: E222 multiple spaces after operator
-src/moon_phases/cli.py:142:14: E222 multiple spaces after operator
-src/moon_phases/cli.py:168:30: E231 missing whitespace after ':'
-src/moon_phases/cli.py:168:35: E231 missing whitespace after ','
-src/moon_phases/cli.py:168:46: E231 missing whitespace after ':'
+src/lunar_times/cli.py:139:49: E231 missing whitespace after ':'
+src/lunar_times/cli.py:141:14: E222 multiple spaces after operator
+src/lunar_times/cli.py:142:14: E222 multiple spaces after operator
+src/lunar_times/cli.py:168:30: E231 missing whitespace after ':'
+src/lunar_times/cli.py:168:35: E231 missing whitespace after ','
+src/lunar_times/cli.py:168:46: E231 missing whitespace after ':'
 ```
 
 ### Reproduction Steps
@@ -517,7 +517,7 @@ src/moon_phases/cli.py:168:46: E231 missing whitespace after ':'
 "coords": f"{latitude:.2f}, {longitude:.2f}",
 ```
 **Files Modified**: 
-- `src/moon_phases/cli.py` (fixed coordinate formatting)
+- `src/lunar_times/cli.py` (fixed coordinate formatting)
 - `tests/test_cli.py` (updated test expectations)
 **Result**: All linting checks pass, CI pipeline successful on all Python versions
 

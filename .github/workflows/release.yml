@@ -12,7 +12,6 @@ jobs:
   release:
     name: Build and Publish Release
     runs-on: ubuntu-latest
-    environment: release  # Requires manual approval
     
     steps:
     - name: Checkout code

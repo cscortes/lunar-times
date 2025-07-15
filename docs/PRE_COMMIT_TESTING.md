@@ -184,7 +184,7 @@ Fix issues before committing.
 
 #### 1. **Linting Failures**
 ```
-src/moon_phases/cli.py:168:35: E231 missing whitespace after ','
+src/lunar_times/cli.py:168:35: E231 missing whitespace after ','
 ```
 
 **Solution:** Fix formatting issues:
