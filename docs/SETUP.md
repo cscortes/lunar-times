@@ -271,7 +271,7 @@ make check
 make test
 
 # Format code
-make format
+make lint
 
 # Lint code
 make lint

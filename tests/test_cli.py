@@ -66,7 +66,9 @@ class TestMoonData(unittest.TestCase):
             # Assertions
             self.assertEqual(lat, 30.2672)
             self.assertEqual(lng, -97.7431)
-            mock_nominatim.assert_called_once_with(user_agent="lunar_times_app")
+            mock_nominatim.assert_called_once_with(
+                user_agent="lunar_times_app"
+            )
             mock_geolocator.geocode.assert_called_once_with("Austin, TX")
 
     def test_find_latlong_not_found(self):

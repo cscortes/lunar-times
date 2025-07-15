@@ -242,7 +242,7 @@ python scripts/clean_invisible_chars.py docs --clean          # Clean files (aut
 ### Integration with Development Workflow
 ```bash
 # Add to your development routine
-make format                    # Format code
+make lint                     # Check code quality
 make check-invisible          # Quick check for invisible chars
 make check-invisible-detailed # Detailed invisible char analysis
 make lint                     # Run linting

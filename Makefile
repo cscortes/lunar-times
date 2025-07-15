@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible check-invisible-detailed clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible check-invisible-detailed clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -49,7 +49,6 @@ info:
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "coverage-report" "Generate detailed coverage report"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "coverage-html" "Open coverage report in browser"
 	@printf "  $(YELLOW)%s$(RESET)        %s\n" "lint" "Run code linting (flake8)"
-	@printf "  $(YELLOW)%s$(RESET)      %s\n" "format" "Format code with black"
 	@printf "  $(YELLOW)%s$(RESET)       %s\n" "check" "Run all checks (lint + test + type check)"
 	@printf "  $(YELLOW)%s$(RESET)         %s\n" "run" "Run the application interactively"
 	@printf "  $(YELLOW)%s$(RESET)   %s\n" "run-debug" "Run the application in debug mode (El Paso, TX)"
@@ -58,7 +57,7 @@ info:
 	@printf "  $(YELLOW)%s$(RESET)      %s\n" "status" "Show project status and configuration"
 	@echo ""
 	$(call colorecho,$(GREEN),Advanced targets:)
-	@printf "  $(YELLOW)%s$(RESET)          %s\n" "ci" "Run continuous integration checks (format + check + build)"
+	@printf "  $(YELLOW)%s$(RESET)          %s\n" "ci" "Run continuous integration checks (check + build)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "quick-check" "Run quick development checks (lint + test)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-all-python" "Test with multiple Python versions (like CI)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-github-actions" "Test GitHub Actions workflows locally (requires act)"
@@ -74,7 +73,7 @@ info:
 	@echo "  make test      # Run tests"
 	@echo "  make check     # Run all quality checks"
 	@echo "  make run       # Run the lunar times calculator"
-	@echo "  make ci        # Run CI pipeline (format + check + build)"
+	@echo "  make ci        # Run CI pipeline (check + build)"
 
 # Initial project setup
 setup:
@@ -126,12 +125,7 @@ lint: install
 	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev flake8 $(TEST_FILES); fi
 	$(call colorecho,$(GREEN),✓ Linting completed)
 
-# Format code
-format: install
-	$(call colorecho,$(BLUE),Formatting code...)
-	@if [ -n "$(SRC_FILES)" ]; then uv run --extra dev black --line-length 79 $(SRC_FILES); fi
-	@if [ -n "$(TEST_FILES)" ]; then uv run --extra dev black --line-length 79 $(TEST_FILES); fi
-	$(call colorecho,$(GREEN),✓ Code formatted)
+
 
 # Type checking
 typecheck: install
@@ -213,7 +207,7 @@ status:
 	@echo "  Target Python: $(PYTHON_VERSION)"
 
 # Continuous Integration pipeline
-ci: format check build
+ci: check build
 	$(call colorecho,$(GREEN),✓ CI pipeline completed successfully!)
 
 
@@ -243,7 +237,7 @@ test-github-actions:
 	@./scripts/test_github_actions_local.sh
 
 # Comprehensive pre-commit checks (recommended before every commit)
-pre-commit: format check
+pre-commit: check
 	$(call colorecho,$(GREEN),✓ Pre-commit checks completed!)
 	$(call colorecho,$(BLUE),Recommendation: Run 'make test-all-python' before major commits)
 

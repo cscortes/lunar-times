@@ -101,8 +101,8 @@ git push
 ### Scenario 2: Major Feature Addition
 
 ```bash
-# Format code first
-make format
+# Check code quality first
+make lint
 
 # Test with all Python versions
 make test-all-python
@@ -189,7 +189,7 @@ src/lunar_times/cli.py:168:35: E231 missing whitespace after ','
 
 **Solution:** Fix formatting issues:
 ```bash
-make format  # Auto-format code
+make lint    # Check code quality
 make lint    # Check if fixed
 ```
 
@@ -247,9 +247,9 @@ curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 
 ### Pre-Commit Workflow
 
-1. **Always format first:**
+1. **Always check code quality first:**
    ```bash
-   make format
+   make lint
    ```
 
 2. **Run standard pre-commit checks:**
