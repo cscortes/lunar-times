@@ -3,10 +3,10 @@ name = "lunar-times"
 version = "0.6.10"
 description = "Calculate lunar rise and set times for any location"
 authors = [
-    {name = "Luis Cortés", email = "lcortes@example.com"}
+    {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
 ]
 maintainers = [
-    {name = "Luis Cortés", email = "lcortes@example.com"}
+    {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}

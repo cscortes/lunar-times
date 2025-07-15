@@ -832,10 +832,10 @@ GitHub Actions CI failing during package validation with "Metadata is missing re
 - **Why it failed**: The issue was with the parsing library, not the metadata format
 
 #### Attempt 2: Update Email Address Format
-- **Method**: Changed author email from "your-email@example.com" to "lcortes@example.com"
-- **Reasoning**: Thought placeholder email might cause parsing issues
-- **Result**: No change in parsing behavior
-- **Why it failed**: Email format was not the root cause
+- **Method**: Changed author email from "your-email@example.com" to "lcortes@example.com", then to "cscortes@users.noreply.github.com"
+- **Reasoning**: Thought placeholder email might cause parsing issues, then adopted GitHub noreply for privacy
+- **Result**: No change in parsing behavior (email was not the root cause)
+- **Why it failed**: Email format was not the root cause of the metadata parsing issue
 
 #### Attempt 3: Virtual Environment Reset
 - **Method**: Ran `make reset` to clean and recreate virtual environment

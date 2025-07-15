@@ -10,7 +10,7 @@ The project is now configured for PyPI publishing with the following improvement
 
 1. **Consolidated Author Information**
    - Author: Luis Cortés
-   - Email: `your-email@example.com` (placeholder - needs real email)
+   - Email: `cscortes@users.noreply.github.com` (GitHub noreply email for privacy)
    - Both `pyproject.toml` and `__init__.py` use consistent information
 
 2. **PyPI-Ready Metadata**
@@ -39,10 +39,9 @@ The project is now configured for PyPI publishing with the following improvement
 
 1. **Update Contact Information**
    ```toml
-   # In pyproject.toml, replace:
-   {name = "Luis Cortés", email = "your-email@example.com"}
-   # With your real email:
-   {name = "Luis Cortés", email = "your-real-email@domain.com"}
+   # In pyproject.toml, current configuration:
+   {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
+   # Using GitHub noreply email for privacy protection
    ```
 
 2. **Update URLs (Optional)**
@@ -151,7 +150,7 @@ lunar-times
 
 ### Common Issues
 
-1. **Missing email**: Update `your-email@example.com` with real email
+1. **Email configured**: Now using `cscortes@users.noreply.github.com` for privacy
 2. **Authentication errors**: Check API tokens and environment variables
 3. **Package name conflicts**: Check if name is available on PyPI
 4. **Build errors**: Run `make check` to verify all quality checks pass

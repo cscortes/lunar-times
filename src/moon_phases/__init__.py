@@ -15,9 +15,9 @@ from .cli import (
     get_citystate,
 )
 
-__version__ = "0.6.9"
+__version__ = "0.6.10"
 __author__ = "Luis Cortés"
-__email__ = "your-email@example.com"
+__email__ = "cscortes@users.noreply.github.com"
 
 __all__ = [
     "main",
