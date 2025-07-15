@@ -166,7 +166,7 @@ def scan_directory(directory: Path, extensions: Optional[List[str]] = None) -> N
     for file_path in directory.rglob('*'):
         if (file_path.is_file() and 
             file_path.suffix.lower() in extensions and
-            not any(part.startswith('.') for part in file_path.parts[1:])):  # Skip hidden dirs
+            not any(part in file_path.parts for part in ['.venv', '.git', 'node_modules', '.pytest_cache', '__pycache__', '.mypy_cache', 'htmlcov', 'dist', 'build', '.eggs', '.tox'])):  # Skip build/cache dirs
             
             total_files += 1
             issues, is_text = scan_file(file_path)
@@ -243,7 +243,8 @@ def main():
             # Scan all files and show what would be cleaned
             for file_path in path.rglob('*'):
                 if (file_path.is_file() and 
-                    file_path.suffix.lower() in args.extensions):
+                    file_path.suffix.lower() in args.extensions and
+                    not any(part in file_path.parts for part in ['.venv', '.git', 'node_modules', '.pytest_cache', '__pycache__', '.mypy_cache', 'htmlcov', 'dist', 'build', '.eggs', '.tox'])):
                     print(f"🔍 Would scan: {file_path}")
                     issues, is_text = scan_file(file_path)
                     if is_text and issues:
@@ -259,7 +260,8 @@ def main():
             # Clean all files (no prompting - assume yes)
             for file_path in path.rglob('*'):
                 if (file_path.is_file() and 
-                    file_path.suffix.lower() in args.extensions):
+                    file_path.suffix.lower() in args.extensions and
+                    not any(part in file_path.parts for part in ['.venv', '.git', 'node_modules', '.pytest_cache', '__pycache__', '.mypy_cache', 'htmlcov', 'dist', 'build', '.eggs', '.tox'])):
                     clean_file(file_path, dry_run=False)
         else:
             # Just scan

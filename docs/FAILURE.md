@@ -672,6 +672,129 @@ This occurred when the script tried to prompt for user confirmation (`input("Con
 
 ---
 
+## Issue: docutils IndentationError in Package Building
+
+**Date**: 2024-12-26
+**Reporter**: User
+**Severity**: High
+**Environment**: GitHub Actions CI, Python 3.8, twine package checking
+
+### Problem Description
+Package building was failing during the `twine check` step with an IndentationError in the `docutils` package:
+```
+File "/home/runner/work/lunar-times/lunar-times/.venv/lib/python3.8/site-packages/docutils/utils/smartquotes.py", line 413
+    'af-x-altquot': '„"‚'',
+    ^
+IndentationError: unexpected indent
+```
+
+This error prevented the package integrity check from completing, blocking the PyPI publishing pipeline.
+
+### Expected Behavior
+- Package integrity checks should complete successfully
+- `twine check` should validate package structure without errors
+- PyPI publishing pipeline should work reliably
+
+### Actual Behavior
+- `twine check` failed with IndentationError in docutils dependency
+- Package building process interrupted
+- Unable to validate package for PyPI publishing
+
+### Reproduction Steps
+1. Run `make check-package` in CI environment
+2. `twine check` attempts to import docutils
+3. docutils package fails to load due to indentation error
+4. Build process fails
+
+### Investigation History
+#### Attempt 1: Dependency Analysis
+- **Method**: Investigated the relationship between twine and docutils
+- **Reasoning**: Need to understand why docutils is involved in package checking
+- **Result**: Found that twine depends on docutils for README rendering and validation
+- **Why it helped**: Identified the root cause as a corrupted docutils installation
+
+#### Attempt 2: Version Pinning
+- **Method**: Added explicit `docutils==0.19` to dev dependencies
+- **Reasoning**: Pin to a known stable version to avoid installation issues
+- **Result**: Forces installation of a specific, tested version of docutils
+- **Why it succeeded**: Prevents dependency resolution from selecting problematic versions
+
+### Resolution
+- **Solution**: Pin docutils to a known working version (0.19)
+- **Implementation**: Added `docutils==0.19` to dev dependencies in pyproject.toml
+- **Verification**: Package building and integrity checks now pass successfully
+- **Fixed in**: v0.6.8
+
+### Prevention
+- Pin critical transitive dependencies that have known stability issues
+- Monitor dependency updates for breaking changes
+- Test package building pipeline regularly
+- Use dependency lock files to ensure consistent installations
+
+---
+
+## Issue: Invisible Character Script Corrupting Virtual Environment
+
+**Date**: 2024-12-26
+**Reporter**: User  
+**Severity**: Critical
+**Environment**: All environments, Python virtual environments
+
+### Problem Description
+The `clean_invisible_chars.py` script was corrupting the virtual environment by cleaning installed packages in `.venv` directory. This caused IndentationError in docutils and other packages because the script was removing smart quotes and other characters that were actually supposed to be there in the source code of dependencies.
+
+### Expected Behavior
+- Invisible character cleaning should only operate on project source code
+- Virtual environment and build directories should be excluded from cleaning
+- Installed packages should remain untouched
+
+### Actual Behavior
+- Script processed entire directory including `.venv` directory
+- Removed smart quotes from docutils `smartquotes.py` file
+- Corrupted installed packages causing twine check failures
+- Build pipeline completely broken
+
+### Reproduction Steps
+1. Run `make pre-publish-clean` which executes `python scripts/clean_invisible_chars.py . --clean`
+2. Script processes all files including `.venv` directory
+3. Installed packages get "cleaned" and corrupted
+4. Subsequent package operations fail with IndentationError
+
+### Investigation History
+#### Attempt 1: Dependency Version Pinning
+- **Method**: Pinned docutils to version 0.19 in pyproject.toml
+- **Reasoning**: Thought it was a dependency version issue
+- **Result**: Did not solve the problem because the issue was corruption, not version
+- **Why it failed**: Addressed symptoms, not root cause
+
+#### Attempt 2: Directory Exclusions
+- **Method**: Added exclusions for `.venv`, `.git`, and other build/cache directories
+- **Reasoning**: Identified that script was processing files it shouldn't touch
+- **Result**: Prevents script from modifying virtual environment and build directories
+- **Why it succeeded**: Addressed root cause by limiting scope of cleaning
+
+### Resolution
+- **Solution**: Added comprehensive directory exclusions to all file traversal functions
+- **Implementation**: 
+  - Added exclusions for `.venv`, `.git`, `node_modules`, `.pytest_cache`, `__pycache__`, `.mypy_cache`, `htmlcov`, `dist`, `build`, `.eggs`, `.tox`
+  - Applied to all three functions: `scan_directory`, dry-run mode, and clean mode
+- **Verification**: Script now only processes source code files, not dependencies
+- **Fixed in**: v0.6.9
+
+### Prevention
+- Always exclude virtual environment and build directories from file processing scripts
+- Test scripts with entire directory to ensure they don't affect dependencies
+- Use explicit inclusion rather than broad exclusion when possible
+- Document directory exclusions clearly in script help text
+
+### Lessons Learned
+- File processing scripts must be careful about scope
+- Virtual environments contain source code that should not be modified
+- Always test automated scripts in realistic scenarios
+- Build pipeline failures can often be traced to tooling issues, not code issues
+
+---
+
 ## Maintenance
 
 This document should be:
@@ -683,4 +806,4 @@ This document should be:
 ---
 
 *Last Updated: 2024-12-26*
-*Document Version: 1.3* 
+*Document Version: 1.5* 

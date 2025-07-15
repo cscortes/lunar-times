@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.9] - 2024-12-26
+
+### Fixed
+- **CRITICAL: Invisible Character Script**: Fixed script corrupting virtual environment and installed packages
+  - Added exclusions for `.venv`, `.git`, `node_modules`, `.pytest_cache`, and other build/cache directories
+  - Prevents script from modifying installed packages which was causing docutils IndentationError
+  - Resolves package corruption when running `pre-publish-clean` with entire directory cleaning
+  - All directory traversal functions now properly exclude environment and build directories
+  - Ensures invisible character cleaning only operates on source code, not dependencies
+
+## [0.6.8] - 2024-12-26
+
+### Fixed
+- **Package Building**: Fixed IndentationError in docutils package during package checks
+  - Added explicit `docutils==0.19` to dev dependencies to avoid corrupted installations
+  - Resolves `twine check` failures with IndentationError in smartquotes.py
+  - Ensures reliable package building and PyPI publishing pipeline
+  - All package integrity checks now pass successfully
+
 ## [0.6.7] - 2024-12-26
 
 ### Fixed
