@@ -198,6 +198,8 @@ def main():
     parser.add_argument('path', help='File or directory to process')
     parser.add_argument('--clean', action='store_true', 
                        help='Clean files (creates .bak backups)')
+    parser.add_argument('--dry-run', action='store_true',
+                       help='Show what would be cleaned without making changes')
     parser.add_argument('--extensions', nargs='+', 
                        default=['.py', '.md', '.txt', '.json', '.toml'],
                        help='File extensions to process')
@@ -223,7 +225,9 @@ def main():
             for line_num, char_pos, char, description in issues:
                 print(f"   Line {line_num}, Char {char_pos}: {description} (\\u{ord(char):04X})")
             
-            if args.clean:
+            if args.dry_run:
+                print("\n🔍 DRY RUN MODE - Would clean these issues (no changes made)")
+            elif args.clean:
                 print()
                 clean_file(path, dry_run=False)
         else:
@@ -231,16 +235,28 @@ def main():
             
     else:
         # Process directory
-        if args.clean:
-            print("🔧 CLEANING MODE - Files will be modified!")
-            print("   (Backups will be created with .bak extension)")
-            response = input("Continue? [y/N]: ").strip().lower()
-            if response != 'y':
-                print("Aborted.")
-                sys.exit(0)
+        if args.dry_run:
+            print("🔍 DRY RUN MODE - Showing what would be cleaned")
+            print("   (No files will be modified)")
             print()
             
-            # Clean all files
+            # Scan all files and show what would be cleaned
+            for file_path in path.rglob('*'):
+                if (file_path.is_file() and 
+                    file_path.suffix.lower() in args.extensions):
+                    print(f"🔍 Would scan: {file_path}")
+                    issues, is_text = scan_file(file_path)
+                    if is_text and issues:
+                        print(f"   ⚠️  Would clean {len(issues)} issues")
+                        for line_num, char_pos, char, description in issues:
+                            print(f"      Line {line_num}, Char {char_pos}: {description}")
+        elif args.clean:
+            print("🔧 CLEANING MODE - Files will be modified!")
+            print("   (Backups will be created with .bak extension)")
+            print("   Proceeding automatically...")
+            print()
+            
+            # Clean all files (no prompting - assume yes)
             for file_path in path.rglob('*'):
                 if (file_path.is_file() and 
                     file_path.suffix.lower() in args.extensions):

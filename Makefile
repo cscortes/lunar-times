@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint format clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible check-invisible-detailed clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -64,6 +64,7 @@ info:
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "test-github-actions" "Test GitHub Actions workflows locally (requires act)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-commit" "Run comprehensive pre-commit checks"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "check-invisible" "Check for invisible characters in source files"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "check-invisible-detailed" "Show detailed invisible character analysis (dry-run)"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "clean-invisible" "Remove invisible characters from source files"
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-publish-clean" "Proactive cleanup for PyPI publishing"
 	@printf "  $(YELLOW)%s$(RESET)       %s\n" "reset" "Reset environment (clean + fresh install)"
@@ -263,6 +264,16 @@ check-invisible:
 	@python scripts/clean_invisible_chars.py tests
 	@python scripts/clean_invisible_chars.py pyproject.toml
 	$(call colorecho,$(GREEN),✓ Invisible character check completed)
+
+# Detailed invisible character check (shows what would be cleaned)
+check-invisible-detailed:
+	$(call colorecho,$(BLUE),Detailed invisible character check...)
+	$(call colorecho,$(YELLOW),Showing what would be cleaned without making changes)
+	@python scripts/clean_invisible_chars.py src --dry-run
+	@python scripts/clean_invisible_chars.py docs --dry-run
+	@python scripts/clean_invisible_chars.py tests --dry-run
+	@python scripts/clean_invisible_chars.py pyproject.toml --dry-run
+	$(call colorecho,$(GREEN),✓ Detailed invisible character check completed)
 
 # Clean invisible characters proactively (with backup)
 clean-invisible:

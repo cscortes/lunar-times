@@ -609,6 +609,69 @@ Learn more: https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-th
 
 ---
 
+## Issue: EOFError in clean_invisible_chars.py Script
+
+**Date**: 2024-12-26
+**Reporter**: User
+**Severity**: Medium
+**Environment**: Build/CI environments, non-interactive shells
+
+### Problem Description
+The `clean_invisible_chars.py` script was failing during build processes with:
+```
+EOFError: EOF when reading a line
+```
+This occurred when the script tried to prompt for user confirmation (`input("Continue? [y/N]: ")`) in non-interactive environments like CI/CD pipelines or automated build systems.
+
+### Expected Behavior
+- Script should work in both interactive and non-interactive environments
+- Build processes should complete without manual intervention
+- Clear options for dry-run vs. actual cleaning
+
+### Actual Behavior
+- Script failed with EOFError when trying to read user input
+- Build process interrupted requiring manual intervention
+- No way to assume "yes" for automated environments
+
+### Reproduction Steps
+1. Run `make clean-invisible` in a non-interactive environment
+2. Script prompts for confirmation with `input("Continue? [y/N]: ")`
+3. No stdin available, resulting in EOFError
+4. Build process fails
+
+### Investigation History
+#### Attempt 1: Add --assume-yes Flag
+- **Method**: Added `--assume-yes` flag alongside `--dry-run` 
+- **Reasoning**: Provide explicit flag for automated environments
+- **Result**: Two flags created confusion about when to use which
+- **Why it didn't work**: Overcomplicated the interface with redundant options
+
+#### Attempt 2: Simplify to Single --dry-run Flag
+- **Method**: 
+  - Removed `--assume-yes` flag
+  - Made `--clean` assume "yes" automatically (no prompts)
+  - Used `--dry-run` for preview without changes
+- **Reasoning**: Simpler interface - if you're cleaning, you mean business
+- **Result**: Clean, intuitive behavior that works in all environments
+- **Why it succeeded**: Single-purpose flags with clear intent
+
+### Resolution
+- **Solution**: Simplified script interface with clear behavioral expectations
+- **Implementation**: 
+  - Default mode: Scan and report issues only
+  - `--dry-run`: Show what would be cleaned without making changes
+  - `--clean`: Clean files automatically with no user prompts
+- **Verification**: Updated all Makefile targets, tested in build environments
+- **Fixed in**: v0.6.7
+
+### Prevention
+- Test scripts in non-interactive environments during development
+- Use `sys.stdin.isatty()` to detect interactive vs non-interactive environments
+- Provide clear flags for automated vs manual use
+- Document script behavior in both modes
+
+---
+
 ## Maintenance
 
 This document should be:
@@ -620,4 +683,4 @@ This document should be:
 ---
 
 *Last Updated: 2024-12-26*
-*Document Version: 1.2* 
+*Document Version: 1.3* 

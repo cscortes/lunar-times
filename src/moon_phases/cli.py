@@ -104,14 +104,14 @@ def find_moon_data(data: Dict[str, Any]) -> Tuple[str, str]:
     for item in data["properties"]["data"]["moondata"]:
         if item["phen"] == "Rise":
             time_str = item["time"]
-            moonrise = datetime.datetime.strptime(
-                time_str, "%H:%M"
-            ).strftime("%I:%M %p")
+            moonrise = datetime.datetime.strptime(time_str, "%H:%M").strftime(
+                "%I:%M %p"
+            )
         elif item["phen"] == "Set":
             time_str = item["time"]
-            moonset = datetime.datetime.strptime(
-                time_str, "%H:%M"
-            ).strftime("%I:%M %p")
+            moonset = datetime.datetime.strptime(time_str, "%H:%M").strftime(
+                "%I:%M %p"
+            )
     return moonrise, moonset
 
 

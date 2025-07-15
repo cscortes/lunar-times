@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.7] - 2024-12-26
+
+### Fixed
+- **Invisible Character Script**: Fixed EOFError in non-interactive environments
+  - Simplified script interface: removed confusing dual-flag approach
+  - `--clean` now assumes "yes" automatically (no user prompts)
+  - `--dry-run` shows what would be cleaned without making changes
+  - Resolves build failures in CI/CD pipelines and automated environments
+  - Updated all Makefile targets to use simplified interface
+  - Enhanced documentation with clear usage examples and options
+
+### Improved
+- **Development Tools**: Added `check-invisible-detailed` Makefile target for comprehensive analysis
+- **Documentation**: Updated `scripts/invisible_chars_commands.md` with new script behavior and examples
+- **Build Process**: All invisible character cleaning now works seamlessly in automated environments
+
 ## [0.6.6] - 2024-12-26
 
 ### Fixed

@@ -218,22 +218,36 @@ grep -o -P '[^\x00-\x7F]' file.py | wc -l
 
 ### Using Our Python Script
 ```bash
-# Scan for issues
+# Scan for issues (basic check)
 make check-invisible
 
-# Clean files (creates backups)
+# Detailed scan showing what would be cleaned
+make check-invisible-detailed
+
+# Clean files (creates backups, no prompts)
 make clean-invisible
 
 # Manual usage
-python scripts/clean_invisible_chars.py src
-python scripts/clean_invisible_chars.py docs --clean
+python scripts/clean_invisible_chars.py src                    # Scan only
+python scripts/clean_invisible_chars.py src --dry-run         # Show what would be cleaned
+python scripts/clean_invisible_chars.py docs --clean          # Clean files (automatic, no prompts)
 ```
+
+#### Script Options
+- **Default**: Scan and report issues only
+- **`--dry-run`**: Show detailed analysis of what would be cleaned (no modifications)
+- **`--clean`**: Clean files with backup creation (automatic, no user prompts)
+- **`--extensions`**: Specify file extensions to process (default: .py, .md, .txt, .json, .toml)
 
 ### Integration with Development Workflow
 ```bash
 # Add to your development routine
-make format          # Format code
-make check-invisible # Check for invisible chars
-make lint           # Run linting
-make test-coverage  # Run tests with coverage
+make format                    # Format code
+make check-invisible          # Quick check for invisible chars
+make check-invisible-detailed # Detailed invisible char analysis
+make lint                     # Run linting
+make test-coverage           # Run tests with coverage
+
+# Pre-commit routine
+make pre-commit              # Includes invisible char checks
 ``` 
