@@ -113,7 +113,7 @@ Intermittent failures with "Could not find coordinates" errors for known valid l
 **Method**: Implemented proper User-Agent header and request throttling
 **Implementation**: 
 ```python
-geolocator = Nominatim(user_agent="moon_data_app")
+geolocator = Nominatim(user_agent="lunar_times_app")
 time.sleep(1)  # Rate limiting
 ```
 **Reasoning**: Nominatim requires proper User-Agent and respects rate limits

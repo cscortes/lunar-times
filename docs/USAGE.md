@@ -43,10 +43,10 @@ You can also run the application directly:
 
 ```bash
 # Interactive mode
-uv run python moon_data.py
+lunar-times
 
 # Debug mode
-uv run python moon_data.py -d
+lunar-times -d
 
 # Run the command-line tool
 uv run lunar-times
@@ -203,7 +203,7 @@ ValueError: Could not find coordinates for Invalidcity, XX
 
 ### Network Issues
 ```
-ConnectionError: Failed to retrieve moon data. Status code: 500
+ConnectionError: Failed to retrieve lunar data. Status code: 500
 ```
 
 **Solutions:**
@@ -214,7 +214,7 @@ ConnectionError: Failed to retrieve moon data. Status code: 500
 
 ### API Service Unavailable
 ```
-ConnectionError: Failed to retrieve moon data. Status code: 503
+ConnectionError: Failed to retrieve lunar data. Status code: 503
 ```
 
 **Solutions:**
@@ -289,7 +289,7 @@ make install
 ```bash
 make run-debug
 ```
-Expected output should show El Paso, TX moon data.
+Expected output should show El Paso, TX lunar data.
 
 #### Interactive Mode Test
 ```bash
@@ -297,7 +297,7 @@ make run
 # Enter: New York
 # Enter: NY
 ```
-Should show New York moon data with Eastern timezone.
+Should show New York lunar data with Eastern timezone.
 
 #### Error Handling Test
 ```bash
@@ -347,7 +347,7 @@ The application outputs to stdout, making it suitable for:
 ### Example Shell Script
 ```bash
 #!/bin/bash
-# Get moon data for multiple cities
+# Get lunar data for multiple cities
 # Note: Using uv directly for piping input; make targets work best interactively
 cities=("Austin:TX" "Denver:CO" "Seattle:WA")
 

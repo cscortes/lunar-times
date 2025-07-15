@@ -245,7 +245,7 @@ def test_new_function_success(self):
     expected_output = "expected_result"
     
     # Act
-    result = moon_data.new_function(test_input)
+    result = lunar_times.new_function(test_input)
     
     # Assert
     self.assertEqual(result, expected_output)
@@ -260,7 +260,7 @@ def test_function_with_external_call(self, mock_external):
     mock_external.return_value = "mocked_response"
     
     # Act & Assert
-    result = moon_data.function_name()
+    result = lunar_times.function_name()
     self.assertEqual(result, "expected_result")
     mock_external.assert_called_once()
 ```

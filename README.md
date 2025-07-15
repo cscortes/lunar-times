@@ -38,7 +38,7 @@ make check
 ## Example Usage
 
 ```bash
-$ python moon_data.py
+$ lunar-times
 Enter the city: Austin
 Enter the state: TX
 # Moon rise/set times in (Timezone: America/Chicago -6.0) on 2024-01-15:

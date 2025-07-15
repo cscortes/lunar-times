@@ -61,7 +61,7 @@ make run-debug            # Run in debug mode
 make test                 # Run tests
 
 # Or run commands directly in the environment
-uv run python moon_data.py
+lunar-times
 
 # Or activate the environment
 source .venv/bin/activate  # Linux/macOS
@@ -75,7 +75,7 @@ If you prefer using standard Python tools (not recommended for this project):
 #### 1. Create Virtual Environment
 ```bash
 # Create virtual environment
-python -m venv moon_env
+python -m venv lunar_env
 
 # Activate it
 # On Linux/macOS:
@@ -130,10 +130,10 @@ make check
 #### Using uv directly:
 ```bash
 # Run with user input
-uv run python moon_data.py
+lunar-times
 
 # Run in debug mode (uses El Paso, TX as default)
-uv run python moon_data.py -d
+lunar-times -d
 
 # Using the installed script
 uv run lunar-times
@@ -143,10 +143,10 @@ uv run lunar-times -d
 #### Using Standard Python:
 ```bash
 # Make sure your virtual environment is activated
-python moon_data.py
+lunar-times
 
 # Debug mode
-python moon_data.py -d
+lunar-times -d
 ```
 
 ### Interactive Mode
@@ -161,14 +161,14 @@ Enter the state: TX
 Use the `-d` flag to automatically use El Paso, TX as the location:
 
 ```bash
-python moon_data.py -d
+lunar-times -d
 ```
 
 ## Example Usage
 
 ### Interactive Session
 ```bash
-$ python moon_data.py
+$ lunar-times
 Enter the city: New York
 Enter the state: NY
 # Moon rise/set times in (Timezone: America/New_York -5.0) on 2024-01-15:
@@ -178,7 +178,7 @@ Enter the state: NY
 
 ### Debug Mode Session
 ```bash
-$ python moon_data.py -d
+$ lunar-times -d
 Running in debug mode. Defaulting to city (El Paso, TX)
 # Moon rise/set times in (Timezone: America/Chicago -6.0) on 2024-01-15:
 -  RISE: 10:58 PM
@@ -212,7 +212,7 @@ ValueError: Could not find coordinates for InvalidCity, XX
 
 #### 4. API Connection Issues
 ```
-ConnectionError: Failed to retrieve moon data. Status code: 500
+ConnectionError: Failed to retrieve lunar data. Status code: 500
 ```
 **Solution**: 
 - Check internet connection
@@ -295,7 +295,7 @@ uv run black .
 uv run flake8 .
 
 # Type checking
-uv run mypy moon_data.py
+uv run mypy src/lunar_times/cli.py
 ```
 
 ## Verification
@@ -304,19 +304,19 @@ To verify your installation works correctly:
 
 ### 1. Test Debug Mode
 ```bash
-python moon_data.py -d
+lunar-times -d
 ```
-Should output moon data for El Paso, TX without prompting for input.
+Should output lunar data for El Paso, TX without prompting for input.
 
 ### 2. Test Interactive Mode
 ```bash
-python moon_data.py
+lunar-times
 ```
 Enter a known city/state combination and verify you get moon rise/set times.
 
 ### 3. Test Error Handling
 ```bash
-python moon_data.py
+lunar-times
 # Enter invalid city: "InvalidCity"
 # Enter invalid state: "XX"
 ```

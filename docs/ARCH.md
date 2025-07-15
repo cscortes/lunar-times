@@ -5,7 +5,7 @@
 The Lunar Times is a command-line Python application that retrieves and displays moonrise and moonset times for any given city and state. The system integrates with external APIs and services to provide accurate astronomical data with proper timezone handling.
 
 ### Key Features
-- Location-based moon data retrieval
+- Location-based lunar data retrieval
 - Automatic coordinate resolution from city/state input
 - Timezone-aware time calculations
 - Debug mode for development

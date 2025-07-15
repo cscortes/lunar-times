@@ -25,7 +25,7 @@ def find_latlong(city: str, state: str) -> Tuple[float, float]:
     Raises:
         ValueError: If the city and state cannot be found.
     """
-    geolocator = Nominatim(user_agent="moon_data_app")
+    geolocator = Nominatim(user_agent="lunar_times_app")
     location = geolocator.geocode(f"{city}, {state}")
     if location is None:
         raise ValueError(f"Could not find coordinates for {city}, {state}")

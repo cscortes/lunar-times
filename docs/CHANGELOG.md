@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.11] - 2025-07-14
+
+### Fixed
+- **Documentation Consistency**: Comprehensive review and correction of all documentation references
+  - Updated all command-line usage examples from `python moon_data.py` to `lunar-times`
+  - Updated virtual environment examples from `moon_env` to `lunar_env` for consistency
+  - Updated user agent string from `moon_data_app` to `lunar_times_app` in source code and tests
+  - Updated error messages and examples from "moon data" to "lunar data" for consistency
+  - Fixed all remaining references to old module names across documentation files
+  - Ensured consistent package naming throughout README.md, USAGE.md, SETUP.md, FAILURE.md, TEST.md, and ARCH.md
+
 ## [0.6.10] - 2024-12-26
 
 ### Fixed
@@ -275,8 +286,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved Makefile organization with phony targets and color-coded help
 
 ### Fixed  
-- Removed unused imports from test_moon_data.py
-- Fixed f-string without placeholders in moon_data.py
+- Removed unused imports from test files
+- Fixed f-string without placeholders in CLI module
 
 ## [0.2.1] - 2025-01-14
 
