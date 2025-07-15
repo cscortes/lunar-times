@@ -795,6 +795,100 @@ The `clean_invisible_chars.py` script was corrupting the virtual environment by 
 
 ---
 
+## Issue: Package Building Workflow Validation Failures
+
+**Date**: 2024-12-26
+**Reporter**: Development Team
+**Severity**: High
+**Environment**: Python 3.8+, GitHub Actions, uv package manager
+
+### Problem Description
+GitHub Actions CI failing during package validation with "Metadata is missing required fields: Name, Version" error, despite fields being present in the METADATA file. Additionally, redundant invisible character cleaning was causing virtual environment corruption.
+
+### Expected Behavior
+- `make check-package` should pass successfully
+- Package metadata should be properly parsed by twine
+- Virtual environment should remain intact during build process
+- GitHub Actions CI should pass all package validation checks
+
+### Actual Behavior
+- `twine check` fails with "InvalidDistribution: Metadata is missing required fields"
+- Package METADATA file contains Name and Version fields but twine cannot parse them
+- Virtual environment gets corrupted during invisible character cleaning
+- GitHub Actions CI fails at package validation step
+
+### Reproduction Steps
+1. Run `make check-package` 
+2. Observe twine check failure with missing Name/Version fields
+3. Check METADATA file manually - fields are present
+4. Virtual environment shows IndentationError in docutils
+
+### Investigation History
+
+#### Attempt 1: Fix METADATA File Format
+- **Method**: Checked for invisible characters and formatting issues in METADATA file
+- **Reasoning**: Suspected parsing issues due to hidden characters
+- **Result**: No invisible characters found, METADATA format was correct
+- **Why it failed**: The issue was with the parsing library, not the metadata format
+
+#### Attempt 2: Update Email Address Format
+- **Method**: Changed author email from "your-email@example.com" to "lcortes@example.com"
+- **Reasoning**: Thought placeholder email might cause parsing issues
+- **Result**: No change in parsing behavior
+- **Why it failed**: Email format was not the root cause
+
+#### Attempt 3: Virtual Environment Reset
+- **Method**: Ran `make reset` to clean and recreate virtual environment
+- **Reasoning**: Suspected corruption due to invisible character script
+- **Result**: Temporarily fixed but issue returned on subsequent builds
+- **Why it failed**: Root cause was in the build workflow, not just environment corruption
+
+### Final Solution
+**Method**: Multi-pronged approach addressing workflow redundancy and dependency versions
+
+**Implementation**: 
+1. **Remove redundant cleaning**: Modified `pre-publish-clean` target to remove full directory scan
+   ```makefile
+   pre-publish-clean: clean-invisible
+   	$(call colorecho,$(BLUE),Running proactive cleanup for publishing...)
+   	$(call colorecho,$(YELLOW),Source files cleaned of invisible characters via clean-invisible target)
+   	$(call colorecho,$(GREEN),✓ Pre-publish cleanup completed)
+   ```
+
+2. **Update dependency versions**: Updated `pyproject.toml` to use compatible versions
+   ```toml
+   "twine==6.1.0",     # was 5.1.1
+   "docutils==0.20.1", # was 0.19
+   ```
+
+3. **Streamline workflow**: Build process now only cleans targeted directories (`src`, `docs`, `tests`, `pyproject.toml`)
+
+**Reasoning**: 
+- Older twine version had compatibility issues with newer metadata format
+- Redundant directory cleaning was corrupting virtual environment
+- docutils 0.19 had IndentationError in smartquotes.py
+- Targeted cleaning prevents dependency corruption
+
+**Testing**: 
+- `make check-package` now passes successfully
+- Both wheel and source distribution pass twine validation
+- Virtual environment remains intact during builds
+- GitHub Actions CI package checks pass
+
+### Lessons Learned
+- Redundant workflow steps can cause subtle corruption issues
+- Package validation tools need to be kept up-to-date
+- Virtual environment corruption can cascade through build pipeline
+- Build workflows should be minimal and targeted to avoid side effects
+- Always test build processes in clean environments
+- Version compatibility between packaging tools is critical
+
+### Related Issues
+- [Invisible Character Script Corrupting Virtual Environment](#issue-invisible-character-script-corrupting-virtual-environment)
+- [docutils IndentationError in Package Building](#issue-docutils-indentationerror-in-package-building)
+
+---
+
 ## Maintenance
 
 This document should be:

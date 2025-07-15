@@ -288,8 +288,7 @@ clean-invisible:
 # Proactive invisible character cleanup for publishing
 pre-publish-clean: clean-invisible
 	$(call colorecho,$(BLUE),Running proactive cleanup for publishing...)
-	$(call colorecho,$(YELLOW),Ensuring all source files are clean of invisible characters)
-	@python scripts/clean_invisible_chars.py . --clean
+	$(call colorecho,$(YELLOW),Source files cleaned of invisible characters via clean-invisible target)
 	$(call colorecho,$(GREEN),✓ Pre-publish cleanup completed)
 
 # PyPI Package Building and Publishing

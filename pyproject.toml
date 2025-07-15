@@ -1,12 +1,12 @@
 [project]
 name = "lunar-times"
-version = "0.6.9"
+version = "0.6.10"
 description = "Calculate lunar rise and set times for any location"
 authors = [
-    {name = "Luis Cortés", email = "your-email@example.com"}
+    {name = "Luis Cortés", email = "lcortes@example.com"}
 ]
 maintainers = [
-    {name = "Luis Cortés", email = "your-email@example.com"}
+    {name = "Luis Cortés", email = "lcortes@example.com"}
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}
@@ -29,8 +29,6 @@ classifiers = [
     "Topic :: Utilities",
 ]
 
-
-
 dependencies = [
     "requests==2.32.4",
     "geopy==2.4.1", 
@@ -47,19 +45,18 @@ dev = [
     "black==24.8.0",
     "flake8==5.0.4", 
     "mypy==1.14.1",
-    "twine==5.1.1",
-    "docutils==0.19",
+    "twine==6.1.0",
+    "docutils==0.20.1",
     "types-requests",
     "types-pytz",
 ]
 
-# [project.urls]
-# Uncomment and update with real URLs when ready for public release:
-# Homepage = "https://github.com/your-username/moon-phases-calculator"
-# Repository = "https://github.com/your-username/moon-phases-calculator" 
-# Documentation = "https://github.com/your-username/moon-phases-calculator/tree/main/docs"
-# Issues = "https://github.com/your-username/moon-phases-calculator/issues"
-# Changelog = "https://github.com/your-username/moon-phases-calculator/blob/main/docs/CHANGELOG.md"
+[project.urls]
+Homepage = "https://github.com/cscortes/lunar-times"
+Repository = "https://github.com/cscortes/lunar-times"
+Documentation = "https://github.com/cscortes/lunar-times/tree/main/docs"
+Issues = "https://github.com/cscortes/lunar-times/issues"
+Changelog = "https://github.com/cscortes/lunar-times/blob/main/docs/CHANGELOG.md"
 
 [project.scripts]
 lunar-times = "moon_phases.cli:main"

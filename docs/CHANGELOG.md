@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.10] - 2024-12-26
+
+### Fixed
+- **Package Building Workflow**: Fixed redundant invisible character cleaning and package validation issues
+  - Removed redundant full directory scan from `pre-publish-clean` target to prevent virtual environment corruption
+  - Updated `twine` from 5.1.1 to 6.1.0 to fix "Metadata is missing required fields" error during package validation
+  - Updated `docutils` from 0.19 to 0.20.1 to resolve IndentationError in smartquotes.py
+  - Updated author email from placeholder to proper format for better package metadata
+  - Streamlined packaging workflow: now only cleans targeted source directories (`src`, `docs`, `tests`, `pyproject.toml`)
+  - GitHub Actions CI package checks now pass successfully
+  - Eliminates virtual environment corruption during build process
+
 ## [0.6.9] - 2024-12-26
 
 ### Fixed
