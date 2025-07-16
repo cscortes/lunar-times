@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.13] - 2025-01-15
+
+### Fixed
+- **GitHub Actions Workflow**: Fixed version extraction in release workflow
+  - Changed grep pattern from `version.*=` to `^version = ` to avoid false matches
+  - Prevents matching dependency version specifications in pyproject.toml
+  - Resolves "Version mismatch between tag and package!" error during automated releases
+  - Ensures reliable automated publishing to PyPI through GitHub Actions
+
 ## [0.6.12] - 2025-01-15
 
 ### Fixed
