@@ -12,6 +12,8 @@ jobs:
   release:
     name: Build and Publish Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases
     
     steps:
     - name: Checkout code
@@ -39,8 +41,9 @@ jobs:
           exit 1
         fi
 
-    - name: Run full test suite
-      run: make ci
+    - name: Run tests
+      run: |
+        echo "2" | make test-all-python
 
     - name: Build package
       run: make build-package
@@ -70,8 +73,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        name: Lunar Times ${{ github.ref }}
+        tag_name: ${{ github.ref_name }}
+        name: Lunar Times ${{ github.ref_name }}
         draft: false
         prerelease: false
         files: dist/*

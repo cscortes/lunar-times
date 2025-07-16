@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.15] - 2025-01-15
+
+### Fixed
+- **GitHub Actions Release**: Fixed GitHub release creation in automated workflow
+  - Added `permissions: contents: write` to allow release creation
+  - Fixed tag references from `github.ref` to `github.ref_name` to avoid `refs/tags/` prefix
+  - Resolves "403 Forbidden" error when creating GitHub releases
+  - Ensures proper release names (e.g., "Lunar Times v0.6.15" instead of "Lunar Times refs/tags/v0.6.15")
+  - Improves automated release workflow reliability
+
 ## [0.6.14] - 2025-01-15
 
 ### Fixed
