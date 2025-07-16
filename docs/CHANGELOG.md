@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2025-01-15
+
+### 🎉 **FIRST STABLE RELEASE** 🎉
+
+This marks the official 1.0.0 release of Lunar Times - a reliable, production-ready CLI tool for calculating moonrise and moonset times for any location worldwide.
+
+### Features
+- **Location-based moon data** using city/state input with automatic coordinate resolution
+- **Timezone-aware calculations** with proper local time display and UTC offset information  
+- **Multiple data sources** integration (Nominatim geocoding + USNO Navy Astronomical API)
+- **Clean command-line interface** with debug mode support (`-d` flag)
+- **Robust error handling** with graceful degradation and meaningful error messages
+- **Comprehensive test suite** with 22 unit tests covering all functionality
+- **Production-ready packaging** with automated PyPI publishing via GitHub Actions
+
+### Technical Highlights
+- **Python 3.8+ compatibility** tested across multiple Python versions (3.8-3.12)
+- **Functional programming approach** with pure functions and modular design
+- **External API integration** with proper rate limiting and error handling
+- **Timezone handling** using timezonefinder and pytz for accurate local times
+- **Quality assurance** with linting, type checking, and comprehensive testing
+- **Automated CI/CD** with GitHub Actions for testing and publishing
+
+### Installation
+```bash
+pip install lunar-times
+```
+
+### Usage
+```bash
+# Interactive mode
+lunar-times
+
+# Debug mode (uses El Paso, TX)
+lunar-times -d
+```
+
+### Stability
+This release represents a stable, tested, and production-ready tool that has undergone extensive development and refinement. All core functionality is complete and reliable for everyday use.
+
 ## [0.6.16] - 2025-01-15
 
 ### Fixed
