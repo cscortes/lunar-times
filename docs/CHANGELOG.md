@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.14] - 2025-01-15
+
+### Fixed
+- **GitHub Actions Workflow**: Fixed Test PyPI installation in release workflow
+  - Specify exact version when installing from Test PyPI to avoid dependency conflicts
+  - Add main PyPI as fallback index for dependencies
+  - Use TAG_VERSION variable to install the specific version being released
+  - Resolves pip dependency resolution error with multiple package versions
+- **GitHub Actions Workflow**: Fixed version extraction in release workflow
+  - Changed grep pattern from `version.*=` to `^version = ` to avoid false matches
+  - Prevents matching dependency version specifications in pyproject.toml
+  - Resolves "Version mismatch between tag and package!" error during automated releases
+  - Ensures reliable automated publishing to PyPI through GitHub Actions
+
 ## [0.6.13] - 2025-01-15
 
 ### Fixed
