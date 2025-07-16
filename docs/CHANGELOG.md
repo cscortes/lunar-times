@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.12] - 2025-01-15
+
+### Fixed
+- **Documentation Links**: Fixed broken placeholder links in documentation
+  - Updated all GitHub repository URLs from placeholder `your-username/yourusername` to correct `cscortes/lunar-times`
+  - Fixed README.md badge URLs for CI, coverage, and workflow actions
+  - Updated docs/PYPI.md example URLs to use real repository paths
+  - Updated Makefile help documentation to include PyPI publishing targets
+  - Renamed `upload-test` to `upload-test-pypi` for clarity across all documentation
+  - All project links now correctly point to actual repository when published
+
+### Changed
+- **PyPI Publishing**: Enhanced upload target naming for better clarity
+  - Renamed Make target from `upload-test` to `upload-test-pypi`
+  - Updated help documentation to show all PyPI publishing targets
+  - Updated .env usage comments to reflect new target names
+
 ## [0.6.11] - 2025-07-14
 
 ### Fixed

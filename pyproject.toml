@@ -1,6 +1,6 @@
 [project]
 name = "lunar-times"
-version = "0.6.11"
+version = "0.6.12"
 description = "Calculate lunar rise and set times for any location"
 authors = [
     {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
@@ -47,6 +47,7 @@ dev = [
     "mypy==1.14.1",
     "twine==6.1.0",
     "docutils==0.20.1",
+    "python-dotenv==1.0.1",
     "types-requests",
     "types-pytz",
 ]

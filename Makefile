@@ -1,4 +1,4 @@
-.PHONY: info setup install test test-coverage coverage-report coverage-html lint clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible check-invisible-detailed clean-invisible pre-publish-clean build-package check-package upload-test upload-pypi
+.PHONY: info setup install test test-coverage coverage-report coverage-html lint clean check run run-debug build status help ci dev-setup quick-check test-all-python test-github-actions pre-commit reset check-invisible check-invisible-detailed clean-invisible pre-publish-clean build-package check-package upload-test-pypi upload-pypi
 .DEFAULT_GOAL := info
 
 # Source file tracking
@@ -68,12 +68,20 @@ info:
 	@printf "  $(YELLOW)%s$(RESET) %s\n" "pre-publish-clean" "Proactive cleanup for PyPI publishing"
 	@printf "  $(YELLOW)%s$(RESET)       %s\n" "reset" "Reset environment (clean + fresh install)"
 	@echo ""
+	$(call colorecho,$(GREEN),PyPI Publishing:)
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "build-package" "Build wheel and source distribution for PyPI"
+	@printf "  $(YELLOW)%s$(RESET) %s\n" "check-package" "Validate package integrity with twine"
+	@printf "  $(YELLOW)%s$(RESET)  %s\n" "upload-test-pypi" "Upload to Test PyPI (uses .env TWINE_PASSWORD_TEST)"
+	@printf "  $(YELLOW)%s$(RESET)  %s\n" "upload-pypi" "Upload to production PyPI (uses .env TWINE_PASSWORD_PROD)"
+	@echo ""
 	$(call colorecho,$(GREEN),Usage examples:)
 	@echo "  make setup     # First-time project setup"
 	@echo "  make test      # Run tests"
 	@echo "  make check     # Run all quality checks"
 	@echo "  make run       # Run the lunar times calculator"
 	@echo "  make ci        # Run CI pipeline (check + build)"
+	@echo "  make upload-test-pypi # Test PyPI upload (requires .env with tokens)"
+	@echo "  make upload-pypi # Production PyPI upload (requires confirmation)"
 
 # Initial project setup
 setup:
@@ -297,17 +305,19 @@ check-package: build-package
 	@uv run twine check dist/*
 	$(call colorecho,$(GREEN),✓ Package checks passed)
 
-upload-test: check-package
+upload-test-pypi: check-package
 	$(call colorecho,$(BLUE),Uploading to Test PyPI...)
-	$(call colorecho,$(YELLOW),Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for TestPyPI)
-	@uv run twine upload --repository testpypi dist/*
+	$(call colorecho,$(YELLOW),Loading environment from .env file if it exists...)
+	@if [ -f .env ]; then export $$(cat .env | grep -v '^#' | xargs) && export TWINE_PASSWORD=$$TWINE_PASSWORD_TEST; fi; \
+	uv run twine upload --repository testpypi dist/*
 	$(call colorecho,$(GREEN),✓ Uploaded to Test PyPI)
 
 upload-pypi: check-package
 	$(call colorecho,$(RED),WARNING: This will upload to the REAL PyPI!)
-	$(call colorecho,$(YELLOW),Make sure you have set TWINE_USERNAME and TWINE_PASSWORD for PyPI)
+	$(call colorecho,$(YELLOW),Loading environment from .env file if it exists...)
 	@read -p "Are you sure you want to upload to PyPI? (y/N): " confirm && [ "$$confirm" = "y" ]
-	@uv run twine upload dist/*
+	@if [ -f .env ]; then export $$(cat .env | grep -v '^#' | xargs) && export TWINE_PASSWORD=$$TWINE_PASSWORD_PROD; fi; \
+	uv run twine upload dist/*
 	$(call colorecho,$(GREEN),✓ Uploaded to PyPI)
 
 # Help alias

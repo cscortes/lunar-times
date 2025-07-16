@@ -49,7 +49,7 @@ jobs:
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-      run: make upload-test
+      run: make upload-test-pypi
 
     - name: Test installation from Test PyPI
       run: |

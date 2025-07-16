@@ -1,9 +1,9 @@
 # Lunar Times
 
-[![CI](https://github.com/your-username/lunar-times/workflows/CI/badge.svg)](https://github.com/your-username/lunar-times/actions)
+[![CI](https://github.com/cscortes/lunar-times/workflows/CI/badge.svg)](https://github.com/cscortes/lunar-times/actions)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/lunar-times.svg)](https://badge.fury.io/py/lunar-times)
-[![Coverage](https://codecov.io/gh/your-username/lunar-times/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/lunar-times)
+[![Coverage](https://codecov.io/gh/cscortes/lunar-times/branch/main/graph/badge.svg)](https://codecov.io/gh/cscortes/lunar-times)
 
 A command-line Python application that calculates moonrise and moonset times for any location. The application integrates with external APIs to provide accurate astronomical data with proper timezone handling.
 
@@ -84,7 +84,7 @@ make check         # Runs all quality checks
 make build-package # Builds package like CI
 ```
 
-View live [workflow runs](https://github.com/your-username/lunar-times/actions) and [automation details](.github/workflows/).
+View live [workflow runs](https://github.com/cscortes/lunar-times/actions) and [automation details](.github/workflows/).
 
 ## Requirements
 

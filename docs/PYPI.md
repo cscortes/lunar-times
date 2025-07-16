@@ -46,13 +46,13 @@ The project is now configured for PyPI publishing with the following improvement
 
 2. **Update URLs (Optional)**
    ```toml
-   # Uncomment and update with real URLs when ready for public release:
+   # Real URLs (already configured in pyproject.toml):
    [project.urls]
-   Homepage = "https://github.com/yourusername/lunar-times"
-   Repository = "https://github.com/yourusername/lunar-times"
-   Documentation = "https://github.com/yourusername/lunar-times/tree/main/docs"
-   Issues = "https://github.com/yourusername/lunar-times/issues"
-   Changelog = "https://github.com/yourusername/lunar-times/blob/main/docs/CHANGELOG.md"
+   Homepage = "https://github.com/cscortes/lunar-times"
+   Repository = "https://github.com/cscortes/lunar-times"
+   Documentation = "https://github.com/cscortes/lunar-times/tree/main/docs"
+   Issues = "https://github.com/cscortes/lunar-times/issues"
+   Changelog = "https://github.com/cscortes/lunar-times/blob/main/docs/CHANGELOG.md"
    ```
 
 3. **Update Version** (if needed)
@@ -110,7 +110,7 @@ make check-package
 ### 2. **Test Upload to TestPyPI**
 ```bash
 # Upload to Test PyPI first
-make upload-test
+make upload-test-pypi
 
 # Test installation from TestPyPI
 pip install -i https://test.pypi.org/simple/ lunar-times
@@ -128,7 +128,7 @@ make upload-pypi
 |--------|-------------|
 | `make build-package` | Build wheel and source distribution (includes invisible char cleanup) |
 | `make check-package` | Validate package integrity with twine |
-| `make upload-test` | Upload to Test PyPI |
+| `make upload-test-pypi` | Upload to Test PyPI |
 | `make upload-pypi` | Upload to real PyPI (with confirmation) |
 | `make check-invisible` | Check for invisible characters in source files |
 | `make clean-invisible` | Remove invisible characters (with backups) |
@@ -190,7 +190,7 @@ For subsequent releases:
 1. Replace placeholder email with real contact information
 2. Set up PyPI accounts and generate API tokens
 3. Test the build process: `make build-package`
-4. Upload to TestPyPI first: `make upload-test`
+4. Upload to TestPyPI first: `make upload-test-pypi`
 5. If everything works, upload to PyPI: `make upload-pypi`
 
 ## Automated CI/CD Publishing
@@ -229,7 +229,7 @@ The project includes GitHub Actions workflows for automated PyPI publishing:
 ### Manual Override
 You can still use manual publishing:
 ```bash
-make upload-test    # Manual Test PyPI upload
+make upload-test-pypi    # Manual Test PyPI upload
 make upload-pypi    # Manual production PyPI upload
 ```
 
