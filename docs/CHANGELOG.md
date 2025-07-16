@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.16] - 2025-01-15
+
+### Fixed
+- **GitHub Actions Workflow**: Improved Test PyPI error handling and robustness
+  - Added `continue-on-error: true` to Test PyPI upload step to handle version conflicts gracefully
+  - Enhanced Test PyPI installation step with fallback logic
+  - Try to install specific version first, fall back to latest available if version not found
+  - Better logging and error messages throughout the workflow
+  - Prevents workflow failures when Test PyPI uploads fail due to existing versions
+  - Ensures PyPI publishing continues even if Test PyPI step encounters issues
+
 ## [0.6.15] - 2025-01-15
 
 ### Fixed
