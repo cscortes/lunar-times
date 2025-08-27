@@ -13,7 +13,9 @@ jobs:
   api-health:
     name: API Health Check
     runs-on: ubuntu-latest
-    
+    permissions:
+      issues: write  # Required to create issues when health check fails
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -35,7 +37,9 @@ jobs:
         curl -f "https://nominatim.openstreetmap.org/search?q=Austin,TX&format=json&limit=1" || exit 1
         
         echo "Testing USNO API..."
-        curl -f "https://aa.usno.navy.mil/api/rstt/oneday?date=today&coords=30.2672,-97.7431" || exit 1
+        # Use proper date format and required parameters like the app does
+        TODAY=$(date +%Y-%m-%d)
+        curl -f "https://aa.usno.navy.mil/api/rstt/oneday?date=$TODAY&coords=30.27,-97.74&tz=-6&dst=false" || exit 1
 
     - name: Test debug mode functionality
       timeout-minutes: 2
@@ -54,4 +58,4 @@ jobs:
                   'Workflow: ${{ github.workflow }}\n' +
                   'Run: ${{ github.run_id }}',
             labels: ['bug', 'external-api']
-          }) 
+          })
