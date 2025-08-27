@@ -19,21 +19,40 @@ A command-line Python application that calculates moonrise and moonset times for
 ## Quick Start
 
 ```bash
-# Install dependencies
-make install
+# Install the application
+pip install lunar-times
 
 # Run the application
-make run
+lunar-times
 
-# Or use debug mode (defaults to El Paso, TX)
-make run-debug
+# Or run with debug mode (defaults to El Paso, TX)
+lunar-times --debug
 
-# Run tests
-make test
-
-# Check code quality
-make check
+# For development installation
+git clone https://github.com/cscortes/lunar-times.git
+cd lunar-times
+pip install -e .
 ```
+
+### Alternative: Using the repository directly
+
+If you prefer to run from the source code:
+
+```bash
+# Clone the repository
+git clone https://github.com/cscortes/lunar-times.git
+cd lunar-times
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python -m lunar_times
+
+# Or run with debug mode
+python -m lunar_times --debug
+```
+
 
 ## Example Usage
 
