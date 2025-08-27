@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "Testing Nominatim API..."
         curl -f "https://nominatim.openstreetmap.org/search?q=Austin,TX&format=json&limit=1" || exit 1
-        
+
         echo "Testing USNO API..."
         # Use proper date format and required parameters like the app does
         TODAY=$(date +%Y-%m-%d)
