@@ -889,6 +889,101 @@ GitHub Actions CI failing during package validation with "Metadata is missing re
 
 ---
 
+## Issue: flake8 crashes on Python 3.14 (`ast.Str` removed)
+
+**Date**: 2026-10-10
+**Reporter**: GitHub Actions CI
+**Severity**: High
+**Environment**: GitHub Actions CI, Python 3.14, flake8 5.0.4, pyflakes 2.5.0
+
+### Problem Description
+The test matrix job for Python 3.14 failed during linting:
+
+```
+src/lunar_times/cli.py: "pyflakes[F]" failed during execution due to AttributeError("module 'ast' has no attribute 'Str'")
+```
+
+`make check` runs flake8 on every matrix version, including 3.14. That failure blocked the rest of the 3.14 job.
+
+### Expected Behavior
+flake8 should lint the project on every supported Python version, including 3.14.
+
+### Actual Behavior
+pyflakes aborted while parsing `src/lunar_times/cli.py` because it still referenced `ast.Str`.
+
+### Reproduction Steps
+1. Install dev dependencies from the lockfile that pins flake8 5.0.4.
+2. Run `uv run --extra dev flake8 src tests` with Python 3.14.
+3. pyflakes raises `AttributeError: module 'ast' has no attribute 'Str'`.
+
+### Investigation History
+#### Attempt 1: Keep flake8 5.0.4
+**Approach**: Leave the existing pin and only re-run CI.
+**Result**: Failed. Python 3.14 removed the deprecated AST aliases (`ast.Str`, `ast.Num`, `ast.Bytes`, `ast.NameConstant`, `ast.Ellipsis`). pyflakes 2.5.0, required by flake8 5.0.4, still uses those names.
+**Reason for failure**: The crash is in the linter, not in the application code.
+
+### Root Cause Analysis
+flake8 5.0.4 depends on pyflakes `>=2.5.0,<2.6.0`. That pyflakes release predates the Python 3.14 AST cleanup. Support landed in pyflakes 3.4.0 (via flake8 7.3.0) and is current in pyflakes 4.x (via flake8 7.4.1).
+
+### Solution
+**Final Approach**: Pin `flake8==7.4.1` in the dev extra and refresh `uv.lock`.
+**Implementation**: Updated `pyproject.toml` and locked dependencies. flake8 7.4.1 requires pyflakes `>=4.0.0,<4.1.0`, which parses the Python 3.14 AST.
+**Reasoning**: The project already pins dev tools to exact versions. Pinning flake8 is enough; it pulls a compatible pyflakes.
+**Testing**: `uv run --extra dev flake8` on the local interpreter, then CI on the 3.11–3.14 matrix.
+
+### Lessons Learned
+- A linter pin that works on the quick-check interpreter (3.11) can still break a newer matrix version.
+- When adding a Python version to CI, check that dev tools declare support for that version, not only the runtime dependencies.
+
+### Related Issues
+- Python 3.14 support added in 1.1.0
+
+---
+
+## Issue: `make test-all-python` fails on Windows before linting
+
+**Date**: 2026-10-10
+**Reporter**: Local Git Bash on Windows
+**Severity**: High
+**Environment**: Git Bash (MINGW64), uv, Python 3.11.16–3.14.7
+
+### Problem Description
+`make test-all-python` reported every supported version as failed:
+
+```
+error: No virtual environment or system Python installation found for path `.venv-test/bin/python`
+.venv-test/bin/python: No such file or directory
+✗ Linting failed
+❌ FAILED VERSIONS: 3.11.16 3.12.14 3.13.15 3.14.7
+```
+
+### Expected Behavior
+The script should install dependencies and run flake8, mypy, and pytest on each supported Python version.
+
+### Actual Behavior
+uv created `.venv-test\Scripts\python.exe`. The script then called `.venv-test/bin/python`, which is the layout uv uses on Linux and macOS.
+
+### Reproduction Steps
+1. On Windows Git Bash, run `make test-all-python`.
+2. Choose option 1.
+3. Each version fails at the install step.
+
+### Root Cause Analysis
+`scripts/test_all_python.sh` hardcoded the POSIX virtualenv layout. On Windows, `set -e` also does not abort the function, because the caller invokes it as `if ! test_python_version`. The failed install continued into the lint step, which then reported a missing interpreter.
+
+A follow-on failure appears once the interpreter path is fixed. mypy is configured with `python_version = "3.11"`, and NumPy 2.5 stubs use the Python 3.12 `type` statement. mypy reports that as a syntax error in `numpy/__init__.pyi` on Python 3.12 and newer.
+
+### Solution
+**Final Approach**: Install with `uv sync --python <version> --extra dev` and run flake8, mypy, and pytest through `uv run`, so uv selects `Scripts/python.exe` or `bin/python`. Tell mypy to skip NumPy imports.
+**Implementation**: Updated `scripts/test_all_python.sh` and added a mypy override for `numpy` and `numpy.*` with `follow_imports = "skip"`.
+**Testing**: `uv run --extra dev mypy src`, then `make test-all-python` on 3.11–3.14.
+
+### Lessons Learned
+- A bash script that shells out to a virtualenv interpreter needs uv to resolve that path on Windows.
+- Commands inside a function called from `if !` do not trip `set -e`, so install failures must be checked explicitly.
+
+---
+
 ## Maintenance
 
 This document should be:
@@ -899,5 +994,5 @@ This document should be:
 
 ---
 
-*Last Updated: 2024-12-26*
-*Document Version: 1.5* 
+*Last Updated: 2026-10-10*
+*Document Version: 1.6* 

@@ -42,7 +42,7 @@ dev = [
     "pytest==8.3.5",
     "pytest-cov==4.0.0",
 
-    "flake8==5.0.4", 
+    "flake8==7.4.1", 
     "mypy==1.14.1",
     "twine==6.1.0",
     "docutils==0.20.1",
@@ -96,7 +96,17 @@ disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "geopy.geocoders"
-ignore_missing_imports = true 
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "numpy"
+follow_imports = "skip"
+follow_imports_for_stubs = true
+
+[[tool.mypy.overrides]]
+module = "numpy.*"
+follow_imports = "skip"
+follow_imports_for_stubs = true 
 
 [tool.coverage.run]
 source = ["src"]

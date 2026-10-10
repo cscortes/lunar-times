@@ -38,17 +38,18 @@ test_python_version() {
     # Copy project files
     cp -r "$OLDPWD"/* . 2>/dev/null || true
     
-    # Create virtual environment with specific Python version
+    # uv picks Scripts/python.exe on Windows and bin/python elsewhere.
     echo "Creating virtual environment..."
-    uv venv --python "$version" .venv-test
-    
-    # Install dependencies
-    echo "Installing dependencies..."
-    uv pip install --python .venv-test/bin/python -e ".[dev]"
+    if ! uv sync --python "$version" --extra dev; then
+        echo -e "${RED}✗ Dependency install failed${NC}"
+        cd "$OLDPWD"
+        rm -rf "$temp_dir"
+        return 1
+    fi
     
     # Run linting
     echo -e "${YELLOW}Running linting...${NC}"
-    if .venv-test/bin/python -m flake8 src/ tests/ --max-line-length=79; then
+    if uv run --extra dev flake8 src/ tests/ --max-line-length=79; then
         echo -e "${GREEN}✓ Linting passed${NC}"
     else
         echo -e "${RED}✗ Linting failed${NC}"
@@ -59,7 +60,7 @@ test_python_version() {
     
     # Run type checking
     echo -e "${YELLOW}Running type checking...${NC}"
-    if .venv-test/bin/python -m mypy src/; then
+    if uv run --extra dev mypy src/; then
         echo -e "${GREEN}✓ Type checking passed${NC}"
     else
         echo -e "${RED}✗ Type checking failed${NC}"
@@ -70,7 +71,7 @@ test_python_version() {
     
     # Run tests
     echo -e "${YELLOW}Running tests...${NC}"
-    if .venv-test/bin/python -m pytest tests/ -v; then
+    if uv run --extra dev pytest tests/ -v; then
         echo -e "${GREEN}✓ Tests passed${NC}"
     else
         echo -e "${RED}✗ Tests failed${NC}"

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **CI**: Bump the dev pin of flake8 from 5.0.4 to 7.4.1 so linting works on Python 3.14. flake8 5.0.4 pulls pyflakes 2.5.0, which still references `ast.Str`. Python 3.14 removed that AST node, so `make check` failed with `AttributeError: module 'ast' has no attribute 'Str'` on the 3.14 matrix job. flake8 7.4.1 depends on pyflakes 4.x, which supports the current AST.
+- **Local multi-version tests**: `scripts/test_all_python.sh` now installs and runs checks with `uv sync` and `uv run`. The old `.venv-test/bin/python` path does not exist on Windows, where uv creates `Scripts/python.exe`, so every version failed during install.
+- **Type checking**: mypy still targets Python 3.11. NumPy is skipped, including its `.pyi` stubs (`follow_imports_for_stubs`). NumPy 2.5 stubs use the `type` statement, which mypy rejects while `python_version` is 3.11. The application does not import NumPy directly.
+
 ## [1.1.0] - 2026-10-10
 
 ### Security
