@@ -150,6 +150,9 @@ lunar-times -d
 
 # Command-line help
 lunar-times --help
+
+# Package version
+lunar-times --version
 ```
 
 ### Interactive Mode
@@ -161,7 +164,7 @@ Enter the state: TX
 ```
 
 ### Debug Mode
-Use `-d` or `--debug` to automatically use El Paso, TX as the location. Use `-h` or `--help` to print usage and exit.
+Use `-d` or `--debug` to automatically use El Paso, TX as the location. Use `-h` or `--help` to print usage and exit. Use `-V` or `--version` to print the package version and exit.
 
 ```bash
 lunar-times -d

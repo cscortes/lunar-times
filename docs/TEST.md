@@ -19,7 +19,7 @@ The Lunar Times project maintains a comprehensive test suite designed to ensure 
 |----------|---------|--------------|----------|
 | `find_latlong()` | Geocoding city/state to coordinates | 3 tests | ✅ Success, failure, input formatting |
 | `get_citystate()` | User input handling for location | 3 tests | ✅ Debug mode, interactive, input cleaning |
-| `parse_args()` | Command-line help and debug flags | 2 tests | ✅ `-h`/`--help`, `-d`/`--debug` |
+| `parse_args()` | Command-line help, version, and debug flags | 3 tests | ✅ `-h`/`--help`, `-V`/`--version`, `-d`/`--debug` |
 | `get_timezone()` | Timezone resolution from coordinates | 2 tests | ✅ Success cases, edge cases |
 | `find_moon_data()` | Parse API response for moon times | 5 tests | ✅ Complete data, missing rise/set, edge cases |
 | `print_moon_data()` | Format and display results | 4 tests | ✅ Normal/debug modes, timezones, N/A values |
@@ -117,6 +117,7 @@ make ci
 
 **Command-Line Tests** (`parse_args`)
 - `test_parse_args_help`: `-h` and `--help` print usage and exit
+- `test_parse_args_version`: `-V` and `--version` print the package version and exit
 - `test_parse_args_debug_flags`: `-d` and `--debug` enable debug mode
 
 **Timezone Tests** (`get_timezone`)

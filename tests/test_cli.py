@@ -142,7 +142,20 @@ class TestMoonData(unittest.TestCase):
                 help_text = output.getvalue()
                 self.assertIn("moonrise and moonset", help_text)
                 self.assertIn("--debug", help_text)
+                self.assertIn("--version", help_text)
                 self.assertIn("El Paso, TX", help_text)
+
+    def test_parse_args_version(self):
+        """Test that -V and --version print the package version and exit."""
+        from lunar_times import __version__
+
+        for flag in ("-V", "--version"):
+            with self.subTest(flag=flag):
+                with self.assertRaises(SystemExit) as context:
+                    with self.captured_output() as output:
+                        moon_data.parse_args([flag])
+                self.assertEqual(context.exception.code, 0)
+                self.assertIn(__version__, output.getvalue())
 
     def test_parse_args_debug_flags(self):
         """Test that -d and --debug enable debug mode."""

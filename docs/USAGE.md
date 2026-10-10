@@ -66,6 +66,7 @@ uv run lunar-times -d
 |--------|-------------|---------|
 | (none) | Interactive mode - prompts for city and state | `uv run lunar-times` |
 | `-h`, `--help` | Show usage and exit | `uv run lunar-times --help` |
+| `-V`, `--version` | Show the package version and exit | `uv run lunar-times --version` |
 | `-d`, `--debug` | Debug mode - uses El Paso, TX as default location | `uv run lunar-times -d` |
 
 ## Input Formats

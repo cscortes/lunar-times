@@ -261,7 +261,7 @@ graph TB
 - **Input Validation**: Automatic string formatting and validation
 
 ### Configuration Management
-- **Command Line Flags**: `-h`/`--help` prints usage; `-d`/`--debug` uses El Paso, TX
+- **Command Line Flags**: `-h`/`--help` prints usage; `-V`/`--version` prints the package version; `-d`/`--debug` uses El Paso, TX
 - **Default Values**: Fallback to El Paso, TX in debug mode
 - **Environment Agnostic**: Uses system timezone detection
 

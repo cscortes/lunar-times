@@ -38,6 +38,13 @@ def find_latlong(city: str, state: str) -> Tuple[float, float]:
     return latitude, longitude
 
 
+def _package_version() -> str:
+    """Return the installed lunar-times version string."""
+    from lunar_times import __version__
+
+    return __version__
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """
     Parse command-line arguments.
@@ -58,6 +65,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "examples:\n"
             "  lunar-times\n"
             "  lunar-times --debug\n"
+            "  lunar-times --version\n"
             "  lunar-times -h"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -67,6 +75,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--debug",
         action="store_true",
         help="skip the prompts and use El Paso, TX",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"%(prog)s {_package_version()}",
     )
     return parser.parse_args(argv)
 
@@ -189,6 +203,7 @@ def main(argv: list[str] | None = None) -> None:
     Args:
         argv: Arguments to parse, excluding the program name. When omitted,
             argparse reads sys.argv. -h and --help print usage and exit.
+            -V and --version print the package version and exit.
             -d and --debug use El Paso, TX instead of prompting.
 
     Raises:
