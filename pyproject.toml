@@ -29,7 +29,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "requests==2.32.4",
+    "requests==2.33.0",
     "geopy==2.5.0", 
     "timezonefinder==8.3.0",
     "pytz==2024.2",
@@ -39,14 +39,14 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest==8.3.5",
+    "pytest==9.0.3",
     "pytest-cov==4.0.0",
 
     "flake8==7.4.1", 
     "mypy==1.14.1",
     "twine==6.1.0",
     "docutils==0.20.1",
-    "python-dotenv==1.0.1",
+    "python-dotenv==1.2.2",
     "types-requests",
     "types-pytz",
 ]
