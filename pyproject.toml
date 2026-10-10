@@ -31,7 +31,7 @@ classifiers = [
 
 dependencies = [
     "requests==2.32.4",
-    "geopy==2.4.1", 
+    "geopy==2.5.0", 
     "timezonefinder==6.5.4",
     "pytz==2024.2",
     "numpy>=1.19.0; python_version<'3.12'",
