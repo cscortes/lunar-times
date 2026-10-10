@@ -6,10 +6,10 @@ The Lunar Times project maintains a comprehensive test suite designed to ensure 
 
 ## Test Suite Statistics
 
-- **Total Test Methods**: 22 unit tests
+- **Total Test Methods**: 29 unit tests
 - **Functions Covered**: 6 (100% function coverage)
 - **Test Framework**: pytest with unittest.TestCase
-- **Test Location**: `tests/test_cli.py`
+- **Test Location**: `tests/test_cli.py`, `tests/test_python_support.py`
 - **Mocking Strategy**: unittest.mock for external dependencies
 - **Coverage Tool**: pytest-cov for line and branch coverage
 
@@ -24,6 +24,7 @@ The Lunar Times project maintains a comprehensive test suite designed to ensure 
 | `print_moon_data()` | Format and display results | 4 tests | ✅ Normal/debug modes, timezones, N/A values |
 | `main()` | Application entry point | 3 tests | ✅ Success, API errors, geocoding errors |
 | **Integration** | End-to-end workflows | 2 tests | ✅ Full workflow, real API structure |
+| Project metadata | Supported Python range and pins | 7 tests | ✅ 3.11–3.14, dependency pins, CI matrix |
 
 ## Coverage Goals
 
@@ -134,6 +135,17 @@ make ci
 - `test_main_success`: Complete successful workflow
 - `test_main_api_error`: API failure handling
 - `test_main_geocoding_error`: Geocoding failure handling
+
+### Support Tests (`TestPythonSupport` class)
+
+**Python range and dependency pins** (`tests/test_python_support.py`)
+- `test_requires_python_range`: Requires `>=3.11,<3.15` and mypy targets 3.11
+- `test_classifiers_match_supported_versions`: Classifiers list 3.11–3.14 only
+- `test_runtime_dependency_pins`: geopy 2.5.0, timezonefinder 8.3.0, numpy bounds
+- `test_lockfile_requires_python`: `uv.lock` records the same range
+- `test_ci_uses_supported_versions_only`: Workflows stay on 3.11–3.14
+- `test_local_matrix_matches_ci`: Local multi-version script matches CI
+- `test_running_interpreter_is_supported`: The current interpreter is in range
 
 ### Integration Tests (`TestIntegration` class)
 

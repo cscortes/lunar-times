@@ -6,7 +6,7 @@ This guide provides comprehensive instructions for setting up the Lunar Times pr
 
 ### System Requirements
 - **Operating System**: Linux, macOS, or Windows
-- **Python Version**: Python 3.8 or higher
+- **Python Version**: Python 3.11 or higher
 - **Internet Connection**: Required for API calls to external services
 
 ### Check Python Version
@@ -16,7 +16,7 @@ python --version
 python3 --version
 ```
 
-If you don't have Python 3.8+, download it from [python.org](https://www.python.org/downloads/).
+If you don't have Python 3.11+, download it from [python.org](https://www.python.org/downloads/).
 
 ## Installation Methods
 
@@ -191,9 +191,9 @@ Running in debug mode. Defaulting to city (El Paso, TX)
 
 #### 1. Python Version Error
 ```
-Error: Python 3.8 or higher required
+Error: Python 3.11 or higher required
 ```
-**Solution**: Upgrade Python to version 3.8 or higher.
+**Solution**: Upgrade Python to version 3.11 or higher.
 
 #### 2. Missing Dependencies
 ```
@@ -359,7 +359,7 @@ This project includes comprehensive **live and operational** GitHub Actions work
 
 ### CI/CD Features ✅
 - **Automated Testing**: Every push and pull request triggers comprehensive testing ✅
-- **Multi-Python Support**: Tests across Python 3.8, 3.9, 3.10, 3.11, and 3.12 ✅
+- **Multi-Python Support**: Tests across Python 3.11, 3.12, 3.13, and 3.14 ✅
 - **Cross-Platform**: Validation on Ubuntu, Windows, and macOS ✅
 - **Quality Gates**: Linting, type checking, coverage, and security scanning ✅
 - **Automated Publishing**: PyPI deployment on version tags ✅

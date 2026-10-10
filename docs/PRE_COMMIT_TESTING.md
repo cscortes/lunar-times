@@ -39,12 +39,12 @@ make pre-commit
 For major commits or before releases:
 
 ```bash
-# Test with all Python versions (3.8-3.12)
+# Test with all Python versions (3.11-3.14)
 make test-all-python
 ```
 
 **What it tests:**
-- All standard checks across Python 3.8, 3.9, 3.10, 3.11, 3.12
+- All standard checks across Python 3.11, 3.12, 3.13, and 3.14
 - Dependency compatibility
 - Version-specific linting differences
 - Cross-platform compatibility
@@ -53,7 +53,7 @@ make test-all-python
 
 **Interactive Options:**
 1. **Test all versions** - Full CI simulation
-2. **Test Python 3.12 only** - Quick check for recent linting issues
+2. **Test Python 3.14 only** - Quick check on the latest supported release
 3. **Test specific version** - Debug version-specific issues
 
 ### 3. **GitHub Actions Local Testing**
@@ -150,15 +150,14 @@ git push
 ==============================
 
 Available Python versions for testing:
-  ✓ Python 3.8.20
-  ✓ Python 3.9.23
-  ✓ Python 3.10.15
-  ✓ Python 3.11.10
-  ✓ Python 3.12.11
+  ✓ Python 3.11.16
+  ✓ Python 3.12.14
+  ✓ Python 3.13.15
+  ✓ Python 3.14.7
 
 Select testing mode:
 1. Test all versions (recommended before major commits)
-2. Test Python 3.12 only (quick check for recent linting issues)
+2. Test Python 3.14 only (quick check on the latest supported release)
 3. Test specific version
 4. Exit
 ```
@@ -166,7 +165,7 @@ Select testing mode:
 ### Success Indicators
 
 ```
-✓ Python 3.12.11: ALL TESTS PASSED
+✓ Python 3.14.7: ALL TESTS PASSED
 🎉 ALL PYTHON VERSIONS PASSED!
 Safe to commit and push.
 ```
@@ -174,7 +173,7 @@ Safe to commit and push.
 ### Failure Indicators
 
 ```
-❌ FAILED VERSIONS: 3.12.11
+❌ FAILED VERSIONS: 3.14.7
 Fix issues before committing.
 ```
 
@@ -206,13 +205,13 @@ make test    # Verify fix
 
 #### 3. **Version-Specific Issues**
 ```
-❌ Python 3.12 tests failed!
+❌ Python 3.14 tests failed!
 ```
 
 **Solution:** Test specific version:
 ```bash
 make test-all-python  # Choose option 3
-# Enter: 3.12.11
+# Enter: 3.14.7
 # Debug the specific issue
 ```
 
@@ -239,7 +238,7 @@ curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 - Subsequent runs are faster
 
 #### 3. **Selective Testing**
-- Use Python 3.12 only for quick linting checks
+- Use Python 3.14 only for a quick check on the latest release
 - Use full multi-Python testing for comprehensive validation
 - Use GitHub Actions local testing only for workflow changes
 

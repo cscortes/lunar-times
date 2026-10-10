@@ -1,7 +1,7 @@
 # Lunar Times
 
 [![CI](https://github.com/cscortes/lunar-times/workflows/CI/badge.svg)](https://github.com/cscortes/lunar-times/actions)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/lunar-times.svg)](https://badge.fury.io/py/lunar-times)
 [![Coverage](https://codecov.io/gh/cscortes/lunar-times/branch/main/graph/badge.svg)](https://codecov.io/gh/cscortes/lunar-times)
 
@@ -80,7 +80,7 @@ Enter the state: TX
 This project uses **GitHub Actions** for comprehensive automated testing and deployment. All workflows are **live and operational**:
 
 ### Continuous Integration ✅
-- **Multi-Python Testing**: Automated testing on Python 3.8, 3.9, 3.10, 3.11, and 3.12
+- **Multi-Python Testing**: Automated testing on Python 3.11, 3.12, 3.13, and 3.14
 - **Cross-Platform**: Tests run on Ubuntu, Windows, and macOS 
 - **Quality Gates**: Linting, type checking, test coverage, and security scanning
 - **Fast Feedback**: Quick validation jobs provide rapid feedback on pull requests
@@ -107,7 +107,7 @@ View live [workflow runs](https://github.com/cscortes/lunar-times/actions) and [
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.11+
 - [uv](https://docs.astral.sh/uv/) package manager
 - Internet connection for API calls
 - Dependencies: requests, geopy, timezonefinder, pytz

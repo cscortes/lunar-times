@@ -18,7 +18,7 @@ This is a Python command-line application that calculates moonrise and moonset t
 - **No Classes**: Current design uses standalone functions, maintain this approach
 
 ## Code Style & Standards
-- **Python Version**: Target Python 3.13+
+- **Python Version**: Target Python 3.11+
 - **Style Guide**: Follow PEP 8 conventions
 - **Function Documentation**: Use Google-style docstrings for all functions
 - **Type Hints**: Add type hints where beneficial for clarity

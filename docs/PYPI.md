@@ -21,8 +21,8 @@ The project is now configured for PyPI publishing with the following improvement
    - Markdown README with content-type specification
 
 3. **Python Version Support**
-   - Supports Python 3.8+ (broadened from 3.8-only)
-   - Classifiers for Python 3.8, 3.9, 3.10, 3.11, 3.12
+   - Supports Python 3.11 through 3.14
+   - Classifiers for Python 3.11, 3.12, 3.13, and 3.14
 
 4. **Build System**
    - Uses modern `hatchling` build backend

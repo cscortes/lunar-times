@@ -13,7 +13,7 @@ TEST_FILES := $(shell find tests -name "*.py" 2>/dev/null || echo "")
 
 # Project Configuration
 PROJECT_NAME := lunar-times
-PYTHON_VERSION := 3.8
+PYTHON_VERSION := 3.11
 
 # Colors for output (using printf for better compatibility)
 # Set NO_COLOR=1 to disable colors

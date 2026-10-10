@@ -10,7 +10,7 @@ maintainers = [
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}
-requires-python = ">=3.8"
+requires-python = ">=3.11,<3.15"
 keywords = ["lunar", "moonrise", "moonset", "astronomy", "cli", "times"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -20,22 +20,21 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: Astronomy",
     "Topic :: Utilities",
 ]
 
 dependencies = [
     "requests==2.32.4",
-    "geopy==2.4.1", 
-    "timezonefinder==6.5.4",
+    "geopy==2.5.0", 
+    "timezonefinder==8.3.0",
     "pytz==2024.2",
-    "numpy>=1.19.0; python_version<'3.12'",
-    "numpy>=1.26.0; python_version>='3.12'",
+    "numpy>=1.24.0; python_version<'3.12'",
+    "numpy>=2.5.2; python_version>='3.12'",
 ]
 
 [project.optional-dependencies]
@@ -90,7 +89,7 @@ max-line-length = 79
 extend-ignore = ["E203", "W503"]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

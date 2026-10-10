@@ -27,7 +27,7 @@ Reproducibility is a fundamental priority for this project, ensuring consistent 
 - Consistent formatting and data processing logic
 
 **Environment Consistency**:
-- Minimal system dependencies (Python 3.8+ only)
+- Minimal system dependencies (Python 3.11+ only)
 - Self-contained virtual environment via uv
 - Cross-platform compatibility (Linux, macOS, Windows)
 
@@ -297,7 +297,7 @@ graph TB
 
 ### CI/CD Integration ✅ (Implemented & Operational)
 - **GitHub Actions**: Comprehensive automated testing and deployment pipeline **LIVE** ✅
-- **Multi-Environment Testing**: Python 3.8-3.12 across Ubuntu, Windows, macOS **OPERATIONAL** ✅
+- **Multi-Environment Testing**: Python 3.11-3.14 across Ubuntu, Windows, macOS **OPERATIONAL** ✅
 - **Quality Automation**: Integrated linting, type checking, and security scanning **ACTIVE** ✅
 - **Deployment Pipeline**: Automated PyPI publishing with Test PyPI validation **READY** ✅
 - **Health Monitoring**: Weekly external API health checks with alerting **SCHEDULED** ✅
@@ -305,7 +305,7 @@ graph TB
 #### Implemented Workflow Architecture
 - **CI Pipeline** (`.github/workflows/ci.yml`): 212 lines, 4.9KB
   - Quick validation stage (lint, type check)
-  - Multi-Python test matrix (3.8, 3.9, 3.10, 3.11, 3.12)
+  - Multi-Python test matrix (3.11, 3.12, 3.13, 3.14)
   - Cross-platform testing (Ubuntu, Windows, macOS)  
   - Security scanning (safety, OSV)
   - Build validation and artifact creation
@@ -327,7 +327,7 @@ graph TB
 ## Development Environment
 
 ### Technology Stack
-- **Language**: Python 3.8+
+- **Language**: Python 3.11+
 - **Package Manager**: uv (modern Python package manager)
 - **HTTP Client**: requests
 - **Geocoding**: geopy (Nominatim)

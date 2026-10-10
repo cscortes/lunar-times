@@ -10,7 +10,7 @@ echo "=============================="
 echo ""
 
 # Python versions to test (available locally)
-PYTHON_VERSIONS=("3.8.20" "3.9.23" "3.10.15" "3.11.10" "3.12.11")
+PYTHON_VERSIONS=("3.11.16" "3.12.14" "3.13.15" "3.14.7")
 
 # Colors for output
 RED='\033[0;31m'
@@ -101,7 +101,7 @@ echo ""
 # Ask user which versions to test
 echo "Select testing mode:"
 echo "1. Test all versions (recommended before major commits)"
-echo "2. Test Python 3.12 only (quick check for recent linting issues)"
+echo "2. Test Python 3.14 only (quick check on the latest supported release)"
 echo "3. Test specific version"
 echo "4. Exit"
 echo ""
@@ -127,17 +127,17 @@ case $choice in
         fi
         ;;
     2)
-        echo "Testing Python 3.12 only..."
-        if test_python_version "3.12.11"; then
-            echo -e "${GREEN}🎉 Python 3.12 tests passed!${NC}"
+        echo "Testing Python 3.14 only..."
+        if test_python_version "3.14.7"; then
+            echo -e "${GREEN}🎉 Python 3.14 tests passed!${NC}"
         else
-            echo -e "${RED}❌ Python 3.12 tests failed!${NC}"
+            echo -e "${RED}❌ Python 3.14 tests failed!${NC}"
             exit 1
         fi
         ;;
     3)
         echo "Available versions: ${PYTHON_VERSIONS[*]}"
-        read -p "Enter Python version (e.g., 3.12.11): " custom_version
+        read -p "Enter Python version (e.g., 3.14.7): " custom_version
         if test_python_version "$custom_version"; then
             echo -e "${GREEN}🎉 Python $custom_version tests passed!${NC}"
         else
