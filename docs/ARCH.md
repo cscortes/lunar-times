@@ -219,7 +219,8 @@ graph LR
 | Function | Purpose | Input | Output |
 |----------|---------|--------|--------|
 | `main()` | Entry point and orchestration | Command line args | None |
-| `get_citystate()` | User input handling | stdin/argv | (city, state) |
+| `get_citystate()` | User input handling | debug flag or stdin | (city, state) |
+| `parse_args()` | Command-line parsing | argv | debug flag |
 | `find_latlong()` | Geocoding service | city, state | (latitude, longitude) |
 | `get_timezone()` | Timezone resolution | lat, lng | (tz_label, offset) |
 | `find_moon_data()` | API response parsing | JSON data | (moonrise, moonset) |
@@ -260,7 +261,7 @@ graph TB
 - **Input Validation**: Automatic string formatting and validation
 
 ### Configuration Management
-- **Command Line Flags**: Debug mode via `-d` flag
+- **Command Line Flags**: `-h`/`--help` prints usage; `-d`/`--debug` uses El Paso, TX
 - **Default Values**: Fallback to El Paso, TX in debug mode
 - **Environment Agnostic**: Uses system timezone detection
 

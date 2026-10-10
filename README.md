@@ -13,6 +13,7 @@ A command-line Python application that calculates moonrise and moonset times for
 - 📍 Automatic coordinate resolution using OpenStreetMap geocoding
 - 🕐 Timezone-aware calculations with proper daylight saving time handling
 - 🔧 Debug mode for development and testing
+- 📖 Command-line help via `-h` or `--help`
 - 🚀 Clean command-line interface with clear output formatting
 - ✅ **Enterprise-grade CI/CD** with automated testing across multiple Python versions and platforms
 
@@ -24,6 +25,9 @@ pip install lunar-times
 
 # Run the application
 lunar-times
+
+# Show command-line help
+lunar-times --help
 
 # Or run with debug mode (defaults to El Paso, TX)
 lunar-times --debug
@@ -48,6 +52,9 @@ pip install -r requirements.txt
 
 # Run the application
 python -m lunar_times
+
+# Show command-line help
+python -m lunar_times --help
 
 # Or run with debug mode
 python -m lunar_times --debug

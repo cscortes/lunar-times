@@ -7,14 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-10
+
 ### Security
 - **Dependencies**: Bump geopy from 2.4.1 to 2.5.0 to include the fix for GHSA-mhvh-fq92-pfmr (ReDoS in `geopy.Point.from_string`). This app only calls `Nominatim.geocode()` with short city and state strings, so the new 256-character input limit does not affect it.
 
 ### Changed
+- **Author email**: Use the private GitHub noreply address `2752955+cscortes@users.noreply.github.com` for the author, maintainer, and package `__email__`.
 - **Python support**: Drop Python 3.8, 3.9, and 3.10. The project now requires Python 3.11 or newer. CI, local multi-version tests, and mypy target 3.11 and 3.12. Raised the numpy lower bound for Python below 3.12 from 1.19.0 to 1.24.0 so that bound supports Python 3.11.
 - **Python support**: Declare and test Python 3.13 and 3.14. Python 3.15 is excluded (`requires-python` is `>=3.11,<3.15`) because `h3` has no 3.15 wheel. Raised the numpy lower bound for Python 3.12 and newer from 1.26.0 to 2.5.2 so those interpreters get published wheels. Bumped timezonefinder from 6.5.4 to 8.3.0, and refreshed cffi, h3, and coverage, so the install can use wheels published for Python 3.14.
 
 ### Added
+- **Command-line help**: `lunar-times -h` and `lunar-times --help` print usage and exit. `-d` and `--debug` both skip the prompts and use El Paso, TX.
 - **Tests**: `tests/test_python_support.py` checks the Python 3.11–3.14 range, the geopy and timezonefinder pins, the numpy bounds, and the CI and local version matrices.
 
 ## [1.0.0] - 2025-01-15

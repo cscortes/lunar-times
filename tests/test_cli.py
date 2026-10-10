@@ -111,14 +111,12 @@ class TestMoonData(unittest.TestCase):
                 self.assertEqual(lat, 40.7128)
                 self.assertEqual(lng, -74.0060)
 
-    @patch("sys.argv", ["lunar_times.cli.py", "-d"])
     def test_get_citystate_debug_mode(self):
         """Test get_citystate in debug mode."""
-        city, state = moon_data.get_citystate()
+        city, state = moon_data.get_citystate(debug=True)
         self.assertEqual(city, "El Paso")
         self.assertEqual(state, "TX")
 
-    @patch("sys.argv", ["lunar_times.cli.py"])
     @patch("builtins.input", side_effect=["austin", "tx"])
     def test_get_citystate_interactive_mode(self, mock_input):
         """Test get_citystate in interactive mode."""
@@ -126,13 +124,31 @@ class TestMoonData(unittest.TestCase):
         self.assertEqual(city, "Austin")
         self.assertEqual(state, "TX")
 
-    @patch("sys.argv", ["lunar_times.cli.py"])
     @patch("builtins.input", side_effect=[" new york ", " ny "])
     def test_get_citystate_input_cleaning(self, mock_input):
         """Test get_citystate properly cleans and formats input."""
         city, state = moon_data.get_citystate()
         self.assertEqual(city, "New York")
         self.assertEqual(state, "NY")
+
+    def test_parse_args_help(self):
+        """Test that -h and --help print usage and exit."""
+        for flag in ("-h", "--help"):
+            with self.subTest(flag=flag):
+                with self.assertRaises(SystemExit) as context:
+                    with self.captured_output() as output:
+                        moon_data.parse_args([flag])
+                self.assertEqual(context.exception.code, 0)
+                help_text = output.getvalue()
+                self.assertIn("moonrise and moonset", help_text)
+                self.assertIn("--debug", help_text)
+                self.assertIn("El Paso, TX", help_text)
+
+    def test_parse_args_debug_flags(self):
+        """Test that -d and --debug enable debug mode."""
+        self.assertTrue(moon_data.parse_args(["-d"]).debug)
+        self.assertTrue(moon_data.parse_args(["--debug"]).debug)
+        self.assertFalse(moon_data.parse_args([]).debug)
 
     def test_get_timezone_success(self):
         """Test get_timezone with valid coordinates."""
@@ -255,7 +271,6 @@ class TestMoonData(unittest.TestCase):
             self.assertEqual(moonrise, expected_output)
             self.assertEqual(moonset, "N/A")
 
-    @patch("sys.argv", ["lunar_times.cli.py"])
     def test_print_moon_data_normal_mode(self):
         """Test print_moon_data in normal mode."""
         with self.captured_output() as output:
@@ -270,12 +285,16 @@ class TestMoonData(unittest.TestCase):
         self.assertIn("RISE: 10:58 PM", output_lines[1])
         self.assertIn("SET: 01:08 PM", output_lines[2])
 
-    @patch("sys.argv", ["lunar_times.cli.py", "-d"])
     def test_print_moon_data_debug_mode(self):
         """Test print_moon_data in debug mode."""
         with self.captured_output() as output:
             moon_data.print_moon_data(
-                "2024-01-15", "America/Denver", -6.0, "10:28 PM", "08:52 AM"
+                "2024-01-15",
+                "America/Denver",
+                -6.0,
+                "10:28 PM",
+                "08:52 AM",
+                debug=True,
             )
 
         output_lines = output.getvalue().strip().split("\n")
@@ -336,7 +355,7 @@ class TestMoonData(unittest.TestCase):
         mock_find_moon.return_value = ("10:58 PM", "01:08 PM")
 
         # Test
-        moon_data.main()
+        moon_data.main([])
 
         # Assertions
         mock_get_cs.assert_called_once()
@@ -345,7 +364,12 @@ class TestMoonData(unittest.TestCase):
         mock_requests.assert_called_once()
         mock_find_moon.assert_called_once_with(self.sample_api_response)
         mock_print.assert_called_once_with(
-            "2024-01-15", "America/Chicago", -6.0, "10:58 PM", "01:08 PM"
+            "2024-01-15",
+            "America/Chicago",
+            -6.0,
+            "10:58 PM",
+            "01:08 PM",
+            debug=False,
         )
 
     @patch("lunar_times.cli.get_citystate")
@@ -369,7 +393,7 @@ class TestMoonData(unittest.TestCase):
 
         # Test and assert exception
         with self.assertRaises(ConnectionError) as context:
-            moon_data.main()
+            moon_data.main([])
 
         self.assertIn(
             "Failed to retrieve moon data. Status code: 500",
@@ -388,7 +412,7 @@ class TestMoonData(unittest.TestCase):
 
         # Test and assert exception
         with self.assertRaises(ValueError) as context:
-            moon_data.main()
+            moon_data.main([])
 
         self.assertIn(
             "Could not find coordinates for InvalidCity, XX",
@@ -424,7 +448,7 @@ class TestMoonData(unittest.TestCase):
             mock_find_moon.return_value = ("10:58 PM", "01:08 PM")
 
             # Test
-            moon_data.main()
+            moon_data.main([])
 
             # Check API call parameters
             expected_params = {

@@ -1,12 +1,12 @@
 [project]
 name = "lunar-times"
-version = "1.0.0"
+version = "1.1.0"
 description = "Calculate lunar rise and set times for any location"
 authors = [
-    {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
+    {name = "Luis Cortés", email = "2752955+cscortes@users.noreply.github.com"}
 ]
 maintainers = [
-    {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
+    {name = "Luis Cortés", email = "2752955+cscortes@users.noreply.github.com"}
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file = "LICENSE"}

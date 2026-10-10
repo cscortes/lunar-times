@@ -147,6 +147,9 @@ lunar-times
 
 # Debug mode
 lunar-times -d
+
+# Command-line help
+lunar-times --help
 ```
 
 ### Interactive Mode
@@ -158,7 +161,7 @@ Enter the state: TX
 ```
 
 ### Debug Mode
-Use the `-d` flag to automatically use El Paso, TX as the location:
+Use `-d` or `--debug` to automatically use El Paso, TX as the location. Use `-h` or `--help` to print usage and exit.
 
 ```bash
 lunar-times -d

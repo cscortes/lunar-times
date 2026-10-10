@@ -13,11 +13,12 @@ from .cli import (
     find_moon_data,
     print_moon_data,
     get_citystate,
+    parse_args,
 )
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Luis Cortés"
-__email__ = "cscortes@users.noreply.github.com"
+__email__ = "2752955+cscortes@users.noreply.github.com"
 
 __all__ = [
     "main",
@@ -26,4 +27,5 @@ __all__ = [
     "find_moon_data",
     "print_moon_data",
     "get_citystate",
+    "parse_args",
 ]

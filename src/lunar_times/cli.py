@@ -1,7 +1,7 @@
-import requests
+import argparse
 import datetime
+import requests
 import pytz
-import sys
 from typing import Dict, Any, Tuple
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
@@ -38,19 +38,51 @@ def find_latlong(city: str, state: str) -> Tuple[float, float]:
     return latitude, longitude
 
 
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    """
+    Parse command-line arguments.
+
+    Args:
+        argv: Arguments to parse, excluding the program name. When omitted,
+            argparse reads sys.argv.
+
+    Returns:
+        Parsed arguments. The debug flag is true when -d or --debug is set.
+    """
+    parser = argparse.ArgumentParser(
+        prog="lunar-times",
+        description=(
+            "Calculate moonrise and moonset times for a city and state."
+        ),
+        epilog=(
+            "examples:\n"
+            "  lunar-times\n"
+            "  lunar-times --debug\n"
+            "  lunar-times -h"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "-d",
+        "--debug",
+        action="store_true",
+        help="skip the prompts and use El Paso, TX",
+    )
+    return parser.parse_args(argv)
+
+
 # Get city and state from the user
-def get_citystate() -> Tuple[str, str]:
+def get_citystate(debug: bool = False) -> Tuple[str, str]:
     """
     Get city and state from user input.
 
-    If the '-d' flag is provided on the command line, default to El Paso, TX.
-    Otherwise, prompt the user for input. Strip and title the city name, and
-    strip and upper the state name.
+    Args:
+        debug: When true, skip the prompts and use El Paso, TX.
 
     Returns:
         tuple: (city, state)
     """
-    if "-d" in sys.argv:
+    if debug:
         city = "El Paso"
         state = "tx"
     else:
@@ -116,7 +148,12 @@ def find_moon_data(data: Dict[str, Any]) -> Tuple[str, str]:
 
 
 def print_moon_data(
-    today: str, tz_label: str, offset: float, moonrise: str, moonset: str
+    today: str,
+    tz_label: str,
+    offset: float,
+    moonrise: str,
+    moonset: str,
+    debug: bool = False,
 ) -> None:
     """
     Print the moonrise and moonset times for a specific date and location.
@@ -127,13 +164,9 @@ def print_moon_data(
         offset (float): The timezone offset from UTC in hours.
         moonrise (str): The moonrise time in 'hh:mm AM/PM' format or "N/A".
         moonset (str): The moonset time in 'hh:mm AM/PM' format or "N/A".
-
-    This function displays the moonrise and moonset times for the given date
-    and timezone. If the '-d' flag is present in the command line arguments,
-    it indicates that the program is running in debug mode and defaults to
-    the city El Paso, TX.
+        debug: When true, note that the location defaulted to El Paso, TX.
     """
-    if "-d" in sys.argv:
+    if debug:
         print("Running in debug mode. Defaulting to city (El Paso, TX)")
     offset_sign = "+" if offset >= 0 else "-"
     print(
@@ -144,7 +177,7 @@ def print_moon_data(
     print(f"- SET: {moonset}")
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     """
     Main entry point for the program.
 
@@ -153,13 +186,16 @@ def main() -> None:
     It then sends a request to the USNO API to retrieve the moon data and
     prints the moonrise and moonset times for the given date and location.
 
-    If the '-d' flag is present on the command line, the program defaults to
-    the city El Paso, TX.
+    Args:
+        argv: Arguments to parse, excluding the program name. When omitted,
+            argparse reads sys.argv. -h and --help print usage and exit.
+            -d and --debug use El Paso, TX instead of prompting.
 
     Raises:
         ConnectionError: If the request to the API fails.
     """
-    city, state = get_citystate()
+    args = parse_args(argv)
+    city, state = get_citystate(debug=args.debug)
     latitude, longitude = find_latlong(city, state)
     today = datetime.date.today().strftime("%Y-%m-%d")
     tz_label, offset = get_timezone(latitude, longitude)
@@ -185,7 +221,9 @@ def main() -> None:
     data = response.json()
     moonrise, moonset = find_moon_data(data)
 
-    print_moon_data(today, tz_label, offset, moonrise, moonset)
+    print_moon_data(
+        today, tz_label, offset, moonrise, moonset, debug=args.debug
+    )
 
 
 if __name__ == "__main__":

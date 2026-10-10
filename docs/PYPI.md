@@ -10,7 +10,7 @@ The project is now configured for PyPI publishing with the following improvement
 
 1. **Consolidated Author Information**
    - Author: Luis Cortés
-   - Email: `cscortes@users.noreply.github.com` (GitHub noreply email for privacy)
+   - Email: `2752955+cscortes@users.noreply.github.com` (GitHub noreply email for privacy)
    - Both `pyproject.toml` and `__init__.py` use consistent information
 
 2. **PyPI-Ready Metadata**
@@ -40,7 +40,7 @@ The project is now configured for PyPI publishing with the following improvement
 1. **Update Contact Information**
    ```toml
    # In pyproject.toml, current configuration:
-   {name = "Luis Cortés", email = "cscortes@users.noreply.github.com"}
+   {name = "Luis Cortés", email = "2752955+cscortes@users.noreply.github.com"}
    # Using GitHub noreply email for privacy protection
    ```
 
@@ -56,7 +56,7 @@ The project is now configured for PyPI publishing with the following improvement
    ```
 
 3. **Update Version** (if needed)
-   - Current version: `0.5.0`
+   - Current version: `1.1.0`
    - Update in both `pyproject.toml` and `src/lunar_times/__init__.py`
 
 4. **Final Quality Checks**
@@ -150,7 +150,7 @@ lunar-times
 
 ### Common Issues
 
-1. **Email configured**: Now using `cscortes@users.noreply.github.com` for privacy
+1. **Email configured**: Now using `2752955+cscortes@users.noreply.github.com` for privacy
 2. **Authentication errors**: Check API tokens and environment variables
 3. **Package name conflicts**: Check if name is available on PyPI
 4. **Build errors**: Run `make check` to verify all quality checks pass
